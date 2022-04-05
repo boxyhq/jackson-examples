@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SAML Jackson Demo App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+      <%- include partials/header.ejs %>
+
+      <!-- Begin page content -->
+      <main role="main" class="container col-md-6">
+        <h5>Home</h5>
+
+        <% if(info.length > 0){ %>
+          <div class="alert alert-danger" role="alert">
+            <%= info %>
+          </div>
+       <% } %>
+
+        <a href="<%= authorizeUrl %>" class="btn btn-primary">Login via SSO</a>
+
+        <br><br>
+
+        <table class="table">
+          <tr>
+            <td>Provider</td>
+            <td><%= provider %></td>
+          </tr>
+
+          <tr>
+            <td>Product</td>
+            <td><%= product %></td>
+          </tr>
+
+          <tr>
+            <td>Tenant</td>
+            <td><%= tenant %></td>
+          </tr>
+
+          <tr>
+            <td>Base Url</td>
+            <td><%= baseUrl %></td>
+          </tr>
+
+          <tr>
+            <td>Default Redirect Url</td>
+            <td><%= defaultRedirectUrl %></td>
+          </tr>
+
+          <tr>
+            <td>ACS Url</td>
+            <td><code><%= acsUrl %></code></td>
+          </tr>
+
+          <tr>
+            <td>Saml Audience</td>
+            <td><code><%= samlAudience %></code></td>
+          </tr>
+        </table>
+      </main>
+  </body>
+</html>
