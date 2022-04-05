@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-
+    "dev": "node ./bin/www"
   },
   "dependencies": {
     "@boxyhq/saml-jackson": "0.3.8",
