@@ -11,13 +11,13 @@
   "main": "",
   "scripts": {
     "dev": "next -p 3366",
+    "dev:next-auth": "next -p 3366",
     "build": "next build",
     "start": "next start -p 3366",
     "types": "tsc --noEmit"
   },
   "author": "Deepak Prabhakara <deepak@boxyhq.com>",
-  "contributors": [
-  ],
+  "contributors": [],
   "license": "ISC",
   "dependencies": {
     "next": "12.1.0",
@@ -32,7 +32,6 @@
     "@boxyhq/config": "*",
     "@boxyhq/tsconfig": "*",
     "typescript": "4.6.2"
-    
   },
   "prettier": {
     "semi": false
