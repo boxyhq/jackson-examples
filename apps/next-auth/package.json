@@ -10,7 +10,7 @@
   "homepage": "https://saml-demo.boxyhq.com",
   "main": "",
   "scripts": {
-
+    "dev": "next -p 3366",
     "build": "next build",
     "start": "next start -p 3366",
     "types": "tsc --noEmit"
