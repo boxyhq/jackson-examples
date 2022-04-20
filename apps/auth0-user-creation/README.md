@@ -9,7 +9,7 @@ You'll need an auth0 tenant.
 
 ## Auth flow
 
-App redirects to Jackson -> Jackson to Idp -> Idp back to jackson -> Jackson back to our app with auth code which is exchanged for a token -> get user profile -> call Auth0 Management APIs to update user if already exists else create the user.
+App redirects to Jackson -> Jackson to Idp -> Idp back to jackson -> Jackson back to our app with auth code which is exchanged for a token -> get user profile -> call Auth0 Management APIs to update user if already exists, else create the user.
 
 ## Run the app
 
