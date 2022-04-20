@@ -1,4 +1,4 @@
-This demo shows the SAML flow with jackson with a user creation step at end. The user is created against an Auth0 Database connection.
+This demo shows the SAML flow with jackson with a user creation step at end. The user is created by invoking the [Auth0 management api](https://auth0.com/docs/api/management/v2#!/Users/post_users).
 
 ## Setup
 
