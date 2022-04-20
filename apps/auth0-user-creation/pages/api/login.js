@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { JACKSON_URL } from 'lib/constants';
 import auth0Client from 'lib/auth0Client';
+import generatePassword from 'lib/generatePassword';
 
 async function loginRoute(req, res) {
   const { access_token } = req.query;
@@ -27,7 +28,7 @@ async function loginRoute(req, res) {
                   email: data.email,
                   connection: process.env.AUTH0_CONNECTION,
                   name: data.firstName,
-                  password: '$dummy123L',
+                  password: generatePassword(12),
                 },
                 function cb(err, user) {
                   if (err) {
