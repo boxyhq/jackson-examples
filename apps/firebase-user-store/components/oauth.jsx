@@ -109,6 +109,6 @@ export default function OAuth() {
       </button>
     </div>
   ) : (
-    <button onClick={authorize}>Client-Side Flow</button>
+    <button onClick={authorize}>Sign-in</button>
   );
 }

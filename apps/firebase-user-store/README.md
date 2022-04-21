@@ -13,7 +13,7 @@ To use the Firebase Admin SDK, you'll need the following:
 
 ## Auth flow
 
-Click Sign in -> redirects to Jackson -> Jackson redirect to IdP based on config -> User logs in at IdP/IdP returns the assertion to Jackson -> Jackson redirects with the auth code which is then exchanged for a token and user profile -> the profile is used to update the user in firebase if it exists, else creates a new user -> firebase returns a custom token back to app -> app uses the token to sign in and establish session.
+Click Sign in -> redirects to Jackson -> Jackson redirect to IdP based on config -> User logs in at IdP/IdP returns the assertion to Jackson -> Jackson redirects to app with the auth code which is then exchanged for a token and user profile -> the profile is used to update the user in firebase if it exists, else creates a new user -> firebase returns a custom token against the user back to app -> app uses the token to sign in and establish session.
 
 ## Run the app
 
