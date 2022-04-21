@@ -24,7 +24,7 @@ async function loginRoute(req, res) {
         .catch((error) => {
           if (error.code === 'auth/user-not-found') {
             console.log(`User not found ... Creating user`);
-            getAuth()
+            return getAuth()
               .createUser({
                 uid: uid,
                 email: data.email,
