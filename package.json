@@ -1,6 +1,6 @@
 {
   "name": "jackson-examples",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -8,7 +8,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run build --ignore='apps/next-auth/*' --ignore='apps/express-demo/*'",
     "dev:express-demo": "turbo run dev --filter=\"express-demo\"",
     "dev:next-auth": "turbo run dev --filter=\"next-auth\"",
     "dev:next-client-auth": "turbo run dev --filter=\"next-client-auth\"",
@@ -45,6 +44,5 @@
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
-  },
-  "packageManager": "npm@8.1.2"
+  }
 }
