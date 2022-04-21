@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import { withIronSessionApiRoute } from 'iron-session/next';
 import 'lib/firebaseClient'; // Initializes the Firebase SDK
 import { getAuth } from 'firebase-admin/auth';
 import { JACKSON_URL } from 'lib/constants';
@@ -58,12 +57,3 @@ async function loginRoute(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
-
-export default withIronSessionApiRoute(loginRoute, {
-  cookieName: 'myapp_cookiename',
-  password: 'complex_password_at_least_32_characters_long',
-  // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-  cookieOptions: {
-    secure: process.env.NODE_ENV === 'production',
-  },
-});
