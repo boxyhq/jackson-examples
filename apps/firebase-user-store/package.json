@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@bity/oauth2-auth-code-pkce": "2.13.0",
+    "firebase": "9.6.11",
     "firebase-admin": "10.0.2",
     "iron-session": "6.1.2",
     "next": "12.1.5",

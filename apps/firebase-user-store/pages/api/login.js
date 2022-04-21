@@ -11,9 +11,10 @@ async function loginRoute(req, res) {
   try {
     const response = await fetch(`${JACKSON_URL}/api/oauth/userinfo?access_token=` + access_token);
     const data = await response.json();
+    const uid = data.id;
     if (response.ok) {
-      getAuth()
-        .updateUser(data.id, {
+      const userCreationTask = getAuth()
+        .updateUser(uid, {
           email: data.email,
           displayName: data.firstName,
         })
@@ -26,7 +27,7 @@ async function loginRoute(req, res) {
             console.log(`User not found ... Creating user`);
             getAuth()
               .createUser({
-                uid: data.id,
+                uid: uid,
                 email: data.email,
                 displayName: data.firstName,
                 password: generatePassword(12),
@@ -44,10 +45,14 @@ async function loginRoute(req, res) {
           }
           console.log('Error updating user:', error);
         });
+      await userCreationTask;
+      const token = await getAuth().createCustomToken(uid);
+      res.json({ token });
+      return;
     }
 
-    req.session.user = data.email;
-    await req.session.save();
+    // req.session.user = data.email;
+    // await req.session.save();
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
