@@ -8,14 +8,7 @@
     "lint": {
       "outputs": []
     },
-    "dev": {
-      "cache": false
-    },
-    "dev:next-client-auth": {
-      "cache": false
-    },
-    "dev:next-auth": {
-      "cache": false
-    }
+    "dev": {},
+    "start": {}
   }
 }
