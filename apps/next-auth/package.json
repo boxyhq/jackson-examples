@@ -1,0 +1,41 @@
+{
+  "name": "next-auth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An example project for NextAuth.js",
+  "repository": "https://github.com/boxyhq/jackson-next-auth.git",
+  "bugs": {
+    "url": "https://github.com/boxyhq/jackson-next-auth/issues"
+  },
+  "homepage": "https://saml-demo.boxyhq.com",
+  "main": "",
+  "scripts": {
+    "dev": "next -p 3366",
+    "build": "next build",
+    "start": "next start -p 3366",
+    "types": "tsc --noEmit"
+  },
+  "author": "Deepak Prabhakara <deepak@boxyhq.com>",
+  "contributors": [],
+  "license": "ISC",
+  "dependencies": {
+    "next": "12.1.0",
+    "next-auth": "4.3.1",
+    "nodemailer": "6.7.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.21",
+    "@types/react": "17.0.40",
+    "@boxyhq/config": "*",
+    "@boxyhq/tsconfig": "*",
+    "typescript": "4.6.2"
+  },
+  "prettier": {
+    "semi": false
+  },
+  "engines": {
+    "node": ">=14.18.1 <=16.x"
+  }
+}

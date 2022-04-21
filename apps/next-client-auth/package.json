@@ -1,0 +1,21 @@
+{
+  "name": "next-client-auth",
+  "version": "0.1.0",
+  "license": "Apache 2.0",
+  "scripts": {
+    "dev": "next start -p 3366",
+    "build": "next build",
+    "start": "next start -p 3366"
+  },
+  "dependencies": {
+    "@bity/oauth2-auth-code-pkce": "2.13.0",
+    "iron-session": "6.0.4",
+    "next": "12.1.0",
+    "node-fetch": "3.1.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@boxyhq/config": "*"
+  }
+}

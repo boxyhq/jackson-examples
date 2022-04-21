@@ -1,0 +1,50 @@
+{
+  "name": "jackson-examples",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run build --ignore='apps/next-auth/*' --ignore='apps/express-demo/*'",
+    "dev:express-demo": "turbo run dev --filter=\"express-demo\"",
+    "dev:next-auth": "turbo run dev --filter=\"next-auth\"",
+    "dev:next-client-auth": "turbo run dev --filter=\"next-client-auth\"",
+    "dev:firebase-user-store": "turbo run dev --filter=\"firebase-user-store\"",
+    "dev:auth0-user-store": "turbo run dev --filter=\"auth0-user-store\"",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "apps/**/*.{js,ts}": [
+      "eslint --cache --fix"
+    ],
+    "apps/**/*.{js,ts,css,md}": [
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "husky": "7.0.4",
+    "lint-staged": "12.3.7",
+    "prettier": "2.6.0",
+    "prettier-plugin-tailwindcss": "0.1.8",
+    "turbo": "1.2.4"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "npm@8.1.2"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "firebase-user-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3366",
+    "build": "next build",
+    "start": "next start -p 3366",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@bity/oauth2-auth-code-pkce": "2.13.0",
+    "firebase": "9.6.11",
+    "firebase-admin": "10.0.2",
+    "next": "12.1.5",
+    "node-fetch": "3.2.3",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5"
+  }
+}
