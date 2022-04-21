@@ -4,7 +4,7 @@ import { getAuth } from 'firebase-admin/auth';
 import { JACKSON_URL } from 'lib/constants';
 import generatePassword from 'lib/generatePassword';
 
-async function loginRoute(req, res) {
+export default async function loginRoute(req, res) {
   const { access_token } = req.query;
 
   try {
