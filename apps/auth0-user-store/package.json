@@ -1,5 +1,5 @@
 {
-  "name": "auth0-user-creation",
+  "name": "auth0-user-store",
   "version": "0.1.0",
   "private": true,
   "scripts": {
