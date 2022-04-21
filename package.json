@@ -8,9 +8,10 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "dev:next-auth": "turbo run dev:next-auth",
-    "dev:next-client-auth": "turbo run dev:next-client-auth",
+    "dev": "turbo run build --ignore='apps/next-auth/*' --ignore='apps/express-demo/*'",
+    "dev:express-demo": "turbo run dev --filter=\"express-demo\"",
+    "dev:next-auth": "turbo run dev --filter=\"next-auth\"",
+    "dev:next-client-auth": "turbo run dev --filter=\"next-client-auth\"",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -33,11 +34,11 @@
     ]
   },
   "devDependencies": {
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "^2.6.0",
-    "prettier-plugin-tailwindcss": "^0.1.8",
-    "turbo": "v1.1.10"
+    "husky": "7.0.4",
+    "lint-staged": "12.3.7",
+    "prettier": "2.6.0",
+    "prettier-plugin-tailwindcss": "0.1.8",
+    "turbo": "1.2.4"
   },
   "engines": {
     "npm": ">=7.0.0",
