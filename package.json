@@ -9,7 +9,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev:express": "turbo run dev --filter='express'",
+    "build:next-auth": "turbo run build --filter='next-auth'",
     "dev:next-auth": "turbo run dev --filter='next-auth'",
+    "start:next-auth": "turbo run start --filter='next-auth'",
     "dev:next-client-auth": "turbo run dev --filter='next-client-auth'",
     "dev:firebase-user-store": "turbo run dev --filter='firebase-user-store'",
     "dev:auth0-user-store": "turbo run dev --filter='auth0-user-store'",
