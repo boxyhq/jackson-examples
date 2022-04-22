@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev:express-demo": "turbo run dev --filter='express-demo'",
+    "dev:express": "turbo run dev --filter='express'",
     "dev:next-auth": "turbo run dev --filter='next-auth'",
     "dev:next-client-auth": "turbo run dev --filter='next-client-auth'",
     "dev:firebase-user-store": "turbo run dev --filter='firebase-user-store'",
