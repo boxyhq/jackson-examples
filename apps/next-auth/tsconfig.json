@@ -1,8 +1,0 @@
-{
-  "extends": "@boxyhq/tsconfig/nextjs.json",
-  "compilerOptions": {
-
-  },
-  "include": ["process.d.ts", "next-env.d.ts", "next-auth.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
-}

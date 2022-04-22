@@ -38,8 +38,8 @@ npm run dev
 
 ## Configure
 
-- Visit [http://localhost:3000](http://localhost:3000)
+- Visit [http://localhost:3366](http://localhost:3366)
 
-- [Add SAML Metadata](http://localhost:3000/config/create)
+- [Add SAML Metadata](http://localhost:3366/config/create)
 
 - Click the button `Login via SSO`

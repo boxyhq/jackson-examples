@@ -20,13 +20,11 @@ export default function OAuth() {
       authorizationUrl: `${JACKSON_URL}/api/oauth/authorize`,
       tokenUrl: `${JACKSON_URL}/api/oauth/token`,
       redirectUrl: 'http://localhost:3366',
-      clientId: 'tenant=boxyhq.com&product=demo',
+      clientId: 'tenant=boxyhq.com&product=saml-demo.boxyhq.com',
       clientSecret: 'dummy',
       onAccessTokenExpiry(refreshAccessToken) {
         console.log('Expired! Access token needs to be renewed.');
-        alert(
-          'We will try to get a new access token via grant code or refresh token.'
-        );
+        alert('We will try to get a new access token via grant code or refresh token.');
         return refreshAccessToken();
       },
       onInvalidGrant(refreshAuthCodeOrRefreshToken) {

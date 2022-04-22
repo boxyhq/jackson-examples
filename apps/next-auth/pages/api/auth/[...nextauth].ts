@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import BoxyHQSAMLProvider from "next-auth/providers/boxyhq-saml"
 
 const samlLoginUrl =
-  process.env.BOXYHQ_SAML_JACKSON_URL || "http://localhost:5225"
+  process.env.BOXYHQ_SAML_JACKSON_URL || "https://jackson-demo.boxyhq.com"
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -13,7 +13,7 @@ export default NextAuth({
     BoxyHQSAMLProvider({
       issuer: samlLoginUrl,
       clientId: `tenant=boxyhq.com&product=${
-        process.env.BOXYHQ_PRODUCT || "next-auth-demo"
+        process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
       }`,
       clientSecret: "dummy",
     }),
@@ -27,7 +27,8 @@ export default NextAuth({
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         code: {
-          label: "Code: Go to https://mocksaml.com/saml/login to initiate SAML IdP login",
+          label:
+            "Code: Go to https://mocksaml.com/saml/login to initiate SAML IdP login",
           type: "text",
           placeholder: "Enter code",
         },
