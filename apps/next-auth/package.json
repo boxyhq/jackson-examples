@@ -17,7 +17,7 @@
   },
   "author": "Deepak Prabhakara <deepak@boxyhq.com>",
   "contributors": [],
-  "license": "ISC",
+  "license": "Apache 2.0",
   "dependencies": {
     "next": "12.1.0",
     "next-auth": "4.3.1",
