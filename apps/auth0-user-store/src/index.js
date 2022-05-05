@@ -19,17 +19,24 @@ const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
   ...(config.audience ? { audience: config.audience } : null),
-  redirectUri: window.location.origin,
-  access_type: 'tenant=boxyhq.com&product=saml-demo.auth0.com',
+  redirectUri: window.location.origin + '/profile',
   onRedirectCallback,
 };
+const TENANT_RE = /[?&]tenant=[^&]+/;
 
-ReactDOM.render(
-  <Auth0Provider {...providerConfig}>
-    <App />
-  </Auth0Provider>,
-  document.getElementById('root')
-);
+function Index() {
+  const searchParams = window.location.search;
+  const hasTenantParams = TENANT_RE.test(searchParams);
+  const tenant = (hasTenantParams && new URLSearchParams(searchParams).get('tenant')) || '';
+
+  return (
+    <Auth0Provider {...providerConfig} access_type={`tenant=${tenant}&product=saml-demo.auth0.com`}>
+      <App />
+    </Auth0Provider>
+  );
+}
+
+ReactDOM.render(<Index />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
