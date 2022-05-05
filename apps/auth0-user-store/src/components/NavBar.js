@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink as RouterNavLink } from 'react-router-dom';
+import { NavLink as RouterNavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -24,6 +24,8 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const toggle = () => setIsOpen(!isOpen);
+  const location = useLocation();
+  const isTenantSelectionRoute = location.pathname === '/tenant';
 
   const logoutWithRedirect = () =>
     logout({
@@ -38,25 +40,21 @@ const NavBar = () => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='mr-auto' navbar>
-              <NavItem>
-                <NavLink tag={RouterNavLink} to='/' exact activeClassName='router-link-exact-active'>
-                  Home
-                </NavLink>
-              </NavItem>
-              {isAuthenticated && (
+              {!isAuthenticated && !isTenantSelectionRoute && (
                 <NavItem>
                   <NavLink
                     tag={RouterNavLink}
-                    to='/external-api'
+                    to='/'
                     exact
-                    activeClassName='router-link-exact-active'>
-                    External API
+                    activeClassName='router-link-exact-active'
+                    disabled={isTenantSelectionRoute}>
+                    Home
                   </NavLink>
                 </NavItem>
               )}
             </Nav>
             <Nav className='d-none d-md-block' navbar>
-              {!isAuthenticated && (
+              {!isAuthenticated && !isTenantSelectionRoute && (
                 <NavItem>
                   <Button
                     id='qsLoginBtn'
