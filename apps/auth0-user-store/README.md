@@ -61,11 +61,11 @@ To do this, first copy `src/auth_config.json.example` into a new file in the sam
 Use `npm` to install the project dependencies:
 
 ```bash
-npm install
+npm install // from root of monorepo
 ```
 
-This compiles and serves the React app and starts the backend API server on port 3001.
+This compiles and serves the React app and starts the backend API server on port 3366.
 
 ```bash
-npm run dev
+npm run dev:auth0-user-store // from root of monorepo
 ```
