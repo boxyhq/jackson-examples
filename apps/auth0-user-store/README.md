@@ -1,22 +1,71 @@
 # SAML Jackson + Auth0 User store
 
-This demo shows the SAML flow with jackson with a user creation step at end. The user is created by invoking the [Auth0 management api](https://auth0.com/docs/api/management/v2#!/Users/post_users).
+This demo shows how to login with Auth0 using SAML Jackson Generic Connection. Users will be automatically mapped to the Auth0 user store.
 
 ## Setup
 
-You'll need an auth0 tenant.
+1. Create [Custom Connection](https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2) under `Authentication` -> `Social` tab. While configuring the connection,
+   - Point the Authorization and Token URL to a hosted endpoint for jackson.
+   - You can set the Client ID to `dummy`, while the Client Secret to the Client Secret verifier.
+   - Paste the following for the `Fetch User Profile Script`:
+     ```javascript
+     function fetchUserProfile(accessToken, context, callback) {
+       request.get(
+         {
+           url: 'https://<jackson-hosted-endpoint>/api/oauth/userinfo',
+           headers: {
+             Authorization: 'Bearer ' + accessToken,
+           },
+         },
+         (err, resp, body) => {
+           if (err) {
+             return callback(err);
+           }
+           if (resp.statusCode !== 200) {
+             return callback(new Error(body));
+           }
+           let bodyParsed;
+           try {
+             bodyParsed = JSON.parse(body);
+           } catch (jsonError) {
+             return callback(new Error(body));
+           }
+           const profile = {
+             user_id: bodyParsed.id,
+             email: bodyParsed.email,
+           };
+           callback(null, profile);
+         }
+       );
+     }
+     ```
+2. Create an Application under `Applications` -> `Applications` and set the Allowed Callback URLs to point to `http://localhost:3366`. Also enable the connection created in the previous step. Use the clientId of the application for configuration as mentioned below.
 
-- [Register](https://auth0.com/docs/get-started/auth0-overview/create-applications/machine-to-machine-apps) a Machine-to-Machine app and giving it access to the management API with permissions: `create:users update:users`. Copy the cliend id and secret and set `AUTH0_NON_INTERACTIVE_CLIENT_ID` & `AUTH0_NON_INTERACTIVE_CLIENT_SECRET` env vars.
-- Create a Database connection against which we will be creating users. Set `AUTH0_CONNECTION` with the name of the connection.
+## Configuration
 
-## Auth flow
+### Configure credentials
 
-App redirects to Jackson -> Jackson to Idp -> Idp back to jackson -> Jackson back to our app with auth code which is exchanged for a token -> get user profile -> call Auth0 Management APIs to update user if already exists, else create the user.
+The project needs to be configured with your Auth0 domain and client ID in order for the authentication flow to work.
 
-## Run the app
+To do this, first copy `src/auth_config.json.example` into a new file in the same folder called `src/auth_config.json`, and replace the values with your own Auth0 application credentials, and optionally the base URLs of your application and API:
 
-`npm run dev`
+```json
+{
+  "domain": "{YOUR AUTH0 DOMAIN}",
+  "clientId": "{YOUR AUTH0 CLIENT ID}"
+}
+```
 
-production:  
-`npm run build`  
-`npm run start`
+## Run the sample
+
+Use `npm` to install the project dependencies:
+
+```bash
+npm install
+```
+
+This compiles and serves the React app and starts the backend API server on port 3001.
+
+```bash
+npm run dev
+```
