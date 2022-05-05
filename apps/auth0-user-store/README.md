@@ -39,7 +39,7 @@ This demo shows how to login with Auth0 using SAML Jackson Generic Connection. U
        );
      }
      ```
-2. Create an Application under `Applications` -> `Applications` and set the Allowed Callback URLs to point to `http://localhost:3366`. Also enable the connection created in the previous step. Use the clientId of the application for configuration as mentioned below.
+2. Create an Application under `Applications` -> `Applications` and set the Allowed Callback URLs to point to `http://localhost:3366/profile`. Also enable the connection created in the previous step. Use the clientId of the application for configuration as mentioned below.
 
 ## Configuration
 
