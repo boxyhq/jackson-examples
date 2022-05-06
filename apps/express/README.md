@@ -24,10 +24,6 @@ npm install
 
 ### Setup environment variables
 
-```
-cp .env.example .env
-```
-
 Update the `.env` with your own values.
 
 ### Start the server
