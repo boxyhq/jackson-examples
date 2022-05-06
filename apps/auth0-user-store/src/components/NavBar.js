@@ -40,7 +40,7 @@ const NavBar = () => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='mr-auto' navbar>
-              {!isAuthenticated && !isTenantSelectionRoute && (
+              {isAuthenticated && !isTenantSelectionRoute && (
                 <NavItem>
                   <NavLink
                     tag={RouterNavLink}
