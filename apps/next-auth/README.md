@@ -18,11 +18,13 @@ npm install
 
 ### 2. Configure your local environment
 
-Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
+Copy the .env file in this directory to .env.local (which will be ignored by Git):
 
 ```bash
-cp .env.local.example .env.local
+cp .env .env.local
 ```
+
+Update the `.env` with your own values.
 
 ### 4. Start the application
 
