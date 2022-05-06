@@ -3,15 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm-run-all --parallel spa api-server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "spa": "react-scripts start",
     "server": "node server.js",
-    "server:dev": "nodemon server.js",
-    "api-server": "node api-server.js",
-    "api-server:dev": "nodemon api-server.js",
     "dev": "PORT=3366 react-scripts start",
     "prod": "npm-run-all --parallel server api-server"
   },
