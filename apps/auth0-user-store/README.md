@@ -47,13 +47,11 @@ This demo shows how to login with Auth0 using SAML Jackson Generic Connection. U
 
 The project needs to be configured with your Auth0 domain and client ID in order for the authentication flow to work.
 
-To do this, first copy `src/auth_config.json.example` into a new file in the same folder called `src/auth_config.json`, and replace the values with your own Auth0 application client ID and auth0 domain.
+To do this, first copy `.env.local.example` into a new file in the root folder called `.env.local`, and replace the values with your own Auth0 Application client ID and Auth0 domain.
 
-```json
-{
-  "domain": "{YOUR AUTH0 DOMAIN}",
-  "clientId": "{YOUR AUTH0 CLIENT ID}"
-}
+```sh
+REACT_APP_AUTH0_DOMAIN={YOUR_AUTH0_DOMAIN}
+REACT_APP_AUTH0_CLIENTID={YOUR_AUTH0_CLIENTID}
 ```
 
 ## Run the sample
