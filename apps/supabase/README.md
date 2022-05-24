@@ -1,34 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Supabase BoxyHQSAML provider demo
 
-## Getting Started
+This app demonstrates login via [BoxyHQSAML Provider](https://github.com/supabase/gotrue/pull/478).
 
-First, run the development server:
+# Setup
+
+Run self hosted supabase using https://github.com/supabase/supabase/blob/master/docker/docker-compose.yml.
+
+## Update `docker-compose.yml`
+
+- Point the gotrue instance to a docker image built using https://github.com/boxyhq/gotrue/tree/boxyhqsaml-provider
+
+- Also add the following env for gotrue in docker-compose
+
+  ```yml
+  GOTRUE_EXTERNAL_BOXYHQSAML_ENABLED: 'true'
+  GOTRUE_EXTERNAL_BOXYHQSAML_CLIENT_ID: 'dummy'
+  GOTRUE_EXTERNAL_BOXYHQSAML_SECRET: '5i3DgQQI0NsnUr7z8IOY0B0e3lw='
+  GOTRUE_EXTERNAL_BOXYHQSAML_REDIRECT_URI: 'http://localhost:8000/auth/v1/callback'
+  GOTRUE_EXTERNAL_BOXYHQSAML_URL: # Point this to a hosted (https://boxyhq.com/docs/jackson/deploy/service) instance of jackson or use: https://jackson-demo.boxyhq.com
+  ```
+
+## Start the app
+
+Run
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm run dev:supabase // from root folder
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tenant and product
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+If you are using https://jackson-demo.boxyhq.com then input tenant as `boxyhq.com` in the landing page and set product in [components/Auth.js](components/Auth.js#L14) as `saml-demo.boxyhq.com`.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you are hosting [Jackson as a service](https://boxyhq.com/docs/jackson/deploy/service) then SAML config can be [added](https://boxyhq.com/docs/jackson/saml-flow#21-saml-add-config-api) for multiple tenant/products as you wish.
