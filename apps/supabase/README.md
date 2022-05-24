@@ -6,7 +6,7 @@ This app demonstrates login via [BoxyHQSAML Provider](https://github.com/supabas
 
 Run self hosted supabase using https://github.com/supabase/supabase/blob/master/docker/docker-compose.yml.
 
-## Update `docker-compose.yml`
+### Update `docker-compose.yml`
 
 - Point the gotrue instance to a docker image built using https://github.com/boxyhq/gotrue/tree/boxyhqsaml-provider
 
@@ -21,7 +21,7 @@ Run self hosted supabase using https://github.com/supabase/supabase/blob/master/
   GOTRUE_EXTERNAL_BOXYHQSAML_URL:
   ```
 
-## Start the app
+### Start the app
 
 Run
 
@@ -29,7 +29,7 @@ Run
 npm run dev:supabase // from root folder
 ```
 
-## Tenant and product
+### Tenant and product
 
 If you are using https://jackson-demo.boxyhq.com then input tenant as `boxyhq.com` in the landing page and set product in [components/Auth.js](components/Auth.js#L14) as `saml-demo.boxyhq.com`.
 
