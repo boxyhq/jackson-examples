@@ -17,7 +17,8 @@ Run self hosted supabase using https://github.com/supabase/supabase/blob/master/
   GOTRUE_EXTERNAL_BOXYHQSAML_CLIENT_ID: 'dummy'
   GOTRUE_EXTERNAL_BOXYHQSAML_SECRET: '5i3DgQQI0NsnUr7z8IOY0B0e3lw='
   GOTRUE_EXTERNAL_BOXYHQSAML_REDIRECT_URI: 'http://localhost:8000/auth/v1/callback'
-  GOTRUE_EXTERNAL_BOXYHQSAML_URL: # Point this to a hosted (https://boxyhq.com/docs/jackson/deploy/service) instance of jackson or use: https://jackson-demo.boxyhq.com
+  # Point below to a hosted (https://boxyhq.com/docs/jackson/deploy/service) instance of jackson or use: https://jackson-demo.boxyhq.com
+  GOTRUE_EXTERNAL_BOXYHQSAML_URL:
   ```
 
 ## Start the app
