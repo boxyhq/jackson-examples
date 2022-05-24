@@ -11,7 +11,7 @@ export default function Auth({}) {
       const { error, user } = await supabase.auth.signIn(
         { provider: 'boxyhqsaml' },
         {
-          scopes: `tenant=${tenant}&product=supabase`,
+          scopes: `tenant=${tenant}&product=saml-demo.boxyhq.com`,
         }
       );
       if (error) throw error;
