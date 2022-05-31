@@ -6,6 +6,12 @@ export default function Auth() {
   const [magicLinkLoading, setMagicLinkLoading] = useState(false);
   const [tenant, setTenant] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
+
+  function toggleSignUp() {
+    setIsSignUp(!isSignUp);
+  }
 
   const handleLogin = async () => {
     try {
@@ -28,12 +34,13 @@ export default function Auth() {
     }
   };
 
-  const handleMagicLink = async () => {
+  const handleAdminLogin = async () => {
     try {
       setMagicLinkLoading(true);
-      const { error } = await supabase.auth.signIn({ email });
+      const { error } = isSignUp
+        ? await supabase.auth.signUp({ email, password })
+        : await supabase.auth.signIn({ email, password });
       if (error) throw error;
-      alert('Check your email for the login link!');
     } catch (error) {
       alert(error.error_description || error.message);
     } finally {
@@ -50,7 +57,7 @@ export default function Auth() {
       </div>
       <div className='row'>
         <div className='col-6 auth-widget'>
-          <p className='description'>Sign in via Magic Link</p>
+          <p className='description'>Sign {isSignUp ? 'up' : 'in'} using email</p>
           <div>
             <input
               className='inputField'
@@ -62,16 +69,32 @@ export default function Auth() {
             />
           </div>
           <div>
+            <input
+              className='inputField'
+              type='password'
+              placeholder='Your password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
             <button
               onClick={(e) => {
                 e.preventDefault();
-                handleMagicLink();
+                handleAdminLogin();
               }}
               className={'button block'}
               disabled={loading}>
-              {magicLinkLoading ? <img className='loader' src='loader.svg' /> : <span>SignIn</span>}
+              {magicLinkLoading ? (
+                <img className='loader' src='loader.svg' />
+              ) : (
+                <span>{isSignUp ? 'SignUp' : 'SignIn'}</span>
+              )}
             </button>
           </div>
+          <button onClick={toggleSignUp}>
+            {isSignUp ? 'Do you have an account ? Sign in' : "Don't have an account ? Sign up"}
+          </button>
         </div>
         <div className='col-6 auth-widget'>
           <p className='description'>Sign in via BoxyHQSAML</p>
