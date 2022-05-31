@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import Auth from '../components/Auth';
-import Account from '../components/Account';
+import SamlConfig from './saml';
 
 export default function Home() {
   const [session, setSession] = useState(null);
@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div className='container' style={{ padding: '50px 0 100px 0' }}>
-      {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
+      {!session ? <Auth /> : <SamlConfig key={session.user.id} session={session} />}
     </div>
   );
 }
