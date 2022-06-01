@@ -22,8 +22,6 @@ export default function Account({ session }) {
         .eq('id', user.id)
         .single();
 
-      console.log(data);
-
       if (error && status !== 406) {
         throw error;
       }
