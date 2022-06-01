@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Auth from '../components/Auth';
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }) {
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      axios.post('/api/set-supabase-cookie', { event: _event, session: session });
       if (_event === 'SIGNED_OUT') {
         router.push('/');
       }
