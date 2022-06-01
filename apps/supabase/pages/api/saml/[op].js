@@ -1,22 +1,39 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withApiAuth } from '@supabase/supabase-auth-helpers/nextjs';
 import axios from 'axios';
-export default async function handler(req, res) {
+
+const headers = { Authorization: `Api-Key ${process.env.JACKSON_API_KEY}` };
+
+export default withApiAuth(async function handler(req, res) {
   const { op } = req.query;
   try {
     switch (op) {
+      case 'fetch':
+        // GET /api/v1/saml/config
+        const { tenant, product } = req.query;
+        const { data } = await axios.get(
+          `${process.env.JACKSON_SERVICE}/api/v1/saml/config?tenant=${tenant}&product=${product}`,
+          {
+            headers,
+          }
+        );
+        res.json(data);
+        break;
       case 'add':
-      // POST /admin/saml/config/add
-      case 'list':
-        // GET /admin/saml/config
-        const _response = await axios.get(`${process.env.API_URL}/admin/saml/config`, {
-          headers: { Authorization: `Bearer ${process.env.JACKSON_API_KEY}` },
+        // POST /api/v1/saml/config
+        await axios.post(`${process.env.JACKSON_SERVICE}/api/v1/saml/config`, req.body, {
+          headers,
         });
-
+        break;
       case 'update':
-      // PATCH /admin/saml/config/update
+        // PATCH /api/v1/saml/config
+        await axios.patch(`${process.env.JACKSON_SERVICE}/api/v1/saml/config`, req.body, {
+          headers,
+        });
+        break;
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.status(error.response.status || 500).send(error.response.data || 'Internal Server Error');
   }
-}
+});
