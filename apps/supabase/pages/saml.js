@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from 'utils/supabaseClient';
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 
-const SAML_TENANT = 'supabase.example.com';
-const SAML_PRODUCT = 'crm';
+const SAML_TENANT = process.env.NEXT_PUBLIC_TENANT;
+const SAML_PRODUCT = process.env.NEXT_PUBLIC_PRODUCT;
 
 /**
  * Edit view will have extra fields (showOnlyInEditView: true)

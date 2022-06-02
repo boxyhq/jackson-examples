@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 
+const SAML_TENANT = process.env.NEXT_PUBLIC_TENANT;
+const SAML_PRODUCT = process.env.NEXT_PUBLIC_PRODUCT;
+
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [magicLinkLoading, setMagicLinkLoading] = useState(false);
-  const [tenant, setTenant] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
@@ -19,8 +21,8 @@ export default function Auth() {
       const { error, user } = await supabase.auth.signIn(
         { provider: 'boxyhqsaml' },
         {
-          scopes: `tenant=${tenant}&product=supabase`,
-          redirectTo: 'http://localhost:3366/profile',
+          scopes: `tenant=${SAML_TENANT}&product=${SAML_PRODUCT}`,
+          redirectTo: 'http://localhost:3366/',
         }
       );
       if (error) throw error;
@@ -104,8 +106,18 @@ export default function Auth() {
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
               placeholder='Your tenant'
-              value={tenant}
-              onChange={(e) => setTenant(e.target.value)}
+              defaultValue={SAML_TENANT}
+              readOnly
+            />
+          </div>
+          <div>
+            <input
+              className='inputField'
+              type='text'
+              pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
+              placeholder='Your product'
+              defaultValue={SAML_PRODUCT}
+              readOnly
             />
           </div>
           <div>
