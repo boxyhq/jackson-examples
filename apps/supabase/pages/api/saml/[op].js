@@ -24,12 +24,14 @@ export default withApiAuth(async function handler(req, res) {
         await axios.post(`${process.env.JACKSON_SERVICE}/api/v1/saml/config`, req.body, {
           headers,
         });
+        res.status(204).end();
         break;
       case 'update':
         // PATCH /api/v1/saml/config
         await axios.patch(`${process.env.JACKSON_SERVICE}/api/v1/saml/config`, req.body, {
           headers,
         });
+        res.status(204).end();
         break;
     }
   } catch (error) {
