@@ -32,14 +32,14 @@ const fieldCatalog = [
     label: 'Tenant',
     type: 'text',
     placeholder: 'acme.com',
-    attributes: { editable: false, value: SAML_TENANT },
+    attributes: { editable: false, constantVal: SAML_TENANT },
   },
   {
     key: 'product',
     label: 'Product',
     type: 'text',
     placeholder: 'demo',
-    attributes: { editable: false, value: SAML_PRODUCT },
+    attributes: { editable: false, constantVal: SAML_PRODUCT },
   },
   {
     key: 'redirectUrl',
@@ -105,9 +105,9 @@ function getInitialState(samlConfig, isEditView) {
     _state[key] = samlConfig?.[key]
       ? attributes.isArray
         ? samlConfig[key].join('\r\n') // render list of items on newline eg:- redirect URLs
-        : attributes.value
-        ? attributes.value
         : samlConfig[key]
+      : attributes.constantVal
+      ? attributes.constantVal
       : '';
   });
   return _state;
@@ -130,6 +130,7 @@ export default function SamlConfig({ session }) {
   }
 
   const [samlConfig, setSamlConfig] = useState({});
+  const [isFetching, setIsFetching] = useState(false);
   const isEditView = Object.keys(samlConfig).length > 0;
 
   useEffect(() => {
@@ -137,24 +138,19 @@ export default function SamlConfig({ session }) {
   }, []);
 
   async function fetchSAMLConfig() {
+    setIsFetching(true);
     const response = await fetch(`/api/saml/fetch?tenant=${SAML_TENANT}&product=${SAML_PRODUCT}`);
+    setIsFetching(false);
     const samlConfig = await response.json();
     setSamlConfig(samlConfig);
   }
 
-  async function addOrUpdateSAMLConfig() {
-    await fetch(`/api/saml/${isEditView ? 'update' : 'add'}`, {
-      method: isEditView ? 'PATCH' : 'POST',
-      body: {
-        tenant: SAML_TENANT,
-        product: SAML_PRODUCT,
-        redirectUrl: 'http://localhost:3366/*',
-        defaultRedirectUrl: 'http://localhost:3366/',
-        encodedRawMetadata: '',
-      },
-    });
+  // { status: 'UNKNOWN' | 'SUCCESS' | 'ERROR' }
+  const [{ status }, setSaveStatus] = useState({
+    status: 'UNKNOWN',
+  });
 
-    //
+  async function addOrUpdateSAMLConfig(event) {
     event.preventDefault();
     const { rawMetadata, redirectUrl, ...rest } = formObj;
     const encodedRawMetadata = btoa(rawMetadata || '');
@@ -164,19 +160,15 @@ export default function SamlConfig({ session }) {
       method: isEditView ? 'PATCH' : 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Api-Key secret',
       },
       body: JSON.stringify({ ...rest, encodedRawMetadata, redirectUrl: JSON.stringify(redirectUrlList) }),
     });
     if (res.ok) {
-      if (!isEditView) {
-        router.replace('/admin/saml/config');
-      } else {
-        setSaveStatus({ status: 'SUCCESS' });
-        // revalidate on save
-        mutate(`/api/admin/saml/config/${router.query.id}`);
-        setTimeout(() => setSaveStatus({ status: 'UNKNOWN' }), 2000);
-      }
+      setSaveStatus({ status: 'SUCCESS' });
+      // revalidate on save
+      fetchSAMLConfig();
+      setTimeout(() => setSaveStatus({ status: 'UNKNOWN' }), 2000);
+      // }
     } else {
       // save failed
       setSaveStatus({ status: 'ERROR' });
@@ -214,13 +206,14 @@ export default function SamlConfig({ session }) {
                   rows,
                   formatForDisplay,
                   editable,
+                  constantVal,
                   requiredInEditView = true, // by default all fields are required unless explicitly set to false
                   labelInEditView,
                   maxLength,
                   required = true, // by default all fields are required unless explicitly set to false
                 },
               }) => {
-                const readOnly = isEditView && editable === false;
+                const readOnly = (isEditView && editable === false) || constantVal;
                 const _required = isEditView ? !!requiredInEditView : !!required;
                 const _label = isEditView && labelInEditView ? labelInEditView : label;
                 const value =
