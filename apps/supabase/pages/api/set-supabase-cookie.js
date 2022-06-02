@@ -1,4 +1,4 @@
-import { supabase } from 'utils/supabaseServerClient';
+import { supabase } from 'utils/supabaseClient';
 
 const handler = async (req, res) => {
   await supabase.auth.api.setAuthCookie(req, res);
