@@ -54,14 +54,16 @@ export default function Auth() {
     <>
       <div className='row'>
         <div className='col-6'>
-          <h1 className='header'>Supabase Auth + BoxyHQSAML</h1>
+          <h1 className='text-xl font-bold'>Supabase Auth + BoxyHQSAML</h1>
         </div>
       </div>
       <div className='row'>
         <div className='col-6 auth-widget'>
-          <p className='description'>Sign {isSignUp ? 'up' : 'in'} using email</p>
+          <p className='description'>Sign {isSignUp ? 'up' : 'in'} using email/password</p>
           <div>
+            <label htmlFor='email'>Email</label>
             <input
+              id='email'
               className='inputField'
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
@@ -71,7 +73,9 @@ export default function Auth() {
             />
           </div>
           <div>
+            <label htmlFor='password'>Password</label>
             <input
+              id='password'
               className='inputField'
               type='password'
               placeholder='Your password'
@@ -101,7 +105,9 @@ export default function Auth() {
         <div className='col-6 auth-widget'>
           <p className='description'>Sign in via BoxyHQSAML</p>
           <div>
+            <label htmlFor='tenant'>Tenant</label>
             <input
+              id='tenant'
               className='inputField'
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
@@ -111,7 +117,9 @@ export default function Auth() {
             />
           </div>
           <div>
+            <label htmlFor='product'>Product</label>
             <input
+              id='product'
               className='inputField'
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
