@@ -8,9 +8,10 @@ datasource db {
 }
 
 model Tenant {
-  id     Int    @id @default(autoincrement())
-  domain String @unique
+  id     Int     @id @default(autoincrement())
+  domain String  @unique
   users  User[]
+  groups Group[]
 }
 
 model User {
@@ -21,4 +22,19 @@ model User {
   lastName        String
   email           String @unique
   tenant          Tenant @relation(fields: [tenantId], references: [id])
+}
+
+model Group {
+  id               Int    @id @default(autoincrement())
+  tenantId         Int
+  directoryGroupId String @unique
+  name             String
+  tenant           Tenant @relation(fields: [tenantId], references: [id])
+}
+
+model UserGroup {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  groupId Int
+  // Add relations
 }
