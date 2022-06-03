@@ -22,36 +22,39 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
   // Log the webhook events
   addLog(tenantInfo.id, event, data);
 
+  // Users events
   if (event === 'user.created') {
     return await user.create(tenantInfo.id, data);
   }
 
   if (event === 'user.updated') {
-    return await user.update(data.id, data);
+    return await user.update(data);
   }
 
   if (event === 'user.deleted') {
-    return await user.delete(data.id);
+    return await user.delete(data);
   }
 
+  // Groups events
   if (event === 'group.created') {
     return await group.create(tenantInfo.id, data);
   }
 
   if (event === 'group.updated') {
-    return await group.update(data.id, data);
+    return await group.update(data);
   }
 
   if (event === 'group.deleted') {
-    return await group.delete(data.id);
+    return await group.delete(data);
   }
 
+  // Group membership events
   if (event === 'group.user_added') {
-    return await userGroup.add(data.group.id, data.id);
+    return await userGroup.add(data);
   }
 
   if (event === 'group.user_removed') {
-    return await userGroup.remove(data.group.id, data.id);
+    return await userGroup.remove(data);
   }
 
   return;
@@ -71,10 +74,10 @@ const user = {
     });
   },
 
-  update: async (directoryUserId: string, data: any) => {
+  update: async (data: any) => {
     return await prisma.user.update({
       where: {
-        directoryUserId,
+        directoryUserId: data.id,
       },
       data: {
         firstName: data.first_name,
@@ -84,10 +87,10 @@ const user = {
     });
   },
 
-  delete: async (directoryUserId: string) => {
+  delete: async (data: any) => {
     return await prisma.user.delete({
       where: {
-        directoryUserId,
+        directoryUserId: data.id,
       },
     });
   },
@@ -113,10 +116,10 @@ const group = {
     return group;
   },
 
-  update: async (directoryGroupId: string, data: any) => {
+  update: async (data: any) => {
     return await prisma.group.update({
       where: {
-        directoryGroupId,
+        directoryGroupId: data.id,
       },
       data: {
         name: data.name,
@@ -124,8 +127,8 @@ const group = {
     });
   },
 
-  delete: async (directoryGroupId: string) => {
-    const group = await getGroup(directoryGroupId);
+  delete: async (data: any) => {
+    const group = await getGroup(data.id);
 
     if (group === null) {
       return;
@@ -142,9 +145,9 @@ const group = {
 // Group membership
 const userGroup = {
   // Add a user to a group
-  add: async (directoryGroupId: string, directoryUserId: string) => {
-    const user = await getUser(directoryUserId);
-    const group = await getGroup(directoryGroupId);
+  add: async (data: any) => {
+    const user = await getUser(data.id);
+    const group = await getGroup(data.group.id);
 
     if (user === null || group === null) {
       return;
@@ -159,9 +162,9 @@ const userGroup = {
   },
 
   // Remove a user from a group
-  remove: async (directoryGroupId: string, directoryUserId: string) => {
-    const user = await getUser(directoryUserId);
-    const group = await getGroup(directoryGroupId);
+  remove: async (data: any) => {
+    const user = await getUser(data.id);
+    const group = await getGroup(data.group.id);
 
     if (user === null || group === null) {
       return;
