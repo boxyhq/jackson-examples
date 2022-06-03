@@ -56,7 +56,7 @@ export default function Auth() {
       <h1 className='text-xl font-bold'>Supabase Auth + BoxyHQSAML</h1>
       <div>
         <p className='my-3'>Auth via email/password</p>
-        <div>
+        <div className='mb-2'>
           <label htmlFor='email' className='block text-sm font-medium text-gray-700'>
             Email
           </label>
@@ -77,8 +77,8 @@ export default function Auth() {
             />
           </div>
         </div>
-        <div>
-          <label htmlFor='password' className='block text-sm font-medium text-gray-700'>
+        <div className='mb-2'>
+          <label htmlFor='password' className='mb-1 block text-sm font-medium text-gray-700'>
             Password
           </label>
           <div className='relative mt-1 rounded-md shadow-sm'>
@@ -118,8 +118,8 @@ export default function Auth() {
       </div>
       <div className='mt-10'>
         <p className='my-3'>Auth via BoxyHQSAML</p>
-        <div>
-          <label htmlFor='tenant' className='block text-sm font-medium text-gray-700'>
+        <div className='mb-2'>
+          <label htmlFor='tenant' className='mb-1 block text-sm font-medium text-gray-700'>
             Tenant
           </label>
           <input
@@ -133,7 +133,7 @@ export default function Auth() {
           />
         </div>
         <div>
-          <label htmlFor='product' className='block text-sm font-medium text-gray-700'>
+          <label htmlFor='product' className='mb-1 block text-sm font-medium text-gray-700'>
             Product
           </label>
           <input
