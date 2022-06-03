@@ -18,3 +18,11 @@ export interface Group {
   directoryGroupId: string;
   tenant: Tenant;
 }
+
+export interface Log {
+  id: string;
+  action: string;
+  payload: any;
+  createdAt: Date;
+  tenant: Tenant;
+}

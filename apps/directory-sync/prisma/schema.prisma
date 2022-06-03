@@ -13,6 +13,7 @@ model Tenant {
 
   groups Group[]
   users  User[]
+  logs   Log[]
 }
 
 model User {
@@ -46,4 +47,14 @@ model UserGroup {
 
   @@id([userId, groupId])
   @@unique([userId, groupId])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  action    String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
 }

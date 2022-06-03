@@ -19,6 +19,9 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return;
   }
 
+  // Log the webhook events
+  addLog(tenantInfo.id, event, data);
+
   if (event === 'user.created') {
     return await user.create(tenantInfo.id, data);
   }
@@ -27,6 +30,7 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return await user.update(data.id, data);
   }
 
+  // Not OK
   if (event === 'user.deleted') {
     return await user.delete(data.id);
   }
@@ -35,17 +39,19 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return await group.create(tenantInfo.id, data);
   }
 
+  // Not OK
+  if (event === 'group.updated') {
+    //
+  }
+
+  // Not OK
   if (event === 'group.deleted') {
     return await group.delete(data.id);
   }
 
-  // if (event === 'group.user_added') {
-  //   return await userGroup.add(data);
-  // }
-
-  // if (event === 'group.user_removed') {
-  //   return await userGroup.remove(data.group.id, data.id);
-  // }
+  if (event === 'group.user_added') {
+    return await userGroup.add(data.group.id, data.id);
+  }
 
   return;
 };
@@ -186,4 +192,14 @@ const userGroup = {
     //   },
     // });
   },
+};
+
+const addLog = async (tenantId: number, action: string, payload: any) => {
+  return await prisma.log.create({
+    data: {
+      tenantId,
+      action,
+      payload,
+    },
+  });
 };
