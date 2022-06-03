@@ -72,7 +72,7 @@ export default function Navbar() {
               <NavItem href="/" text="Home" />
               <NavItem href="/users" text="Users" />
               <NavItem href="/groups" text="Groups" />
-              <NavItem href="/logs" text="Logs" />
+              <NavItem href="/logs" text="Webhook Events" />
             </div>
           </div>
         </div>

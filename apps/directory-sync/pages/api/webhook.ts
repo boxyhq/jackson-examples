@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import { Group, PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await handleDirectorySyncEvents(req);
+  handleDirectorySyncEvents(req);
 
   res.status(200).end();
 }
@@ -30,7 +30,6 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return await user.update(data.id, data);
   }
 
-  // Not OK
   if (event === 'user.deleted') {
     return await user.delete(data.id);
   }
@@ -39,12 +38,10 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return await group.create(tenantInfo.id, data);
   }
 
-  // Not OK
   if (event === 'group.updated') {
-    //
+    return await group.update(data.id, data);
   }
 
-  // Not OK
   if (event === 'group.deleted') {
     return await group.delete(data.id);
   }
@@ -53,15 +50,11 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
     return await userGroup.add(data.group.id, data.id);
   }
 
-  return;
-};
+  if (event === 'group.user_removed') {
+    return await userGroup.remove(data.group.id, data.id);
+  }
 
-const getTenantInfo = async (tenant: string) => {
-  return await prisma.tenant.findUnique({
-    where: {
-      domain: tenant,
-    },
-  });
+  return;
 };
 
 // Users CRUD
@@ -120,12 +113,19 @@ const group = {
     return group;
   },
 
-  delete: async (directoryGroupId: string) => {
-    const group = await prisma.group.findUnique({
+  update: async (directoryGroupId: string, data: any) => {
+    return await prisma.group.update({
       where: {
         directoryGroupId,
       },
+      data: {
+        name: data.name,
+      },
     });
+  },
+
+  delete: async (directoryGroupId: string) => {
+    const group = await getGroup(directoryGroupId);
 
     if (group === null) {
       return;
@@ -139,20 +139,12 @@ const group = {
   },
 };
 
-// Group membership CRUD
+// Group membership
 const userGroup = {
+  // Add a user to a group
   add: async (directoryGroupId: string, directoryUserId: string) => {
-    const user = await prisma.user.findUnique({
-      where: {
-        directoryUserId,
-      },
-    });
-
-    const group = await prisma.group.findUnique({
-      where: {
-        directoryGroupId,
-      },
-    });
+    const user = await getUser(directoryUserId);
+    const group = await getGroup(directoryGroupId);
 
     if (user === null || group === null) {
       return;
@@ -166,40 +158,60 @@ const userGroup = {
     });
   },
 
+  // Remove a user from a group
   remove: async (directoryGroupId: string, directoryUserId: string) => {
-    const user = await prisma.user.findUnique({
-      where: {
-        directoryUserId,
-      },
-    });
-
-    const group = await prisma.group.findUnique({
-      where: {
-        directoryGroupId,
-      },
-    });
+    const user = await getUser(directoryUserId);
+    const group = await getGroup(directoryGroupId);
 
     if (user === null || group === null) {
       return;
     }
 
-    // return await prisma.userGroup.delete({
-    //   where: {
-    //     userId_groupId: {
-    //       userId: user.id,
-    //       groupId: group.id,
-    //     }
-    //   },
-    // });
+    return await prisma.userGroup.delete({
+      where: {
+        userId_groupId: {
+          userId: user.id,
+          groupId: group.id,
+        },
+      },
+    });
   },
 };
 
+// Add a log entry
 const addLog = async (tenantId: number, action: string, payload: any) => {
   return await prisma.log.create({
     data: {
       tenantId,
       action,
       payload,
+    },
+  });
+};
+
+// A helper function to get the user
+const getUser = async (directoryUserId: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      directoryUserId,
+    },
+  });
+};
+
+// A helper function to get the group
+const getGroup = async (directoryGroupId: string) => {
+  return await prisma.group.findUnique({
+    where: {
+      directoryGroupId,
+    },
+  });
+};
+
+// A helper function to get the tenant info
+const getTenantInfo = async (tenant: string) => {
+  return await prisma.tenant.findUnique({
+    where: {
+      domain: tenant,
     },
   });
 };
