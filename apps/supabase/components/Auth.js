@@ -1,3 +1,4 @@
+import { LockClosedIcon, MailIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 
@@ -61,29 +62,45 @@ export default function Auth() {
         <div className='col-6 auth-widget'>
           <p className='description'>Sign {isSignUp ? 'up' : 'in'} using email/password</p>
           <div>
-            <label htmlFor='email'>Email</label>
-            <input
-              id='email'
-              className='inputField'
-              type='text'
-              pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
-              placeholder='Your email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <label htmlFor='email' className='block text-sm font-medium text-gray-700'>
+              Email
+            </label>
+            <div className='relative mt-1 rounded-md shadow-sm'>
+              <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2'>
+                <span className='text-gray-500 sm:text-sm'>
+                  <MailIcon className='h-4 w-4' />
+                </span>
+              </div>
+              <input
+                id='email'
+                className='block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                name='email'
+                type='email'
+                placeholder='Your email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
           <div>
             <label htmlFor='password'>Password</label>
-            <input
-              id='password'
-              className='inputField'
-              type='password'
-              placeholder='Your password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className='relative mt-1 rounded-md shadow-sm'>
+              <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2'>
+                <span className='text-gray-500 sm:text-sm'>
+                  <LockClosedIcon className='h-4 w-4' />
+                </span>
+              </div>
+              <input
+                id='password'
+                className='block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                type='password'
+                placeholder='Your password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
-          <div>
+          <div className='mt-4'>
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -108,7 +125,7 @@ export default function Auth() {
             <label htmlFor='tenant'>Tenant</label>
             <input
               id='tenant'
-              className='inputField'
+              className='block w-full rounded-md border-gray-300 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
               placeholder='Your tenant'
@@ -120,7 +137,7 @@ export default function Auth() {
             <label htmlFor='product'>Product</label>
             <input
               id='product'
-              className='inputField'
+              className='block w-full rounded-md border-gray-300 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
               type='text'
               pattern='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
               placeholder='Your product'
@@ -128,7 +145,7 @@ export default function Auth() {
               readOnly
             />
           </div>
-          <div>
+          <div className='mt-4'>
             <button
               onClick={(e) => {
                 e.preventDefault();
