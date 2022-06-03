@@ -24,19 +24,27 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
   }
 
   if (event === 'user.updated') {
-    return await user.update(data);
+    return await user.update(data.id, data);
   }
 
   if (event === 'user.deleted') {
-    return await user.delete(data);
+    return await user.delete(data.id);
   }
 
   if (event === 'group.created') {
     return await group.create(tenantInfo.id, data);
   }
 
+  if (event === 'group.deleted') {
+    return await group.delete(data.id);
+  }
+
   // if (event === 'group.user_added') {
   //   return await userGroup.add(data);
+  // }
+
+  // if (event === 'group.user_removed') {
+  //   return await userGroup.remove(data.group.id, data.id);
   // }
 
   return;
@@ -64,10 +72,10 @@ const user = {
     });
   },
 
-  update: async (data: any) => {
+  update: async (directoryUserId: string, data: any) => {
     return await prisma.user.update({
       where: {
-        directoryUserId: data.id,
+        directoryUserId,
       },
       data: {
         firstName: data.first_name,
@@ -77,10 +85,10 @@ const user = {
     });
   },
 
-  delete: async (data: any) => {
+  delete: async (directoryUserId: string) => {
     return await prisma.user.delete({
       where: {
-        directoryUserId: data.id,
+        directoryUserId,
       },
     });
   },
@@ -104,6 +112,24 @@ const group = {
     }
 
     return group;
+  },
+
+  delete: async (directoryGroupId: string) => {
+    const group = await prisma.group.findUnique({
+      where: {
+        directoryGroupId,
+      },
+    });
+
+    if (group === null) {
+      return;
+    }
+
+    return await prisma.group.delete({
+      where: {
+        id: group.id,
+      },
+    });
   },
 };
 
@@ -132,5 +158,32 @@ const userGroup = {
         groupId: group.id,
       },
     });
+  },
+
+  remove: async (directoryGroupId: string, directoryUserId: string) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        directoryUserId,
+      },
+    });
+
+    const group = await prisma.group.findUnique({
+      where: {
+        directoryGroupId,
+      },
+    });
+
+    if (user === null || group === null) {
+      return;
+    }
+
+    // return await prisma.userGroup.delete({
+    //   where: {
+    //     userId_groupId: {
+    //       userId: user.id,
+    //       groupId: group.id,
+    //     }
+    //   },
+    // });
   },
 };

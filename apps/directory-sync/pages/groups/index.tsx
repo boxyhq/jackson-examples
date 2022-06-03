@@ -7,7 +7,7 @@ export default function Groups(props: { groups: Group[] }) {
   const { groups } = props;
 
   return (
-    <Container title="Me">
+    <Container title="Groups">
       <div className="space-y-4">
         <h2 className="text-2xl">Groups</h2>
       </div>

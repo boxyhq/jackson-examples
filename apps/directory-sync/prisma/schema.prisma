@@ -8,10 +8,11 @@ datasource db {
 }
 
 model Tenant {
-  id     Int     @id @default(autoincrement())
-  domain String  @unique
-  users  User[]
+  id     Int    @id @default(autoincrement())
+  domain String @unique
+
   groups Group[]
+  users  User[]
 }
 
 model User {
@@ -21,7 +22,9 @@ model User {
   firstName       String
   lastName        String
   email           String @unique
-  tenant          Tenant @relation(fields: [tenantId], references: [id])
+
+  tenant     Tenant      @relation(fields: [tenantId], references: [id])
+  userGroups UserGroup[]
 }
 
 model Group {
@@ -29,12 +32,18 @@ model Group {
   tenantId         Int
   directoryGroupId String @unique
   name             String
-  tenant           Tenant @relation(fields: [tenantId], references: [id])
+
+  tenant     Tenant      @relation(fields: [tenantId], references: [id])
+  userGroups UserGroup[]
 }
 
 model UserGroup {
-  id      Int @id @default(autoincrement())
   userId  Int
   groupId Int
-  // Add relations
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, groupId])
+  @@unique([userId, groupId])
 }

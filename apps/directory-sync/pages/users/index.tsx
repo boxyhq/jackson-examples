@@ -7,7 +7,7 @@ export default function Users(props: { users: User[] }) {
   const { users } = props;
 
   return (
-    <Container title="Me">
+    <Container title="Users">
       <div className="space-y-4">
         <h2 className="text-2xl mb-5">Users</h2>
       </div>

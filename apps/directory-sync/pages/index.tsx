@@ -3,7 +3,7 @@ import Container from "../components/Container";
 
 const Home: NextPage = () => {
   return (
-    <Container title="Home">
+    <Container title="Directory Sync Example">
       <div className="space-y-4">
         <h2 className="text-2xl">Example App with Directory Sync powered by BoxyHQ</h2>
         <p>
