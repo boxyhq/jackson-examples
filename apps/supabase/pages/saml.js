@@ -190,7 +190,8 @@ export default function SamlConfig({ session }) {
   }
 
   return (
-    <div className='container'>
+    <div className='m-auto max-w-[500px]'>
+      <h1 className='text-lg font-bold'>SAML config</h1>
       <form onSubmit={addOrUpdateSAMLConfig}>
         <div className='min-w-[28rem] rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 md:w-3/4 md:max-w-lg'>
           {fieldCatalog
@@ -288,11 +289,6 @@ export default function SamlConfig({ session }) {
           </div>
         </div>
       </form>
-      <div className='row'>
-        <button className='button col-3' onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
-      </div>
     </div>
   );
 }

@@ -52,8 +52,8 @@ export default function Auth() {
   };
 
   return (
-    <div className='m-auto max-w-[500px]'>
-      <h1 className='text-xl font-bold'>Supabase Auth + BoxyHQSAML</h1>
+    <div className='m-auto flex h-full max-w-[500px] flex-col justify-center'>
+      <h1 className='self-start text-xl font-bold'>Supabase Auth + BoxyHQSAML</h1>
       <div>
         <p className='my-3'>Auth via email/password</p>
         <div className='mb-2'>
