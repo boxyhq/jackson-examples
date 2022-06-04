@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
-import Container from "../../components/Container";
-import prisma from "../../lib/prisma";
-import { User } from "../../types";
+import Container from "../components/Container";
+import prisma from "../lib/prisma";
+import { User } from "../types";
 
 export default function Users(props: { users: User[] }) {
   const { users } = props;

@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
-import Container from "../../components/Container";
-import prisma from "../../lib/prisma";
-import { Log } from "../../types";
+import Container from "../components/Container";
+import prisma from "../lib/prisma";
+import { Log } from "../types";
 
 export default function Logs(props: { logs: Log[] }) {
   const { logs } = props;

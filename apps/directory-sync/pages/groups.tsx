@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
-import Container from "../../components/Container";
-import prisma from "../../lib/prisma";
-import { Group } from "../../types";
+import Container from "../components/Container";
+import prisma from "../lib/prisma";
+import { Group } from "../types";
 
 export default function Groups(props: { groups: Group[] }) {
   const { groups } = props;
