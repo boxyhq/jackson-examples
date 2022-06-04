@@ -15,7 +15,8 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
   const { body } = req;
   const { event, data, tenant } = body;
 
-  // TODO: Validate the signature "BoxyHQ-Signature"
+  // TODO: Verify the webhook secret
+  // TODO: Verify the signature "BoxyHQ-Signature"
 
   const tenantInfo = await tenants.get(tenant);
 
