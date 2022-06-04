@@ -2,11 +2,9 @@
 
 This is an example app to demonstrate how to use Directory Sync.
 
-```
-npm run dev:directory-sync
-```
-
 ## Setup the example app
+
+### Clone the example repo
 
 ```
 git clone https://github.com/boxyhq/jackson-examples.git
@@ -16,9 +14,25 @@ git clone https://github.com/boxyhq/jackson-examples.git
 cd jackson-examples
 ```
 
+### Configure database in .env
+
+```
+DATABASE_URL=""
+```
+
+### Migrate the database
+
+```
+npx prisma db push
+```
+
+### Install the dependencies
+
 ```
 npm install
 ```
+
+### Run the example app
 
 ```
 npm run dev:directory-sync
