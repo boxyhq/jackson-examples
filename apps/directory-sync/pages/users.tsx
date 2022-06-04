@@ -2,6 +2,9 @@ import type { GetServerSideProps } from "next";
 import Container from "../components/Container";
 import prisma from "../lib/prisma";
 import { User } from "../types";
+import tenants from "../lib/tenants";
+
+const tenantDomain = 'boxyhq.com';
 
 export default function Users(props: { users: User[] }) {
   const { users } = props;
@@ -50,9 +53,11 @@ export default function Users(props: { users: User[] }) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const tenant = await tenants.get(tenantDomain);
+
   const users = await prisma.user.findMany({
     where: {
-      tenantId: 1,
+      tenantId: tenant?.id,
     },
     include: { 
       tenant: true, 

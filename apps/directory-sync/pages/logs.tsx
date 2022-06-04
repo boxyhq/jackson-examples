@@ -2,6 +2,9 @@ import type { GetServerSideProps } from "next";
 import Container from "../components/Container";
 import prisma from "../lib/prisma";
 import { Log } from "../types";
+import tenants from "../lib/tenants";
+
+const tenantDomain = 'boxyhq.com';
 
 export default function Logs(props: { logs: Log[] }) {
   const { logs } = props;
@@ -46,9 +49,11 @@ export default function Logs(props: { logs: Log[] }) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const tenant = await tenants.get(tenantDomain);
+
   const logs = await prisma.log.findMany({
     where: {
-      tenantId: 1,
+      tenantId: tenant?.id,
     },
     include: { tenant: true },
     orderBy: { createdAt: "desc" },

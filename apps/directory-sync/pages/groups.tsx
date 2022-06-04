@@ -2,6 +2,9 @@ import type { GetServerSideProps } from "next";
 import Container from "../components/Container";
 import prisma from "../lib/prisma";
 import { Group } from "../types";
+import tenants from "../lib/tenants";
+
+const tenantDomain = 'boxyhq.com';
 
 export default function Groups(props: { groups: Group[] }) {
   const { groups } = props;
@@ -42,9 +45,11 @@ export default function Groups(props: { groups: Group[] }) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const tenant = await tenants.get(tenantDomain);
+
   const groups = await prisma.group.findMany({
     where: {
-      tenantId: 1,
+      tenantId: tenant?.id,
     },
     include: { tenant: true },
   });
