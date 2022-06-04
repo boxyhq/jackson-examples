@@ -18,16 +18,16 @@ export default function Users(props: { users: User[] }) {
               Tenant
             </th>
             <th scope="col" className="px-6 py-3">
-              User ID
-            </th>
-            <th scope="col" className="px-6 py-3">
               First name
             </th>
             <th scope="col" className="px-6 py-3">
               Last name
             </th>
             <th scope="col" className="px-6 py-3">
-              Email
+              Username
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Groups
             </th>
           </tr>
         </thead>
@@ -36,10 +36,10 @@ export default function Users(props: { users: User[] }) {
             return (
               <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="px-6 py-4">{user.tenant.domain}</td>
-                <td className="px-6 py-4">{user.directoryUserId}</td>
                 <td className="px-6 py-4">{user.firstName}</td>
                 <td className="px-6 py-4">{user.lastName}</td>
                 <td className="px-6 py-4">{user.email}</td>
+                <td className="px-6 py-4">{user.groupName.join(", ")}</td>
               </tr>
             )
           })}
@@ -54,12 +54,30 @@ export const getServerSideProps: GetServerSideProps = async () => {
     where: {
       tenantId: 1,
     },
-    include: { tenant: true },
+    include: { 
+      tenant: true, 
+      memberships: {
+        include: { 
+          group: true
+        }
+      } 
+    },
+  });
+
+  const formattedUsers = users.map((user) => {
+    const groups = user.memberships.map((membership) => {
+      return membership.group.name;
+    });
+
+    return {
+      ...user,
+      groupName: groups,
+    }
   });
 
   return {
     props: {
-      users,
+      users: formattedUsers
     },
   }
 }

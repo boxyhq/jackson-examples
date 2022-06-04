@@ -10,6 +10,7 @@ export interface User {
   lastName: string;
   email: string;
   tenant: Tenant;
+  groupName: string[];
 }
 
 export interface Group {

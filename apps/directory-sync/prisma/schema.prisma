@@ -25,7 +25,7 @@ model User {
   email           String @unique
 
   tenant     Tenant      @relation(fields: [tenantId], references: [id])
-  userGroups UserGroup[]
+  memberships  UserGroup[]
 }
 
 model Group {

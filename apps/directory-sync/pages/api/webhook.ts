@@ -1,12 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Group, PrismaClient, User } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   handleDirectorySyncEvents(req);
 
-  res.status(200).end();
+  return res.status(200).end();
 }
 
 const handleDirectorySyncEvents = async (req: NextApiRequest) => {
@@ -15,6 +13,7 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
 
   const tenantInfo = await getTenantInfo(tenant);
 
+  // Tenant not found
   if (tenantInfo === null) {
     return;
   }
@@ -32,7 +31,7 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
   }
 
   if (event === 'user.deleted') {
-    return await user.delete(data);
+    return await user.delete(data.id);
   }
 
   // Groups events
@@ -45,16 +44,26 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
   }
 
   if (event === 'group.deleted') {
-    return await group.delete(data);
+    return await group.delete(data.id);
   }
 
   // Group membership events
   if (event === 'group.user_added') {
-    return await userGroup.add(data);
+    const {
+      id: directoryUserId,
+      group: { id: directoryGroupId },
+    } = data;
+
+    return await userGroup.add(directoryGroupId, directoryUserId);
   }
 
   if (event === 'group.user_removed') {
-    return await userGroup.remove(data);
+    const {
+      id: directoryUserId,
+      group: { id: directoryGroupId },
+    } = data;
+
+    return await userGroup.remove(directoryGroupId, directoryUserId);
   }
 
   return;
@@ -87,10 +96,10 @@ const user = {
     });
   },
 
-  delete: async (data: any) => {
+  delete: async (directoryUserId: string) => {
     return await prisma.user.delete({
       where: {
-        directoryUserId: data.id,
+        directoryUserId,
       },
     });
   },
@@ -99,18 +108,20 @@ const user = {
 // Groups CRUD
 const group = {
   create: async (tenantId: number, data: any) => {
-    const { members } = data.raw;
+    const { id: directoryGroupId, name } = data;
 
     const group = await prisma.group.create({
       data: {
         tenantId,
-        directoryGroupId: data.id,
-        name: data.name,
+        directoryGroupId,
+        name,
       },
     });
 
+    const { members } = data.raw;
+
     for (const member of members) {
-      await userGroup.add(group.directoryGroupId, member.value);
+      await userGroup.add(directoryGroupId, member.value);
     }
 
     return group;
@@ -127,16 +138,10 @@ const group = {
     });
   },
 
-  delete: async (data: any) => {
-    const group = await getGroup(data.id);
-
-    if (group === null) {
-      return;
-    }
-
+  delete: async (directoryGroupId: string) => {
     return await prisma.group.delete({
       where: {
-        id: group.id,
+        directoryGroupId,
       },
     });
   },
@@ -145,9 +150,9 @@ const group = {
 // Group membership
 const userGroup = {
   // Add a user to a group
-  add: async (data: any) => {
-    const user = await getUser(data.id);
-    const group = await getGroup(data.group.id);
+  add: async (directoryGroupId: string, directoryUserId: string) => {
+    const user = await getUser(directoryUserId);
+    const group = await getGroup(directoryGroupId);
 
     if (user === null || group === null) {
       return;
@@ -162,9 +167,9 @@ const userGroup = {
   },
 
   // Remove a user from a group
-  remove: async (data: any) => {
-    const user = await getUser(data.id);
-    const group = await getGroup(data.group.id);
+  remove: async (directoryGroupId: string, directoryUserId: string) => {
+    const user = await getUser(directoryUserId);
+    const group = await getGroup(directoryGroupId);
 
     if (user === null || group === null) {
       return;
