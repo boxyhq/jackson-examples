@@ -2,8 +2,6 @@
 
 This is an example app to demonstrate how to use Directory Sync.
 
-## Setup the example app
-
 ### Clone the example repo
 
 ```
