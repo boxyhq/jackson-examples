@@ -66,15 +66,27 @@ export default function Account({ session }) {
   }
 
   return (
-    <div className='form-widget'>
+    <div className='m-auto max-w-[500px]'>
+      <h1 className='mb-2 text-lg font-bold'>User Profile</h1>
       <div>
-        <label htmlFor='email'>Email</label>
-        <input id='email' type='text' value={session.user.email} readOnly />
+        <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300'>
+          Email
+        </label>
+        <input
+          id='email'
+          type='text'
+          value={session.user.email}
+          readOnly
+          className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
+        />
       </div>
       <div>
-        <label htmlFor='username'>Name</label>
+        <label htmlFor='username' className='mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300'>
+          Name
+        </label>
         <input
           id='username'
+          className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
           type='text'
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
@@ -85,22 +97,17 @@ export default function Account({ session }) {
         <input
           id='website'
           type='website'
+          className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
           value={website || ''}
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
-      <div>
+      <div className='mt-6'>
         <button
-          className='button primary block'
+          className='btn-primary'
           onClick={() => updateProfile({ username, website, avatar_url })}
           disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-
-      <div>
-        <button className='button block' onClick={() => supabase.auth.signOut()}>
-          Sign Out
         </button>
       </div>
     </div>
