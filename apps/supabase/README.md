@@ -18,7 +18,7 @@ Run self hosted supabase using https://github.com/supabase/supabase/blob/master/
   GOTRUE_EXTERNAL_BOXYHQSAML_CLIENT_ID: 'dummy'
   GOTRUE_EXTERNAL_BOXYHQSAML_SECRET: # Set this to https://boxyhq.com/docs/jackson/deploy/env-variables#client_secret_verifier of hosted jackson instance or use 'dummy' in case you are using https://jackson-demo.boxyhq.com
   GOTRUE_EXTERNAL_BOXYHQSAML_REDIRECT_URI: 'http://localhost:8000/auth/v1/callback' # callback path to gotrue which receives the authorization code from Jackson
-  GOTRUE_EXTERNAL_BOXYHQSAML_URL: # Point this to a hosted (https://boxyhq.com/docs/jackson/deploy/service) instance of jackson or use: https://jackson-demo.boxyhq.com
+  GOTRUE_EXTERNAL_BOXYHQSAML_URL: # Point this to a hosted (https://boxyhq.com/docs/jackson/deploy/service) instance of jackson or use: https://jackson-demo.boxyhq.com. Note if running jackson locally you can use something like [cloudflared tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) to expose over Public IP.
   ```
 
 ### Start the app
