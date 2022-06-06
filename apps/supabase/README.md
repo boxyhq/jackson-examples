@@ -13,6 +13,7 @@ Run self hosted supabase using https://github.com/supabase/supabase/blob/master/
 - Also add the following env for gotrue in docker-compose.yml
 
   ```yml
+  API_EXTERNAL_URL: # Set this to the gateway (kong) url http://localhost:8000
   GOTRUE_EXTERNAL_BOXYHQSAML_ENABLED: 'true'
   GOTRUE_EXTERNAL_BOXYHQSAML_CLIENT_ID: 'dummy'
   GOTRUE_EXTERNAL_BOXYHQSAML_SECRET: # Set this to https://boxyhq.com/docs/jackson/deploy/env-variables#client_secret_verifier of hosted jackson instance or use 'dummy' in case you are using https://jackson-demo.boxyhq.com
