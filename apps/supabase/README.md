@@ -31,6 +31,6 @@ npm run dev:supabase // from root folder
 
 ### Tenant and product
 
-If you are using https://jackson-demo.boxyhq.com then input tenant as `boxyhq.com` in the landing page and set product in [components/Auth.js](components/Auth.js#L14) as `saml-demo.boxyhq.com`.
+If you are using https://jackson-demo.boxyhq.com then set tenant (NEXT_PUBLIC_TENANT) as `boxyhq.com` and product (NEXT_PUBLIC_PRODUCT) as `saml-demo.boxyhq.com` in `.env.local`.
 
-If you are hosting [Jackson as a service](https://boxyhq.com/docs/jackson/deploy/service) then SAML config can be [added](https://boxyhq.com/docs/jackson/saml-flow#21-saml-add-config-api) for multiple tenant/products as you wish. Allowed redirect url in the config should contain `https://localhost:8000` (service endpoint for kong)
+If you are hosting [Jackson as a service](https://boxyhq.com/docs/jackson/deploy/service) then SAML config can be [added](https://boxyhq.com/docs/jackson/saml-flow#21-saml-add-config-api) for multiple tenant/products as you wish. Allowed redirect url in the config should contain `https://localhost:8000` (service endpoint for app gateway or kong)
