@@ -141,8 +141,10 @@ export default function SamlConfig({ session }) {
     setIsFetching(true);
     const response = await fetch(`/api/saml/fetch?tenant=${SAML_TENANT}&product=${SAML_PRODUCT}`);
     setIsFetching(false);
-    const samlConfig = await response.json();
-    setSamlConfig(samlConfig);
+    if (response.ok) {
+      const samlConfig = await response.json();
+      setSamlConfig(samlConfig);
+    }
   }
 
   // { status: 'UNKNOWN' | 'SUCCESS' | 'ERROR' }
