@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://kiran:apple@localhost:5432/postgres"
 }
 
 model Tenant {
@@ -24,8 +24,8 @@ model User {
   lastName        String
   email           String @unique
 
-  tenant     Tenant      @relation(fields: [tenantId], references: [id])
-  memberships  UserGroup[]
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  memberships UserGroup[]
 }
 
 model Group {

@@ -8,11 +8,8 @@ async function main() {
       {
         domain: 'boxyhq.com',
       },
-
-      {
-        domain: 'example.com',
-      },
     ],
+    // Add more tenants here
   });
 }
 

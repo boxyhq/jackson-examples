@@ -12,25 +12,37 @@ git clone https://github.com/boxyhq/jackson-examples.git
 cd jackson-examples
 ```
 
-### Configure database in .env
-
-```
-DATABASE_URL=""
-```
-
-### Migrate the database
-
-```
-npx prisma db push
-```
-
 ### Install the dependencies
 
 ```
 npm install
 ```
 
+```
+cd apps/directory-sync
+```
+
+### Run the prisma migration
+
+```
+npx prisma migrate dev
+```
+
+### Run the prisma seed
+
+```
+npx prisma db seed
+```
+
 ### Run the example app
+
+If you run from the directory `jackson-examples/apps/directory-sync`
+
+```
+npm run dev
+```
+
+If you run from the directory `jackson-examples`
 
 ```
 npm run dev:directory-sync

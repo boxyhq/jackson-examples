@@ -8,6 +8,10 @@ const tenants = {
       },
     });
   },
+
+  getFirst: async () => {
+    return await prisma.tenant.findFirst();
+  },
 };
 
 export default tenants;
