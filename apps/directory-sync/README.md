@@ -22,6 +22,10 @@ npm install
 cd apps/directory-sync
 ```
 
+### Update DATABASE_URL
+
+Update the `DATABASE_URL` in the `.env`
+
 ### Run the prisma migration
 
 ```
