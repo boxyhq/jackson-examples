@@ -28,6 +28,9 @@ export default function Users(props: { users: User[] }) {
               Username
             </th>
             <th scope='col' className='px-6 py-3'>
+              Status
+            </th>
+            <th scope='col' className='px-6 py-3'>
               Groups
             </th>
           </tr>
@@ -42,6 +45,7 @@ export default function Users(props: { users: User[] }) {
                 <td className='px-6 py-4'>{user.firstName}</td>
                 <td className='px-6 py-4'>{user.lastName}</td>
                 <td className='px-6 py-4'>{user.email}</td>
+                <td className='px-6 py-4'>{user.active ? 'Active' : 'Suspended'}</td>
                 <td className='px-6 py-4'>{user.groupName.join(', ')}</td>
               </tr>
             );

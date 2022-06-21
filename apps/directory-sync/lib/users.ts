@@ -9,6 +9,7 @@ const users = {
         firstName: data.first_name,
         lastName: data.last_name,
         email: data.email,
+        active: data.active,
       },
     });
   },
@@ -22,6 +23,7 @@ const users = {
         firstName: data.first_name,
         lastName: data.last_name,
         email: data.email,
+        active: data.active,
       },
     });
   },

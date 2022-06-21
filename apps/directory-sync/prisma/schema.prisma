@@ -17,12 +17,13 @@ model Tenant {
 }
 
 model User {
-  id              Int    @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   tenantId        Int
-  directoryUserId String @unique
+  directoryUserId String  @unique
   firstName       String
   lastName        String
-  email           String @unique
+  email           String  @unique
+  active          Boolean @default(true)
 
   tenant      Tenant      @relation(fields: [tenantId], references: [id])
   memberships UserGroup[]
