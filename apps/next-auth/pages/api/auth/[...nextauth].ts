@@ -29,7 +29,7 @@ export default NextAuth({
       clientId: `tenant=acme.com&product=${
         process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
       }`,
-      clientSecret: "5i3DgQQI0NsnUr7z8IOY0B0e3lw=",
+      clientSecret: "dummy",
     }),
     CredentialsProvider({
       id: "boxyhq-idp",
