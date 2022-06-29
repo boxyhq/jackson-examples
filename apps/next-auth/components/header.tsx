@@ -30,7 +30,10 @@ export default function Header() {
                 data-test-id="signInButton"
                 onClick={(e) => {
                   e.preventDefault()
+                  // OAuth flow
                   signIn("boxyhq-saml")
+                  // OIDC flow
+                  // signIn("boxyhq-saml-oidc")
                 }}
               >
                 Sign in
