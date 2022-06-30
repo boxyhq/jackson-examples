@@ -1,5 +1,5 @@
 {
-  "name": "jackson-hasura-nextjs",
+  "name": "hasura-nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,26 +10,26 @@
     "dev-docker": "docker compose -f ./docker-compose.yml up --build"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.10",
-    "@skillrecordings/next-auth-hasura-adapter": "^0.0.2",
-    "@types/jsonwebtoken": "^8.5.8",
-    "classnames": "^2.3.1",
-    "graphql": "^16.3.0",
-    "jsonwebtoken": "^8.5.1",
-    "next": "12.1.6",
+    "@apollo/client": "3.5.10",
+    "@skillrecordings/next-auth-hasura-adapter": "0.0.2",
+    "@types/jsonwebtoken": "8.5.8",
+    "classnames": "2.3.1",
+    "graphql": "16.3.0",
+    "jsonwebtoken": "8.5.1",
+    "next": "12.1.5",
     "next-auth": "4.7.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/forms": "0.5.0",
     "@types/node": "17.0.21",
     "@types/react": "17.0.39",
-    "autoprefixer": "^10.4.2",
-    "eslint": "8.10.0",
-    "eslint-config-next": "12.1.0",
-    "postcss": "^8.4.8",
-    "tailwindcss": "^3.0.23",
+    "autoprefixer": "10.4.2",
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5",
+    "postcss": "8.4.8",
+    "tailwindcss": "3.0.23",
     "typescript": "4.6.2"
   }
 }

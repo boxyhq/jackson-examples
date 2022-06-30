@@ -1,4 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { env } from './env';
 
 const extractDomain = (email: string): string => {
   return email.split('@')[1];
@@ -7,7 +8,7 @@ const extractDomain = (email: string): string => {
 const apolloClient = ({ token }: { token: string }) => {
   return new ApolloClient({
     link: new HttpLink({
-      uri: 'http://localhost:8081/v1/graphql',
+      uri: env.hasura.endpoint,
       headers: {
         Authorization: `Bearer ${token}`,
         //"x-hasura-admin-secret": "secret",
