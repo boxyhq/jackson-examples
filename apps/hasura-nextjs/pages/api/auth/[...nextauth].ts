@@ -27,7 +27,7 @@ export default NextAuth({
       const defaultRole = 'developer';
 
       // Fetch the group from profile and add it to the claims
-      // If no group found in raw, assume user
+      // If no group found in raw, assume defaultRole
       if (profile) {
         const raw = profile.raw as any;
 
