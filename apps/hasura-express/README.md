@@ -1,45 +1,37 @@
-# BoxyHQ SAML + Hasura GraphQL Auth Example
+# Express.js + SAML Jackson SSO + Hasura GraphQL Integration Example
 
-Express web app that shows how to use [BoxyHQ SAML](https://github.com/boxyhq/jackson) to authenticate [Hasura GraphQL](https://github.com/hasura/graphql-engine) API.
+This demo app shows how to use SAML Jackson with Hasura GraphQL for authentication.
 
-## Install
+## Overview
 
-Please follow the below instructions. Make sure you have Docker installed on your system.
+The example Express.js app runs on port 3000.
 
-```
-git clone https://github.com/boxyhq/boxyhq-saml-hasura-express.git
-```
+Postgres and Hasura are running on port 5432 and 8081 respectively within Docker containers.
 
-```
-cd boxyhq-saml-hasura-express
-```
+This demo is configured to work with 2 `x-hasura-role` (admin, developer).
 
-Open `docker-compose.yml` and update environment variables as per you needs.
+`admin` can see all the rows in the users table. `developer` can see their own row. If no role is provided the `developer` role is assumed.
 
-```
-npm run start
-```
+Execute the command `npm run dev:hasura-express` to start the demo.
 
-## How to run
+### Setup Environment
 
-- Open Hasura console [http://localhost:8080/console](http://localhost:8080/console) and enter admin secret **hasura-admin-secret-key**. You can change the value of the admin secret via env variable `HASURA_GRAPHQL_ADMIN_SECRET`.
+Update `.env` with your own credentials.
 
-- Open the tab **Data** and create a new database. Enter the correct **Database URL**. For example `postgres://postgres:postgres@postgres:5432/postgres`
+### Setup SAML Jackson
 
-- Click the created database from the sidebar on the left and choose the template **Hello World** from the **Template Gallery** and click **Install Template**. This will create 2 tables called `authors` and `articles`. It will also insert a few rows in each tables.
+- Open the demo app at [https://localhost:3000/](https://localhost:3000/)
+- Click `Configure SSO` from the top menu
+- Add your SAML Metadata and click `Save Changes`
 
-- Open the express app at [http://localhost:3000](http://localhost:3000)
+This will configure the SAML Jackson to use the metadata you provided for the tenant `boxyhq.com` and the provider `jackson`. You can change these values in the code.
 
-- Open the page **Metadata** and add your IdP Metadata. You can use [Mock SAML](https://mocksaml.com/) to test the SAML SSO integration.
+### Setup Hasura GraphQL
 
-- Click **Login via SSO** and complete the sign in process.
-
-- Open the page **Articles** to the see articles fetched via GraphQL query using Hasura.
-
-## Notes
-
-- Express app runs on port `3000`
-- Hasura runs on port `8080`
+- Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/console)
+- Configure your database connection
+- Click `SQL` from the lef menu
+- Paste the following SQL into the editor. This will create the `users` table with required columns
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -61,3 +53,9 @@ ALTER TABLE ONLY public.users
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 ```
+
+### Configure Hasura Permissions
+
+Add an additional role `developer` to the `users` table as follows. The demo will throw an error if you don't have this role.
+
+![img alt](assets/hasura-set-role.png)
