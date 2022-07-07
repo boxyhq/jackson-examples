@@ -123,6 +123,7 @@ router.get('/sso/callback', async (req, res, next) => {
   const { access_token } = await oauthController.token(body);
 
   const profile = await oauthController.userInfo(access_token);
+
   const user = (await getUserByEmail(profile.email)) || (await createUser(profile));
 
   req.session.token = generateJWT(user);
