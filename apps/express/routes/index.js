@@ -62,10 +62,12 @@ router.get('/', async (req, res) => {
   });
 
   const authorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl);
+  const openidAuthorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl, true);
 
   res.render('index', {
     provider,
     authorizeUrl,
+    openidAuthorizeUrl,
     product,
     tenant,
     baseUrl,
@@ -140,7 +142,7 @@ router.get('/me', async (req, res, next) => {
 });
 
 // Create the authorize URL
-const createAuthorizeUrl = (tenant, product, defaultRedirectUrl) => {
+const createAuthorizeUrl = (tenant, product, defaultRedirectUrl, isOpenId = false) => {
   const url = new URL(`${baseUrl}/sso/authorize`);
 
   url.searchParams.append('response_type', 'code');
@@ -148,6 +150,9 @@ const createAuthorizeUrl = (tenant, product, defaultRedirectUrl) => {
   url.searchParams.append('client_id', `tenant=${tenant}&product=${product}`);
   url.searchParams.append('redirect_uri', defaultRedirectUrl);
   url.searchParams.append('state', 'a-random-state-value');
+  if (isOpenId) {
+    url.searchParams.append('scope', 'openid');
+  }
 
   return url.href;
 };
