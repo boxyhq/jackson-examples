@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jose = require('jose');
 
 let apiController;
 let oauthController;
@@ -20,6 +21,13 @@ const jacksonOptions = {
   db: {
     engine: 'mongo',
     url: process.env.DB_HOST,
+  },
+  openid: {
+    jwsAlg: 'RS256',
+    jwtSigningKeys: {
+      private: process.env.OPENID_RSA_PRIVATE_KEY,
+      public: process.env.OPENID_RSA_PUBLIC_KEY,
+    },
   },
 };
 
@@ -111,10 +119,15 @@ router.get('/sso/callback', async (req, res, next) => {
   };
 
   try {
-    const { access_token } = await oauthController.token(body);
+    const { access_token, id_token } = await oauthController.token(body);
 
     req.session.access_token = access_token;
+    if (id_token) {
+      const JWKS = jose.createRemoteJWKSet(new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`));
 
+      const { payload } = await jose.jwtVerify(id_token, JWKS);
+      req.session.id_token = id_token;
+    }
     res.redirect('/me');
   } catch (err) {
     next(err);
