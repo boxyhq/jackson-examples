@@ -1,7 +1,5 @@
 # Overview
 
-SAML Jackson is a complete open source SAML SSO solution.
-
 This is an example application that shows how [`SAML Jackson`](https://github.com/boxyhq/jackson) and `next-auth` is applied to a basic Next.js app.
 
 Jackson supports both `OAuth` and `Open Id connect (OIDC)` flows. You can test out both by passing the appropriate ids - `boxyhq-saml` for OAuth and `boxyhq-saml-oidc` for OIDC in the `signIn` (components/header.tsx) call.
