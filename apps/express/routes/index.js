@@ -148,6 +148,7 @@ router.get('/sso/callback', async (req, res, next) => {
 
       const { payload } = await jose.jwtVerify(id_token, JWKS);
       req.session.id_token = id_token;
+      req.session.id_token_claims = payload;
     }
     res.redirect('/me');
   } catch (err) {
@@ -168,8 +169,8 @@ router.get('/me', async (req, res, next) => {
 
   try {
     const profile = await oauthController.userInfo(access_token);
-
-    res.render('me', { profile });
+    const { id_token_claims } = req.session;
+    res.render('me', { profile, id_token_claims });
   } catch (err) {
     next(err);
   }
