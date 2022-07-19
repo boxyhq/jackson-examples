@@ -4,6 +4,7 @@ const jose = require('jose');
 
 let apiController;
 let oauthController;
+let oidcDiscoveryController;
 
 const baseUrl = process.env.APP_URL;
 const redirectUrl = process.env.REDIRECT_URL;
@@ -36,6 +37,7 @@ const jacksonOptions = {
 
   apiController = jackson.apiController;
   oauthController = jackson.oauthController;
+  oidcDiscoveryController = jackson.oidcDiscoveryController;
 })();
 
 // Show form to add Metadata
@@ -108,10 +110,30 @@ router.post(samlPath, async (req, res, next) => {
   }
 });
 
+// OIDC discovery
+router.get('/.well-known/openid-configuration', async (req, res, next) => {
+  try {
+    const config = oidcDiscoveryController.openidConfig();
+    const response = JSON.stringify(config, null, 2);
+    res.status(200).send(response);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/oauth/jwks', async (req, res, next) => {
+  try {
+    const jwks = await oidcDiscoveryController.jwks();
+    const response = JSON.stringify(jwks, null, 2);
+    res.status(200).send(response);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Callback (Redirect URL)
 router.get('/sso/callback', async (req, res, next) => {
   const { code } = req.query;
-
   const body = {
     code,
     client_id: `tenant=${tenant}&product=${product}`,
@@ -120,10 +142,9 @@ router.get('/sso/callback', async (req, res, next) => {
 
   try {
     const { access_token, id_token } = await oauthController.token(body);
-
     req.session.access_token = access_token;
     if (id_token) {
-      const JWKS = jose.createRemoteJWKSet(new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`));
+      const JWKS = jose.createRemoteJWKSet(new URL(`${req.protocol}://${req.get('host')}/oauth/jwks`));
 
       const { payload } = await jose.jwtVerify(id_token, JWKS);
       req.session.id_token = id_token;
