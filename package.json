@@ -17,6 +17,7 @@
     "dev:auth0-user-store": "turbo run dev --filter='auth0-user-store'",
     "dev:supabase": "turbo run dev --filter='supabase'",
     "dev:hasura-next": "turbo run dev --filter='hasura-nextjs'",
+    "dev:hasura-express": "turbo run dev --filter='hasura-express'",
     "dev:directory-sync-embedded": "turbo run dev --filter='directory-sync-embedded'",
     "test": "turbo run test",
     "lint": "turbo run lint",

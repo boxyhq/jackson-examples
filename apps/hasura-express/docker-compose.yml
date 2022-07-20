@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - jackson
+
+  graphql-engine:
+    image: hasura/graphql-engine:v2.3.0
+    depends_on:
+      - postgres
+    ports:
+      - 8081:8080
+    restart: always
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      PG_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: secret
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "a7ZNtr9OlnGz4lTKkX3GBrMEaSR2Ls66je9x1fHlhzk="}' #Don't use this key in production
+    networks:
+      - jackson
+
+networks:
+  jackson:
+
+volumes:
+  db_data:
