@@ -6,7 +6,7 @@
     "dev": "node ./bin/www"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "0.3.8",
+    "@boxyhq/saml-jackson": "1.0.7",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.6",
     "debug": "4.3.4",
