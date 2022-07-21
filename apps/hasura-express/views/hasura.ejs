@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SAML Jackson + Hasura GraphQL Example</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <%- include partials/header.ejs %>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main>
+        <div class="space-y-4">
+          <div class="relative">
+            <div class="bg-slate-200 p-4 rounded">
+              <pre class="text-sm"><%- JSON.stringify(users, null, 2) %></pre>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
