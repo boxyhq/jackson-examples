@@ -22,31 +22,13 @@ npm install
 cd apps/directory-sync
 ```
 
-### Update DATABASE_URL
+### Update Environment variables
 
-Update the `DATABASE_URL` in the `.env`
-
-### Run the prisma migration
-
-```
-npx prisma migrate dev
-```
-
-### Run the prisma seed
-
-```
-npx prisma db seed
-```
+Update the environment variables in the `apps/directory-sync/.env` file with your own values.
 
 ### Run the example app
 
-If you run from the directory `jackson-examples/apps/directory-sync`
-
-```
-npm run dev
-```
-
-If you run from the directory `jackson-examples`
+Run the example app by running the following command:
 
 ```
 npm run dev:directory-sync
