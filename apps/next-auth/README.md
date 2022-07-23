@@ -2,6 +2,8 @@
 
 This is an example application that shows how [`SAML Jackson`](https://github.com/boxyhq/jackson) and `next-auth` is applied to a basic Next.js app.
 
+Jackson supports both `OAuth` and `Open Id connect (OIDC)` flows. You can test out both by passing the appropriate ids - `boxyhq-saml` for OAuth and `boxyhq-saml-oidc` for OIDC in the `signIn` (components/header.tsx) call.
+
 The deployed version can be found at [`saml-demo.boxyhq.com`](https://saml-demo.boxyhq.com). You can test the full SAML login flow because we utilize our [Mock SAML](https://mocksaml.com/) service to provide a configuration free demo.
 
 ## Getting Started
