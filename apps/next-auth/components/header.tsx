@@ -32,11 +32,23 @@ export default function Header() {
                   e.preventDefault()
                   // OAuth flow
                   signIn("boxyhq-saml")
-                  // OIDC flow
-                  // signIn("boxyhq-saml-oidc")
                 }}
               >
-                Sign in
+                Sign in with SAML SSO (Oauth 2.0 proxy)
+              </a>
+
+              <br />
+              <br />
+              <a
+                className={styles.buttonPrimary}
+                data-test-id="signInButtonOIDC"
+                onClick={(e) => {
+                  e.preventDefault()
+                  // OIDC flow
+                  signIn("boxyhq-saml-oidc")
+                }}
+              >
+                Sign in with SAML SSO (OIDC proxy)
               </a>
             </>
           )}

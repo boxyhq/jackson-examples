@@ -26,7 +26,7 @@ export default NextAuth({
       wellKnown: `${samlLoginUrl}/.well-known/openid-configuration`,
       authorization: { params: { scope: "openid email" } },
       // checks: ["pkce", "state"],
-      clientId: `tenant=acme.com&product=${
+      clientId: `tenant=boxyhq.com&product=${
         process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
       }`,
       clientSecret: "dummy",
