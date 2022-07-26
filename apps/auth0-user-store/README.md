@@ -4,6 +4,18 @@ This demo shows how to login with Auth0 using SAML Jackson Generic Connection. U
 
 ## Setup
 
+### Jackson - Setup SAML configuration
+
+For the demo, we can use mocksaml.com (mock SAML IdP) to test the flow. Add a config in Jackson with the following settings.
+
+- tenant: boxyhq.com
+- product: saml-demo.auth0.com
+- Allowed redirect URLs: https://<YOUR_AUTH0_TENANT_FROM_DASHBOARD>.auth0.com
+- Default redirect URL: https://<YOUR_AUTH0_TENANT_FROM_DASHBOARD>.auth0.com/login/callback
+- Raw IdP XML: Can be downloaded from [mocksaml.com](mocksaml.com)
+
+### Auth0 - Setup Connection and Application
+
 1. Create [Custom Connection](https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2) under `Authentication` -> `Social` tab. While configuring the connection,
 
    - Point the Authorization and Token URL to a hosted endpoint for Jackson.
