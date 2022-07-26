@@ -5,9 +5,11 @@ This demo shows how to login with Auth0 using SAML Jackson Generic Connection. U
 ## Setup
 
 1. Create [Custom Connection](https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2) under `Authentication` -> `Social` tab. While configuring the connection,
-   - Point the Authorization and Token URL to a hosted endpoint for jackson.
+
+   - Point the Authorization and Token URL to a hosted endpoint for Jackson.
    - You can set the Client ID to `dummy`, while the Client Secret to the Client Secret verifier.
    - Paste the following for the `Fetch User Profile Script`:
+
      ```javascript
      function fetchUserProfile(accessToken, context, callback) {
        request.get(
@@ -39,6 +41,7 @@ This demo shows how to login with Auth0 using SAML Jackson Generic Connection. U
        );
      }
      ```
+
 2. Create an Application under `Applications` -> `Applications` and set the Allowed Callback URLs to point to `http://localhost:3366/profile`. Also enable the connection created in the previous step. Use the clientId of the application for configuration as mentioned below.
 
 ## Configuration

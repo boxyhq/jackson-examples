@@ -11,27 +11,20 @@ The deployed version can be found at [`saml-demo.boxyhq.com`](https://saml-demo.
 ### 1. Clone the repository and install dependencies
 
 ```bash
-git clone https://github.com/boxyhq/jackson-next-auth.git
-cd jackson-next-auth
+git clone https://github.com/boxyhq/jackson-examples.git
 npm install
 ```
 
 ### 2. Configure your local environment
 
-Copy the .env file in this directory to .env.local (which will be ignored by Git):
-
-```bash
-cp .env .env.local
-```
-
-Update the `.env` with your own values.
+Update the `.env` file if needed and modify the env vars with your own values.
 
 ### 4. Start the application
 
 To run your site locally, use:
 
 ```bash
-npm run dev
+npm run dev:next-auth
 ```
 
 To run it in production mode, use:

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "An example project for NextAuth.js",
-  "repository": "https://github.com/boxyhq/jackson-next-auth.git",
+  "repository": "https://github.com/boxyhq/jackson-examples.git",
   "bugs": {
-    "url": "https://github.com/boxyhq/jackson-next-auth/issues"
+    "url": "https://github.com/boxyhq/jackson-examples/issues"
   },
   "homepage": "https://saml-demo.boxyhq.com",
   "main": "",

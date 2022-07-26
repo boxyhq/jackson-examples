@@ -24,7 +24,7 @@ function Index() {
   const tenant = (hasTenantParams && new URLSearchParams(searchParams).get('tenant')) || '';
 
   return (
-    <Auth0Provider {...providerConfig} access_type={`tenant=${tenant}&product=saml-demo.auth0.com`}>
+    <Auth0Provider {...providerConfig} access_type={`tenant=${tenant}&product=saml-demo.boxyhq.com`}>
       <App />
     </Auth0Provider>
   );
