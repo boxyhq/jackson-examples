@@ -56,6 +56,14 @@ For the demo, we can use mocksaml.com (mock SAML IdP) to test the flow. Add a co
 
 2. Create an Application under `Applications` -> `Applications` and set the Allowed Callback URLs to point to `http://localhost:3366/profile` along with Allowed Logout URLs to `http://localhost:3366`. Also enable the connection created in the previous step. Use the clientId of the application for configuration as mentioned below.
 
+### App - Pass tenant/product to Jackson
+
+Since SAML is multi-tenanted we need to pass the tenant/product information to Jackson. Auth0 supports passing of [parameters to Identity Providers](https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps), although only a limited set of params are allowed. We use `resource` param to pass the encoded tenant info:
+
+```jsx
+<Auth0Provider {...providerConfig} resource={`tenant=${tenant}&product=saml-demo.boxyhq.com`}>
+```
+
 ## Configuration
 
 ### Configure credentials
