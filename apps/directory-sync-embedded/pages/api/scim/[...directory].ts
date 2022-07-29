@@ -1,10 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type {
-  DirectorySyncUserRequest,
-  DirectorySyncGroupRequest,
-  HTTPMethod,
-  DirectorySyncEvent,
-} from '@boxyhq/saml-jackson';
+import type { DirectorySyncRequest, HTTPMethod, DirectorySyncEvent } from '@boxyhq/saml-jackson';
 import jackson from '../../../lib/jackson';
 import { extractAuthToken } from '../../../lib/utils';
 
@@ -17,52 +12,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const [directoryId, path, resourceId] = directory;
 
-  // Validate the SCIM API request token
-  if (!(await directorySync.directories.validateAPISecret(directoryId as string, extractAuthToken(req)))) {
-    return res.status(401).json({ data: null, error: { message: 'Unauthorized' } });
-  }
-
-  // This will be called for each event that is received from the SCIM endpoint
-  const callback = (event: DirectorySyncEvent) => {
-    // INFO: Do the further business logic here
-    console.log(event);
+  // Handle the SCIM API requests
+  const request: DirectorySyncRequest = {
+    method: method as HTTPMethod,
+    body: body ? JSON.parse(body) : undefined,
+    directoryId,
+    resourceId,
+    resourceType: path === 'Users' ? 'users' : 'groups',
+    apiSecret: extractAuthToken(req),
+    query: {
+      count: req.query.count ? parseInt(req.query.count as string) : undefined,
+      startIndex: req.query.startIndex ? parseInt(req.query.startIndex as string) : undefined,
+      filter: req.query.filter as string,
+    },
   };
 
-  // Handle requests to /Users
-  if (path === 'Users') {
-    const request = {
-      method: method as HTTPMethod,
-      body: body ? JSON.parse(body) : undefined,
-      query: {
-        directory_id: directoryId,
-        user_id: resourceId,
-        count: parseInt(req.query.count as string),
-        startIndex: parseInt(req.query.startIndex as string),
-        filter: req.query.filter as string,
-      } as DirectorySyncUserRequest['query'],
-    };
+  const { status, data } = await directorySync.requests.handle(request, async (event: DirectorySyncEvent) => {
+    console.log(event); // Do something with the event
+  });
 
-    const { status, data } = await directorySync.usersRequest.handle(request, callback);
-
-    return res.status(status).json(data);
-  }
-
-  // Handle requests to /Groups
-  if (path === 'Groups') {
-    const request = {
-      method: method as HTTPMethod,
-      body: body ? JSON.parse(body) : undefined,
-      query: {
-        directory_id: directoryId,
-        group_id: resourceId,
-        count: parseInt(req.query.count as string),
-        startIndex: parseInt(req.query.startIndex as string),
-        filter: req.query.filter as string,
-      } as DirectorySyncGroupRequest['query'],
-    };
-
-    const { status, data } = await directorySync.groupsRequest.handle(request, callback);
-
-    return res.status(status).json(data);
-  }
+  return res.status(status).json(data);
 }
