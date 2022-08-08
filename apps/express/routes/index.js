@@ -138,6 +138,7 @@ router.get('/sso/callback', async (req, res, next) => {
     code,
     client_id: `tenant=${tenant}&product=${product}`,
     client_secret: 'dummy',
+    redirect_uri: defaultRedirectUrl,
   };
 
   try {
