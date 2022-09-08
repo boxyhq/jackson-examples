@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../utils/supabaseClient';
-import Auth from '../components/Auth';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import Account from '../components/Account';
+import { supabase } from '../utils/supabaseClient';
 
-export default function Home() {
-  const [session, setSession] = useState(null);
+export default function Profile({ session }) {
+  const router = useRouter();
 
   useEffect(() => {
-    setSession(supabase.auth.session());
+    if (session) {
+      checkForAdmin();
+    }
+  }, [session]);
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  async function checkForAdmin() {
+    const user = supabase.auth.user();
+    if (user?.email === 'admin@example.com') {
+      router.push('/saml');
+    }
+  }
 
-  return (
-    <div className='container' style={{ padding: '50px 0 100px 0' }}>
-      {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
-    </div>
-  );
+  return <Account key={session.user.id} session={session} />;
 }
