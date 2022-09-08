@@ -16,6 +16,8 @@
     "dev:firebase-user-store": "turbo run dev --filter='firebase-user-store'",
     "dev:auth0-user-store": "turbo run dev --filter='auth0-user-store'",
     "dev:supabase": "turbo run dev --filter='supabase'",
+    "dev:hasura-next": "turbo run dev --filter='hasura-nextjs'",
+    "dev:hasura-express": "turbo run dev --filter='hasura-express'",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -45,7 +47,6 @@
     "turbo": "1.2.4"
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "node": ">=14.18.1 <=16.x"
   }
 }

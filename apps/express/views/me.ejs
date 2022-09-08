@@ -37,6 +37,10 @@
             <td><%= profile.lastName %></td>
           </tr>
         </table>
+        <% if ( typeof(id_token_claims) !== "undefined" ) { %>
+        <h6>ID Token claims</h6>
+        <pre><%- JSON.stringify(id_token_claims,null,2) %></pre>
+        <% } %>
       </main>
   </body>
 </html>
