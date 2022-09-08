@@ -49,19 +49,6 @@ const Home: NextPage = () => {
             </a>
           </li>
         </ul>
-
-        <div className='space-y-2 border bg-cyan-100 px-3 py-3'>
-          <p>
-            Your webhook endpoint is <strong>{webhookEndpoint}</strong>
-          </p>
-          <p>Create a Directory on the SAML Jackson for the tenant you want to sync for.</p>
-          <p>
-            The demo is configured for the tenant <strong>boxyhq.com</strong>
-          </p>
-          <p>
-            Open <strong>apps/directory-sync/prisma/seed.ts</strong> to change the tenant.
-          </p>
-        </div>
       </div>
     </Container>
   );
