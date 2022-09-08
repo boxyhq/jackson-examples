@@ -10,8 +10,22 @@ const samlLoginUrl =
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers/oauth
   providers: [
+    // OAuth flow
     BoxyHQSAMLProvider({
+      authorization: { params: { scope: "" } },
       issuer: samlLoginUrl,
+      clientId: `tenant=boxyhq.com&product=${
+        process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
+      }`,
+      clientSecret: "dummy",
+    }),
+    // Open Id connect flow
+    BoxyHQSAMLProvider({
+      id: "boxyhq-saml-oidc",
+      issuer: samlLoginUrl,
+      wellKnown: `${samlLoginUrl}/.well-known/openid-configuration`,
+      authorization: { params: { scope: "openid email" } },
+      // checks: ["pkce", "state"],
       clientId: `tenant=boxyhq.com&product=${
         process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
       }`,
