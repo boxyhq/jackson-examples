@@ -30,10 +30,11 @@ export default function Header() {
                 data-test-id="signInButton"
                 onClick={(e) => {
                   e.preventDefault()
+                  // OAuth flow
                   signIn("boxyhq-saml")
                 }}
               >
-                Sign in
+                Sign in with SAML SSO
               </a>
             </>
           )}

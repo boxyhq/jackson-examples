@@ -23,7 +23,7 @@ const Home: NextPage = () => {
               className='underline underline-offset-2'
               target='_blank'
               rel='noreferrer'
-              href='https://boxyhq.com/docs/jackson/introduction'>
+              href='https://boxyhq.com/docs/jackson/overview'>
               Documentation
             </a>
           </li>
