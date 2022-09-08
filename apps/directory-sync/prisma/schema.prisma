@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id     Int    @id @default(autoincrement())
+  domain String @unique
+
+  groups Group[]
+  users  User[]
+  logs   Log[]
+}
+
+model User {
+  id              Int     @id @default(autoincrement())
+  tenantId        Int
+  directoryUserId String  @unique
+  firstName       String
+  lastName        String
+  email           String  @unique
+  active          Boolean @default(true)
+
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  memberships UserGroup[]
+}
+
+model Group {
+  id               Int    @id @default(autoincrement())
+  tenantId         Int
+  directoryGroupId String @unique
+  name             String
+
+  tenant     Tenant      @relation(fields: [tenantId], references: [id])
+  userGroups UserGroup[]
+}
+
+model UserGroup {
+  userId  Int
+  groupId Int
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, groupId])
+  @@unique([userId, groupId])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  tenantId  Int
+  action    String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+}
