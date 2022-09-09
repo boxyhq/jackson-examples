@@ -2,10 +2,6 @@
 
 This is an example app to demonstrate how to use SAML Jackson (NPM Embedded) Directory Sync with Next.js
 
-## Prerequisite
-
-- PostgreSQL
-
 ## Run this example
 
 Follow the below steps to run this example.
