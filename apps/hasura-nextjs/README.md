@@ -92,11 +92,11 @@ Make sure you [track the tables](https://hasura.io/docs/latest/graphql/core/data
 
 - Click on the `public` schema
 - Click `Track All` against `Untracked tables or views`
-- Click `Track All` aginst `Untracked foreign-key relationships`
+- Click `Track All` against `Untracked foreign-key relationships`
 
 #### Configure Hasura Permissions
 
-Add an additional role `developer` to the `users` table.
+Add an additional role `developer` to the `users` table. The Row select permissions are outlined below in the image, also please don't forget to select all for Column select permissions.
 
 ![img alt](assets/hasura-set-role.png)
 
