@@ -13,6 +13,7 @@ export default NextAuth({
   providers: [
     BoxyHQSAMLProvider({
       issuer: env.jackson.endpoint,
+      authorization: { params: { scope: '' } },
       clientId: 'dummy',
       clientSecret: 'dummy',
     }),
