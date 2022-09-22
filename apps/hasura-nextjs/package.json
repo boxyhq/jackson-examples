@@ -10,11 +10,10 @@
     "dev-docker": "docker compose -f ./docker-compose.yml up --build"
   },
   "dependencies": {
-    "@apollo/client": "3.5.10",
+    "@apollo/client": "3.6.9",
     "@skillrecordings/next-auth-hasura-adapter": "0.0.2",
-    "@types/jsonwebtoken": "8.5.8",
     "classnames": "2.3.1",
-    "graphql": "16.3.0",
+    "graphql": "16.6.0",
     "jsonwebtoken": "8.5.1",
     "next": "12.3.1",
     "next-auth": "4.7.0",
@@ -22,6 +21,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "8.5.8",
     "@tailwindcss/forms": "0.5.0",
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",

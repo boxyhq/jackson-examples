@@ -15,7 +15,7 @@ export default NextAuth({
       issuer: env.jackson.endpoint,
       clientId: 'dummy',
       clientSecret: 'dummy',
-      idToken: true,
+      authorization: { params: { scope: '' } },
     }),
   ],
   session: {
