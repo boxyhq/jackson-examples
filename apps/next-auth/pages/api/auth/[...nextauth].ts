@@ -21,6 +21,7 @@ export default NextAuth({
     }),
     // Open Id connect flow
     BoxyHQSAMLProvider({
+      name: "BoxyHQ OIDC",
       id: "boxyhq-saml-oidc",
       issuer: samlLoginUrl,
       wellKnown: `${samlLoginUrl}/.well-known/openid-configuration`,
