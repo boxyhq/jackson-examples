@@ -19,7 +19,7 @@
     "dev:hasura-nextjs": "turbo run dev --filter='hasura-nextjs'",
     "dev:hasura-express": "turbo run dev --filter='hasura-express'",
     "dev:directory-sync-embedded": "turbo run dev --filter='directory-sync-embedded'",
-    "dev:adonis": "turbo run dev --filter='adonisjs'",
+    "dev:adonisjs": "turbo run dev --filter='adonisjs'",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
