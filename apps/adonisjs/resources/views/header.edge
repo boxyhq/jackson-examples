@@ -1,0 +1,23 @@
+<header>
+  <nav class="border-gray-200 px-4 py-4 shadow">
+    <div class="max-w-7xl mx-auto">
+      <ul class="flex gap-4">
+        <li>
+          <a href="/" class="font-normal text-gray-900">Home</a>
+        </li>
+        <li>
+          <a href="/settings" class="font-normal text-gray-900">SAML SSO</a>
+        </li>
+        @if(auth.isLoggedIn)
+          <li>
+            <a href="/logout" class="font-normal text-gray-900">Logout</a>
+          </li>
+        @else
+          <li>
+            <a href="/login" class="font-normal text-gray-900">Login</a>
+          </li>
+        @endif
+      </ul>
+    </div>
+  </nav>
+</header>
