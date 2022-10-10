@@ -2,24 +2,29 @@
 
 This is an example app to demonstrate how to use Directory Sync.
 
-### Clone the example repo
+## Prerequisite
 
-```
+- PostgreSQL
+- SAML Jackson service
+
+## Run this example
+
+Follow the below steps to run this example.
+
+### Clone repository jackson-examples
+
+```bash
 git clone https://github.com/boxyhq/jackson-examples.git
 ```
 
-```
+```bash
 cd jackson-examples
 ```
 
 ### Install the dependencies
 
-```
+```bash
 npm install
-```
-
-```
-cd apps/directory-sync
 ```
 
 ### Update Environment variables
@@ -28,8 +33,8 @@ Update the environment variables in the `apps/directory-sync/.env` file with you
 
 ### Run the example app
 
-Run the example app by running the following command:
+Run the app by executing the following command:
 
-```
+```bash
 npm run dev:directory-sync
 ```

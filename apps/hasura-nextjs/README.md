@@ -4,7 +4,7 @@ This demo app shows how to use SAML Jackson with Hasura GraphQL for authenticati
 
 ## Overview
 
-The example Next.js app runs on port 3000.
+The example Next.js app runs on port 3366.
 
 Postgres and Hasura are running on port 5432 and 8081 respectively within Docker containers.
 
@@ -12,13 +12,13 @@ This demo is configured to work with 2 `x-hasura-role` (admin, developer).
 
 `admin` can see all the rows in the users table. `developer` can see their own row. If no role is provided the `developer` role is assumed.
 
-Execute the command `npm run dev:hasura-next` to start the demo app.
+Execute the command `npm run dev:hasura-nextjs` to start the demo app.
 
 ## Setup Environment
 
 Update `.env` with your own credentials.
 
-Run `npm run dev-docker` to start the Postgres and Hasura containers.
+Run `npm run dev-docker` from `/apps/hasura-nextjs` to start the Postgres and Hasura Docker containers.
 
 ### Setup SAML Jackson
 
@@ -28,9 +28,9 @@ Run `npm run dev-docker` to start the Postgres and Hasura containers.
 
 Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/console)
 
-In the Hasura Console we use the **Raw SQL** feature create and track the tables [NextAuth.js needs](https://github.com/skillrecordings/products/tree/main/packages/next-auth-hasura-adapter#overview).
+#### Add Required Tables
 
-Make sure you [track the tables](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/using-existing-database/#to-track-all-tables-and-views-present-in-the-database). Tracking a table means telling Hasura GraphQL engine that you want to expose that table over GraphQL.
+In the Hasura Console we use the **Raw SQL** feature and add the tables [NextAuth.js needs](https://github.com/skillrecordings/products/tree/main/packages/next-auth-hasura-adapter#overview).
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -86,17 +86,25 @@ ALTER TABLE ONLY public.sessions
     ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 ```
 
-### Configure Hasura Permissions
+#### Track the Tables and Relationships
 
-Add an additional role `developer` to the `users` table.
+Make sure you [track the tables](https://hasura.io/docs/latest/graphql/core/databases/postgres/schema/using-existing-database/#to-track-all-tables-and-views-present-in-the-database). Tracking a table means telling Hasura GraphQL engine that you want to expose that table over GraphQL.
+
+- Click on the `public` schema
+- Click `Track All` against `Untracked tables or views`
+- Click `Track All` against `Untracked foreign-key relationships`
+
+#### Configure Hasura Permissions
+
+Add an additional role `developer` to the `users` table. The Row select permissions are outlined below in the image, also please don't forget to select all for Column select permissions.
 
 ![img alt](assets/hasura-set-role.png)
 
 ### Start the app
 
-Run `npm run dev` to start the app.
+Run `npm run dev:hasura-nextjs` to start the app.
 
-Now you can open the demo app at [http://localhost:3000/](http://localhost:3000/) and start playing with the app.
+Now you can open the demo app at [http://localhost:3366/](http://localhost:3366/) and start playing with the app.
 
 ### Configure Okta (Optional)
 

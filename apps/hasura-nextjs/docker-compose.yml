@@ -14,7 +14,7 @@ services:
       - jackson
 
   graphql-engine:
-    image: hasura/graphql-engine:v2.3.0
+    image: hasura/graphql-engine:v2.12.0
     depends_on:
       - postgres
     ports:
