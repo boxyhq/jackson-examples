@@ -1,5 +1,6 @@
-import { APIController } from '@boxyhq/saml-jackson/dist/controller/api';
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application';
+
+import { options } from '../lib/jackson';
 
 /*
 |--------------------------------------------------------------------------
@@ -28,50 +29,16 @@ export default class JacksonProvider {
   }
 
   public async boot() {
+    const jackson = await require('@boxyhq/saml-jackson').default(options);
+
     this.app.container.singleton('BoxyHQ/Jackson', () => {
-      let apiController: APIController | null = null;
-
-      (async function init() {
-        const options = {
-          externalUrl: 'http://localhost:3333/',
-          samlAudience: 'https://saml.boxyhq.com',
-          samlPath: '/sso/acs',
-          db: {
-            engine: 'sql',
-            type: 'postgres',
-            url: 'postgres://admin:password@localhost:54320/adonis-jackson',
-          },
-        };
-
-        const jackson = await require('@boxyhq/saml-jackson').default(options);
-
-        apiController = jackson.apiController;
-      })();
-
-      // const options = {
-      //   externalUrl: "http://localhost:3333/",
-      //   samlAudience: "https://saml.boxyhq.com",
-      //   samlPath: "/sso/acs",
-      //   db: {
-      //     engine: "sql",
-      //     type: "postgres",
-      //     url: "postgres://admin:password@localhost:54320/adonis-jackson",
-      //   },
-      // };
-
-      // const jackson = await require("@boxyhq/saml-jackson").default(options);
-
-      console.log({ api: apiController });
+      const { connectionAPIController, oauthController } = jackson;
 
       return {
-        hello: {
-          name: 'Kiran',
-        },
-        apiController,
+        connectionAPIController,
+        oauthController,
       };
     });
-
-    // All bindings are ready, feel free to use them
   }
 
   public async ready() {

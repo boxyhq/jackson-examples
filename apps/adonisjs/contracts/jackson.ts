@@ -1,5 +1,6 @@
 declare module '@ioc:BoxyHQ/Jackson' {
-  import { APIController } from '@boxyhq/saml-jackson/dist/controller/api';
+  import { type IOAuthController, type IConnectionAPIController } from '@boxyhq/saml-jackson';
 
-  export const apiController: APIController;
+  export const connectionAPIController: IConnectionAPIController;
+  export const oauthController: IOAuthController;
 }

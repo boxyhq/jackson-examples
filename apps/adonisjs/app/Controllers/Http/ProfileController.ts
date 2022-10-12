@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 export default class ProfileController {
-  public async index({ auth, view, response }: HttpContextContract) {
+  public async index({ auth, view }: HttpContextContract) {
     return await view.render('profile', { user: auth.user?.$attributes });
   }
 

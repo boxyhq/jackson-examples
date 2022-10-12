@@ -1,17 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
-import jackson from '@boxyhq/saml-jackson';
-import { options, samlAudience, acsUrl, redirectUrl } from '../../../lib/jackson';
+import { connectionAPIController } from '@ioc:BoxyHQ/Jackson';
+import { samlAudience, acsUrl, redirectUrl } from '../../../lib/jackson';
 
 const tenant = 'boxyhq.com';
 const product = 'saml-demo.boxyhq.com';
 
 export default class ConfigController {
   public async index({ view }: HttpContextContract) {
-    const { apiController } = await jackson(options);
-
     // Get the SAML SSO Connection
-    const connections = await apiController.getConnections({
+    const connections = await connectionAPIController.getConnections({
       tenant,
       product,
     });
@@ -29,12 +27,10 @@ export default class ConfigController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const { apiController } = await jackson(options);
-
     const rawMetadata = request.input('rawMetadata');
 
     // Create SAML SSO Connection
-    await apiController.createSAMLConnection({
+    await connectionAPIController.createSAMLConnection({
       defaultRedirectUrl: redirectUrl,
       redirectUrl,
       tenant,

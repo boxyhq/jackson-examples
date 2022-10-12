@@ -15,6 +15,4 @@ export const options: JacksonOption = {
     type: 'postgres',
     url: 'postgres://admin:password@localhost:54320/adonis-jackson',
   },
-  openid: {},
-  oidcPath: '/abc',
 };

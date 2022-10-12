@@ -1,16 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import User from 'App/Models/User';
 
-import jackson, { type OAuthTokenReqWithCredentials } from '@boxyhq/saml-jackson';
-import { options, redirectUrl } from '../../../lib/jackson';
+import { oauthController } from '@ioc:BoxyHQ/Jackson';
+import { type OAuthTokenReqWithCredentials } from '@boxyhq/saml-jackson';
+import { redirectUrl } from '../../../lib/jackson';
 
 const tenant = 'boxyhq.com';
 const product = 'saml-demo.boxyhq.com';
 
 export default class SSOController {
   public async acs({ request, response }: HttpContextContract) {
-    const { oauthController } = await jackson(options);
-
     const relayState = request.input('RelayState');
     const samlResponse = request.input('SAMLResponse');
 
@@ -23,8 +22,6 @@ export default class SSOController {
   }
 
   public async callback({ request, response, auth }: HttpContextContract) {
-    const { oauthController } = await jackson(options);
-
     const { code, state } = request.qs();
 
     // TODO: Validate the returned `state` value.
