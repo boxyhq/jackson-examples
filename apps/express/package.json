@@ -6,16 +6,19 @@
     "dev": "node ./bin/www"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.3.0",
+    "@boxyhq/saml-jackson": "1.0.7",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.6",
     "debug": "4.3.4",
-    "dotenv": "16.0.3",
-    "ejs": "3.1.8",
-    "express": "4.18.1",
-    "express-session": "1.17.3",
+    "dotenv": "16.0.0",
+    "ejs": "3.1.7",
+    "express": "4.17.3",
+    "express-session": "1.17.2",
     "http-errors": "2.0.0",
-    "jose": "4.10.0",
+    "jose": "4.8.3",
     "morgan": "1.10.0"
+  },
+  "devDependencies": {
+    "@boxyhq/config": "*"
   }
 }

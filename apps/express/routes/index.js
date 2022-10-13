@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jose = require('jose');
 
-let connectionAPIController;
+let apiController;
 let oauthController;
 let oidcDiscoveryController;
 
@@ -11,21 +11,17 @@ const redirectUrl = process.env.REDIRECT_URL;
 const product = 'flex';
 const tenant = 'boxyhq';
 const defaultRedirectUrl = `${baseUrl}/sso/callback`;
-const samlPath = '/api/oauth/saml';
-const oidcPath = '/api/oauth/oidc';
+const samlPath = '/sso/acs';
 const acsUrl = `${baseUrl}${samlPath}`;
 const samlAudience = process.env.SAML_AUDIENCE;
 
-/** @type {import('@boxyhq/saml-jackson').JacksonOption} */
 const jacksonOptions = {
   externalUrl: baseUrl,
   samlAudience: samlAudience,
-  samlPath,
-  oidcPath,
+  samlPath: samlPath,
   db: {
     engine: 'mongo',
     url: process.env.DB_HOST,
-    encryptionKey: process.env.DB_ENCRYPTION_KEY,
   },
   openid: {
     jwsAlg: 'RS256',
@@ -36,16 +32,10 @@ const jacksonOptions = {
   },
 };
 
-const strategyChecker = (req) => {
-  const isSAML = 'rawMetadata' in req.body || 'encodedRawMetadata' in req.body;
-  const isOIDC = 'oidcDiscoveryUrl' in req.body;
-  return { isSAML, isOIDC };
-};
-
 (async function init() {
   const jackson = await require('@boxyhq/saml-jackson').controllers(jacksonOptions);
 
-  connectionAPIController = jackson.connectionAPIController;
+  apiController = jackson.apiController;
   oauthController = jackson.oauthController;
   oidcDiscoveryController = jackson.oidcDiscoveryController;
 })();
@@ -56,53 +46,31 @@ router.get('/config/create', async (req, res) => {
 });
 
 // Store the Metadata
-router.all('/connections', async (req, res, next) => {
-  try {
-    if (req.method === 'GET') {
-      res.json(await connectionAPIController.getConnections(req.query));
-    } else if (req.method === 'POST') {
-      const { isSAML, isOIDC } = strategyChecker(req);
-      if (isSAML) {
-        await connectionAPIController.createSAMLConnection({
-          ...req.body,
-          defaultRedirectUrl,
-          redirectUrl,
-          tenant,
-          product,
-        });
-        res.redirect('/');
-      } else if (isOIDC) {
-        await connectionAPIController.createOIDCConnection({
-          ...req.body,
-          defaultRedirectUrl,
-          redirectUrl,
-          tenant,
-          product,
-        });
-        res.redirect('/');
-      } else {
-        throw { message: 'Missing SSO connection params', statusCode: 400 };
-      }
-    } else {
-      throw { message: 'Method not allowed', statusCode: 405 };
-    }
-  } catch (err) {
-    console.error('connection api error:', err);
-    const { message, statusCode = 500 } = err;
+router.post('/config', async (req, res, next) => {
+  const { rawMetadata } = req.body;
 
-    res.status(statusCode).send(message);
+  try {
+    const response = await apiController.config({
+      rawMetadata,
+      defaultRedirectUrl,
+      redirectUrl,
+      tenant,
+      product,
+    });
+
+    res.redirect('/');
+  } catch (err) {
+    next(err);
   }
 });
 
 // Home
 router.get('/', async (req, res) => {
-  const { idpMetadata, oidcProvider } = (
-    await connectionAPIController.getConnections({
-      tenant,
-      product,
-    })
-  )?.[0];
-  const provider = idpMetadata ? idpMetadata.provider : oidcProvider.provider;
+  const { provider = null } = await apiController.getConfig({
+    tenant,
+    product,
+  });
+
   const authorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl);
   const openidAuthorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl, true);
 
@@ -131,24 +99,12 @@ router.get('/sso/authorize', async (req, res, next) => {
   }
 });
 
-// Handle the SAML Response from IdP
+// Handle the SAML Response from Idp
 router.post(samlPath, async (req, res, next) => {
   try {
     const { redirect_url } = await oauthController.samlResponse(req.body);
 
     res.redirect(redirect_url);
-  } catch (err) {
-    next(err);
-  }
-});
-
-//  Handle the OIDC Response from IdP
-router.get(oidcPath, async (req, res, next) => {
-  try {
-    const { redirect_url } = await oauthController.oidcAuthzResponse(req.query);
-    if (redirect_url) {
-      res.redirect(302, redirect_url);
-    }
   } catch (err) {
     next(err);
   }
@@ -178,7 +134,6 @@ router.get('/oauth/jwks', async (req, res, next) => {
 // Callback (Redirect URL)
 router.get('/sso/callback', async (req, res, next) => {
   const { code } = req.query;
-  console.log(code);
   const body = {
     code,
     client_id: `tenant=${tenant}&product=${product}`,
@@ -227,6 +182,7 @@ const createAuthorizeUrl = (tenant, product, defaultRedirectUrl, isOpenId = fals
   const url = new URL(`${baseUrl}/sso/authorize`);
 
   url.searchParams.append('response_type', 'code');
+  url.searchParams.append('provider', 'saml');
   url.searchParams.append('client_id', `tenant=${tenant}&product=${product}`);
   url.searchParams.append('redirect_uri', defaultRedirectUrl);
   url.searchParams.append('state', 'a-random-state-value');
