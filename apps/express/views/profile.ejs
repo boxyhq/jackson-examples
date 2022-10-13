@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BoxyHQ Enterprise SSO</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <%- include ("partials/header.ejs") %>
+    <div class="mx-auto mt-10 max-w-7xl">
+      <div class="max-w-[50%]">
+        <div class="rounded border border-gray-200 bg-white py-5 px-5">
+          <ul class="flex flex-col space-y-3">
+            <li class="flex flex-col">
+              <span class="font-normal">Provider ID</span>
+              <span class="text-gray-500"><%= profile.id %></span>
+            </li>
+            <li class="flex flex-col">
+              <span class="font-normal">Email</span>
+              <span class="text-gray-500"><%= profile.email %></span>
+            </li>
+            <li class="flex flex-col">
+              <span class="font-normal">First Name</span>
+              <span class="text-gray-500"><%= profile.firstName %></span>
+            </li>
+            <li class="flex flex-col">
+              <span class="font-normal">Last Name</span>
+              <span class="text-gray-500"><%= profile.lastName %></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
