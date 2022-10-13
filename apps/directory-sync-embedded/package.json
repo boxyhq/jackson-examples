@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3366",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3366",
     "lint": "next lint"
   },
   "dependencies": {
     "@boxyhq/saml-jackson": "1.2.1",
     "classnames": "2.3.1",
-    "next": "12.1.0",
-    "next-transpile-modules": "9.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "next": "12.3.1",
+    "next-transpile-modules": "9.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "0.5.3",
