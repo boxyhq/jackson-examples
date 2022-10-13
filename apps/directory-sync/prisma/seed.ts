@@ -10,6 +10,7 @@ async function main() {
       },
     ],
     // Add more tenants here
+    skipDuplicates: true,
   });
 }
 
