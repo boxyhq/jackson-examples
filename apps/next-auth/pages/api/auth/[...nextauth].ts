@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import BoxyHQSAMLProvider from "next-auth/providers/boxyhq-saml"
 
@@ -7,7 +7,7 @@ const samlLoginUrl =
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers/oauth
   providers: [
     // OAuth flow
@@ -113,4 +113,6 @@ export default NextAuth({
       return token
     },
   },
-})
+}
+
+export default NextAuth(authOptions)

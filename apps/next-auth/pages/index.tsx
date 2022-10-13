@@ -25,12 +25,15 @@ export default function ProtectedPage() {
 
   // If no session exists, display access denied message
   if (!session) {
+    console.log(`🤡`)
+
     return (
       <Layout>
         <AccessDenied />
       </Layout>
     )
   }
+  console.log(`💚`)
 
   // If session exists, display content
   return (
