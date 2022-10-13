@@ -1,6 +1,6 @@
-import './TenantForm.css';
+import '../views/TenantForm.css';
 
-export default function TenantForm() {
+export default function Tenant() {
   return (
     <div>
       <p className='prompt'>Enter tenant to login</p>
