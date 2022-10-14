@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@bity/oauth2-auth-code-pkce": "2.13.0",
-    "iron-session": "6.1.2",
-    "next": "12.1.5",
+    "iron-session": "6.2.1",
+    "next": "12.3.1",
     "node-fetch": "3.2.3",
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@boxyhq/config": "0.0.0"
