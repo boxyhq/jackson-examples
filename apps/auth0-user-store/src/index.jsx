@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-d
 import ErrorPage from './error-page';
 import Tenant from './routes/tenant';
 import Profile from './routes/Profile';
+import Home from './routes/Home';
 
 const TENANT_RE = /[?&]tenant=[^&]+/;
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: '/',
+        element: <Home />,
+      },
+      {
         path: '/tenant',
         element: <Tenant />,
       },
@@ -53,7 +58,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
