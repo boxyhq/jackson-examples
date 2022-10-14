@@ -3,36 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>SAML Jackson + Hasura GraphQL Example</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+    <title>BoxyHQ Enterprise SSO</title>
+    <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
     <%- include partials/header.ejs %>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <main>
-        <div class="grid grid-cols-1 divide-x place-items-center">
-          <div class="w-1/2">
-            <h2 class="text-center text-2xl mt-5">Log in to App</h2>
-            <p class="text-center mt-4 font-medium text-gray-500 mb-6">
-              Click `Continue with SAML SSO` and you will be redirected to your
-              third-party authentication provider to finish authenticating.
-            </p>
-
-            <div class="grid grid-cols-1 divide-x place-items-center">
-            <form action="/login" method="POST" class="w-1/2">
-              <div class="mb-6">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Work Email</label>
-                <input type="email" name="email" id="email" value="kiran@boxyhq.com" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-              <div class="mb-6">
-                <button type="submit" class="px-4 py-2 w-full border border-transparent rounded text-sm font-medium text-white bg-indigo-600 focus:outline-none">Continue with SAML SSO</button>
-              </div>
+    <div class="mx-auto h-screen max-w-7xl">
+      <div class="flex h-full flex-col justify-center space-y-5">
+        <h2 class="text-center text-3xl">Log in to App</h2>
+        <div class="mx-auto w-full max-w-md px-3 md:px-0">
+          <div class="rounded border border-gray-200 bg-white py-5 px-5">
+            <form class="space-y-3" method="POST" action="/sso">
+              <label htmlFor="tenant" class="block text-sm">Team ID</label>
+              <input
+                type="text"
+                name="tenant"
+                id="tenant"
+                placeholder="boxyhq.com"
+                class="block w-full appearance-none rounded border border-gray-300 text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500"
+                required />
+              <button
+                type="submit"
+                class="w-full rounded border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white focus:outline-none">
+                Continue with SAML SSO
+              </button>
             </form>
           </div>
-          </div>
         </div>
-      </main>
+      </div>
     </div>
   </body>
 </html>
