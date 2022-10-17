@@ -1,5 +1,4 @@
 const express = require('express');
-const jose = require('jose');
 
 const { options, product, redirectUrl, samlPath } = require('../jackson');
 
@@ -7,7 +6,6 @@ const router = express.Router();
 
 let apiController;
 let oauthController;
-let oidcDiscoveryController;
 
 const tenant = 'boxyhq.com';
 
@@ -16,7 +14,6 @@ const tenant = 'boxyhq.com';
 
   apiController = jackson.connectionAPIController;
   oauthController = jackson.oauthController;
-  oidcDiscoveryController = jackson.oidcDiscoveryController;
 })();
 
 // Home
@@ -83,7 +80,7 @@ router.post('/sso', async (req, res, next) => {
   }
 });
 
-// Handle the SAML Response from Idp
+// Handle the SAML Response from IdP
 router.post(samlPath, async (req, res, next) => {
   const { RelayState, SAMLResponse } = req.body;
 
@@ -115,13 +112,6 @@ router.get('/sso/callback', async (req, res, next) => {
 
     req.session.profile = { id, email, firstName, lastName };
 
-    // if (id_token) {
-    //   const JWKS = jose.createRemoteJWKSet(new URL(`${req.protocol}://${req.get('host')}/oauth/jwks`));
-
-    //   const { payload } = await jose.jwtVerify(id_token, JWKS);
-    //   req.session.id_token = id_token;
-    //   req.session.id_token_claims = payload;
-    // }
     res.redirect('/profile');
   } catch (err) {
     next(err);
@@ -137,27 +127,6 @@ router.get('/profile', async (req, res, next) => {
   }
 
   res.render('profile', { profile });
-});
-
-// OIDC discovery
-router.get('/.well-known/openid-configuration', async (req, res, next) => {
-  try {
-    const config = oidcDiscoveryController.openidConfig();
-    const response = JSON.stringify(config, null, 2);
-    res.status(200).send(response);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get('/oauth/jwks', async (req, res, next) => {
-  try {
-    const jwks = await oidcDiscoveryController.jwks();
-    const response = JSON.stringify(jwks, null, 2);
-    res.status(200).send(response);
-  } catch (err) {
-    next(err);
-  }
 });
 
 module.exports = router;
