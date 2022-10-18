@@ -16,6 +16,13 @@ const tenant = 'boxyhq.com';
   oauthController = jackson.oauthController;
 })();
 
+router.use(function (req, res, next) {
+  // Make `profile` available in templates
+  res.locals.profile = req.session.profile;
+
+  next();
+});
+
 // Home
 router.get('/', async (req, res) => {
   return res.render('index');
