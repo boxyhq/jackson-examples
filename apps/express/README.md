@@ -1,41 +1,23 @@
-## SAML Jackson Demo
+# SAML Jackson + Express.js Example App
 
-Express web app that shows how to use SAML Jackson.
+This demo app shows how to add SAML SSO to a Express.js app using SAML Jackson.
 
-## Install
+## Setup the app
 
 Please follow the below instructions.
 
-### Clone the repo
-
-```
-git clone git@github.com:devkiran/express-jackson-demo.git
-```
-
-```
-cd express-jackson-demo
-```
-
 ### Install dependencies
 
-```
+```bash
 npm install
 ```
 
-### Setup environment variables
+### Setup environment
 
-Update the `.env` with your own values.
+Update the `apps/express/.env` with your own values.
 
-### Start the server
+### Run the app
 
+```bash
+npm run dev:express
 ```
-npm run dev
-```
-
-## Configure
-
-- Visit [http://localhost:3366](http://localhost:3366)
-
-- [Add SAML Metadata](http://localhost:3366/config/create)
-
-- Click the button `Login via SSO`
