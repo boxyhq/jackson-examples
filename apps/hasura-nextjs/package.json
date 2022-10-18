@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start -p 3366",
     "lint": "next lint",
-    "dev-docker": "docker compose -f ./docker-compose.yml up --build"
+    "dev-docker": "docker compose -f ./docker-compose.yml up -d --build"
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
