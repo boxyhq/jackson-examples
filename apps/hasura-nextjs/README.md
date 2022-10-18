@@ -12,8 +12,6 @@ This demo is configured to work with 2 `x-hasura-role` (admin, developer).
 
 `admin` can see all the rows in the users table. `developer` can see their own row. If no role is provided the `developer` role is assumed.
 
-Execute the command `npm run dev:hasura-nextjs` to start the demo app.
-
 ## Setup Environment
 
 Update `.env` with your own credentials.
