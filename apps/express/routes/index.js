@@ -136,4 +136,11 @@ router.get('/profile', async (req, res, next) => {
   res.render('profile', { profile });
 });
 
+// Log out
+router.get('/logout', async (req, res, next) => {
+  req.session.destroy();
+
+  return res.redirect('/sso');
+});
+
 module.exports = router;
