@@ -28,7 +28,9 @@ Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/con
 
 #### Add Required Tables
 
-In the Hasura Console we use the **Raw SQL** feature and add the tables [NextAuth.js needs](https://github.com/skillrecordings/products/tree/main/packages/next-auth-hasura-adapter#overview).
+In the Hasura Console, we use the **Raw SQL** feature to add the tables [NextAuth.js needs](https://github.com/skillrecordings/products/tree/main/packages/next-auth-hasura-adapter#overview).
+
+Navigate to `DATA` tab -> Enter the database connection parameters -> Connect to the database -> Click on `SQL` tab -> Paste the below sql snippet in the editor -> Click Run.
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
