@@ -6,6 +6,10 @@ export const samlAudience = 'https://saml.boxyhq.com';
 export const acsUrl = `${appUrl}/sso/acs`;
 export const redirectUrl = `${appUrl}/sso/callback`;
 
+const databaseUrl = `postgres://${Env.get('PG_USER')}:${Env.get('PG_PASSWORD')}@${Env.get(
+  'PG_HOST'
+)}:${Env.get('PG_PORT')}/${Env.get('PG_DB_NAME')}`;
+
 export const options: JacksonOption = {
   externalUrl: appUrl,
   samlAudience,
@@ -13,6 +17,6 @@ export const options: JacksonOption = {
   db: {
     engine: 'sql',
     type: 'postgres',
-    url: 'postgres://admin:password@localhost:54320/adonis-jackson',
+    url: databaseUrl,
   },
 };

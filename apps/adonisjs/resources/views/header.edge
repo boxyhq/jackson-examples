@@ -6,9 +6,12 @@
           <a href="/" class="font-normal text-gray-900">Home</a>
         </li>
         <li>
-          <a href="/settings" class="font-normal text-gray-900">SAML SSO</a>
+          <a href="/settings" class="font-normal text-gray-900">Setup SAML SSO</a>
         </li>
         @if(auth.isLoggedIn)
+          <li>
+            <a href="/profile" class="font-normal text-gray-900">Profile</a>
+          </li>
           <li>
             <a href="/logout" class="font-normal text-gray-900">Logout</a>
           </li>
