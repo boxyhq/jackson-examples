@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAML Jackson + AdonisJS Example App</title>
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+  @!component('header')
+  <div class="max-w-7xl mx-auto mt-10">
+    <div class="max-w-[50%]">
+      <div class="py-5 px-5 border-gray-200 border bg-white rounded">
+        <ul class="flex flex-col space-y-3">
+          <li class="flex flex-col">
+            <span class="font-normal">User ID</span>
+            <span class="text-gray-500">{{ user.id }}</span>
+          </li>
+          <li class="flex flex-col">
+            <span class="font-normal">Provider ID</span>
+            <span class="text-gray-500">{{ user.providerId }}</span>
+          </li>
+          <li class="flex flex-col">
+            <span class="font-normal">Email</span>
+            <span class="text-gray-500">{{ user.email }}</span>
+          </li>
+          <li class="flex flex-col">
+            <span class="font-normal">First Name</span>
+            <span class="text-gray-500">{{ user.firstName }}</span>
+          </li>
+          <li class="flex flex-col">
+            <span class="font-normal">Last Name</span>
+            <span class="text-gray-500">{{ user.lastName }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

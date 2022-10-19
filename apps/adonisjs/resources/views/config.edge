@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAML Jackson + AdonisJS Example App</title>
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+<div>
+  @!component('header')
+  <div class="max-w-7xl mx-auto mt-10">
+    <div class="max-w-[50%]">
+      <div class="mb-5">
+        @if(!hasConnection)
+          <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">SAML SSO Not Enabled</span>
+        @else
+          <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">SAML SSO Enabled</span>
+        @endif
+      </div>
+      <div class="py-5 px-5 border-gray-200 border bg-white rounded">
+        <form class="space-y-3" method="POST" action="/settings">
+          <label htmlFor="metadata" class="block text-sm">XML Metadata</label>
+          <textarea
+            name="rawMetadata"
+            id="rawMetadata"
+            placeholder="Paste the XML Metadata"
+            class="appearance-none text-sm block w-full border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-indigo-500"
+            required
+            rows="10"
+            ></textarea>
+          <button
+            type="submit"
+            class="px-4 py-2 w-full border border-transparent rounded text-sm font-medium text-white bg-indigo-600 focus:outline-none"
+            >
+          Save Changes
+          </button>
+        </form>
+      </div>
+      <p class="mt-5 text-sm text-gray-600">
+        You can use
+        <a
+          href="https://mocksaml.com/"
+          class="font-medium underline underline-offset-2"
+          >
+        Mock SAML
+        </a>
+        a free SAML 2.0 Identity Provider to test the SAML SSO integration.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
