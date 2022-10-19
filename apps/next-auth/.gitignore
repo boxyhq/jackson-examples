@@ -106,3 +106,5 @@ dist
 .now
 
 .DS_Store
+
+next-env.d.ts

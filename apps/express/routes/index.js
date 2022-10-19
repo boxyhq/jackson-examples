@@ -1,97 +1,85 @@
 const express = require('express');
+
+const { options, product, redirectUrl, samlPath } = require('../jackson');
+
 const router = express.Router();
-const jose = require('jose');
 
 let apiController;
 let oauthController;
-let oidcDiscoveryController;
 
-const baseUrl = process.env.APP_URL;
-const redirectUrl = process.env.REDIRECT_URL;
-const product = 'flex';
-const tenant = 'boxyhq';
-const defaultRedirectUrl = `${baseUrl}/sso/callback`;
-const samlPath = '/sso/acs';
-const acsUrl = `${baseUrl}${samlPath}`;
-const samlAudience = process.env.SAML_AUDIENCE;
-
-const jacksonOptions = {
-  externalUrl: baseUrl,
-  samlAudience: samlAudience,
-  samlPath: samlPath,
-  db: {
-    engine: 'mongo',
-    url: process.env.DB_HOST,
-  },
-  openid: {
-    jwsAlg: 'RS256',
-    jwtSigningKeys: {
-      private: process.env.OPENID_RSA_PRIVATE_KEY,
-      public: process.env.OPENID_RSA_PUBLIC_KEY,
-    },
-  },
-};
+const tenant = 'boxyhq.com';
 
 (async function init() {
-  const jackson = await require('@boxyhq/saml-jackson').controllers(jacksonOptions);
+  const jackson = await require('@boxyhq/saml-jackson').controllers(options);
 
-  apiController = jackson.apiController;
+  apiController = jackson.connectionAPIController;
   oauthController = jackson.oauthController;
-  oidcDiscoveryController = jackson.oidcDiscoveryController;
 })();
 
+router.use(function (req, res, next) {
+  // Make `profile` available in templates
+  res.locals.profile = req.session.profile;
+
+  next();
+});
+
+// Home
+router.get('/', async (req, res) => {
+  return res.render('index');
+});
+
 // Show form to add Metadata
-router.get('/config/create', async (req, res) => {
-  res.render('config/create', { acsUrl });
+router.get('/settings', async (req, res, next) => {
+  try {
+    // Get the SAML SSO connection
+    const connections = await apiController.getConnections({
+      tenant,
+      product,
+    });
+
+    res.render('settings', {
+      hasConnection: connections.length > 0,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Store the Metadata
-router.post('/config', async (req, res, next) => {
+router.post('/settings', async (req, res, next) => {
   const { rawMetadata } = req.body;
 
   try {
-    const response = await apiController.config({
+    // Create SAML SSO connection
+    await apiController.createSAMLConnection({
       rawMetadata,
-      defaultRedirectUrl,
+      defaultRedirectUrl: redirectUrl,
       redirectUrl,
       tenant,
       product,
     });
 
-    res.redirect('/');
+    res.redirect('/settings');
   } catch (err) {
     next(err);
   }
 });
 
-// Home
-router.get('/', async (req, res) => {
-  const { provider = null } = await apiController.getConfig({
-    tenant,
-    product,
-  });
-
-  const authorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl);
-  const openidAuthorizeUrl = createAuthorizeUrl(tenant, product, defaultRedirectUrl, true);
-
-  res.render('index', {
-    provider,
-    authorizeUrl,
-    openidAuthorizeUrl,
-    product,
-    tenant,
-    baseUrl,
-    defaultRedirectUrl,
-    acsUrl,
-    samlAudience,
-    info: req.flash('info'),
-  });
+// SSO Login
+router.get('/sso', async (req, res, next) => {
+  res.render('login');
 });
 
-// OAuth 2.0 flow
-router.get('/sso/authorize', async (req, res, next) => {
+router.post('/sso', async (req, res, next) => {
+  const { tenant } = req.body;
+
   try {
-    const { redirect_url } = await oauthController.authorize(req.query);
+    const { redirect_url } = await oauthController.authorize({
+      tenant,
+      product,
+      state: 'a-random-state-value',
+      redirect_uri: redirectUrl,
+    });
 
     res.redirect(redirect_url);
   } catch (err) {
@@ -99,33 +87,14 @@ router.get('/sso/authorize', async (req, res, next) => {
   }
 });
 
-// Handle the SAML Response from Idp
+// Handle the SAML Response from IdP
 router.post(samlPath, async (req, res, next) => {
+  const { RelayState, SAMLResponse } = req.body;
+
   try {
-    const { redirect_url } = await oauthController.samlResponse(req.body);
+    const { redirect_url } = await oauthController.samlResponse({ RelayState, SAMLResponse });
 
     res.redirect(redirect_url);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// OIDC discovery
-router.get('/.well-known/openid-configuration', async (req, res, next) => {
-  try {
-    const config = oidcDiscoveryController.openidConfig();
-    const response = JSON.stringify(config, null, 2);
-    res.status(200).send(response);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get('/oauth/jwks', async (req, res, next) => {
-  try {
-    const jwks = await oidcDiscoveryController.jwks();
-    const response = JSON.stringify(jwks, null, 2);
-    res.status(200).send(response);
   } catch (err) {
     next(err);
   }
@@ -133,64 +102,45 @@ router.get('/oauth/jwks', async (req, res, next) => {
 
 // Callback (Redirect URL)
 router.get('/sso/callback', async (req, res, next) => {
-  const { code } = req.query;
-  const body = {
-    code,
-    client_id: `tenant=${tenant}&product=${product}`,
-    client_secret: 'dummy',
-    redirect_uri: defaultRedirectUrl,
-  };
+  const { code, state } = req.query;
+
+  // TODO: Validate state
 
   try {
-    const { access_token, id_token } = await oauthController.token(body);
-    req.session.access_token = access_token;
-    if (id_token) {
-      const JWKS = jose.createRemoteJWKSet(new URL(`${req.protocol}://${req.get('host')}/oauth/jwks`));
+    const { access_token, id_token } = await oauthController.token({
+      code,
+      client_id: `tenant=${tenant}&product=${product}`,
+      client_secret: 'dummy',
+      redirect_uri: redirectUrl,
+    });
 
-      const { payload } = await jose.jwtVerify(id_token, JWKS);
-      req.session.id_token = id_token;
-      req.session.id_token_claims = payload;
-    }
-    res.redirect('/me');
+    // Get the profile infor using the access_token
+    const { id, email, firstName, lastName } = await oauthController.userInfo(access_token);
+
+    req.session.profile = { id, email, firstName, lastName };
+
+    res.redirect('/profile');
   } catch (err) {
     next(err);
   }
 });
 
-// Get the user profile
-router.get('/me', async (req, res, next) => {
-  const { access_token } = req.session;
+// Display the user profile
+router.get('/profile', async (req, res, next) => {
+  const { profile } = req.session;
 
-  console.log(req.session);
-
-  if (access_token === undefined) {
-    req.flash('info', 'Please login to access /me');
-    return res.redirect('/');
+  if (profile === undefined) {
+    return res.redirect('/sso');
   }
 
-  try {
-    const profile = await oauthController.userInfo(access_token);
-    const { id_token_claims } = req.session;
-    res.render('me', { profile, id_token_claims });
-  } catch (err) {
-    next(err);
-  }
+  res.render('profile', { profile });
 });
 
-// Create the authorize URL
-const createAuthorizeUrl = (tenant, product, defaultRedirectUrl, isOpenId = false) => {
-  const url = new URL(`${baseUrl}/sso/authorize`);
+// Log out
+router.get('/logout', async (req, res, next) => {
+  req.session.destroy();
 
-  url.searchParams.append('response_type', 'code');
-  url.searchParams.append('provider', 'saml');
-  url.searchParams.append('client_id', `tenant=${tenant}&product=${product}`);
-  url.searchParams.append('redirect_uri', defaultRedirectUrl);
-  url.searchParams.append('state', 'a-random-state-value');
-  if (isOpenId) {
-    url.searchParams.append('scope', 'openid');
-  }
-
-  return url.href;
-};
+  return res.redirect('/sso');
+});
 
 module.exports = router;
