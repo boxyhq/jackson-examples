@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Container from '../components/Container';
 
 const Home: NextPage = () => {
-  const webhookEndpoint = `http://localhost:3000/api/webhook`;
+  const webhookEndpoint = `http://localhost:3366/api/webhook`;
 
   return (
     <Container title='Directory Sync Example'>

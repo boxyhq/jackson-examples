@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BoxyHQ Enterprise SSO</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <%- include ("partials/header.ejs") %>
+    <div class="mx-auto h-screen max-w-7xl">
+      <div class="flex h-full flex-col justify-center space-y-5">
+        <h2 class="text-center text-3xl">Log in to App</h2>
+        <div class="mx-auto w-full max-w-md px-3 md:px-0">
+          <div class="rounded border border-gray-200 bg-white py-5 px-5">
+            <form class="space-y-3" method="POST" action="/sso">
+              <label htmlFor="tenant" class="block text-sm">Team ID</label>
+              <input
+                type="text"
+                name="tenant"
+                id="tenant"
+                placeholder="boxyhq.com"
+                class="block w-full appearance-none rounded border border-gray-300 text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500"
+                required />
+              <button
+                type="submit"
+                class="w-full rounded border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white focus:outline-none">
+                Continue with SAML SSO
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

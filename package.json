@@ -7,9 +7,11 @@
     "packages/*"
   ],
   "scripts": {
+    "clean": "turbo run clean && rm -rf node_modules && rm package-lock.json",
     "build": "turbo run build",
     "dev:express": "turbo run dev --filter='express'",
     "build:next-auth": "turbo run build --filter='next-auth'",
+    "build:auth0-user-store": "turbo run build --filter='auth0-user-store'",
     "dev:next-auth": "turbo run dev --filter='next-auth'",
     "start:next-auth": "turbo run start --filter='next-auth'",
     "dev:next-client-auth": "turbo run dev --filter='next-client-auth'",
@@ -19,6 +21,7 @@
     "dev:hasura-nextjs": "turbo run dev --filter='hasura-nextjs'",
     "dev:hasura-express": "turbo run dev --filter='hasura-express'",
     "dev:directory-sync-embedded": "turbo run dev --filter='directory-sync-embedded'",
+    "dev:adonisjs": "turbo run dev --filter='adonisjs'",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

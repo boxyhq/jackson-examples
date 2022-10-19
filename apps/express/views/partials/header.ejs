@@ -1,23 +1,26 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">SAML Jackson Demo</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/config/create">SAML Metadata</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/me">Me</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <nav class="border-gray-200 px-4 py-4 shadow">
+    <div class="mx-auto max-w-7xl">
+      <ul class="flex gap-4">
+        <li>
+          <a href="/" class="font-normal text-gray-900">Home</a>
+        </li>
+        <li>
+          <a href="/settings" class="font-normal text-gray-900">Setup SAML SSO</a>
+        </li>
+        <% if(profile){ %>
+        <li>
+          <a href="/profile" class="font-normal text-gray-900">Profile</a>
+        </li>
+        <li>
+          <a href="/logout" class="font-normal text-gray-900">Sign out</a>
+        </li>
+        <% } else{ %>
+        <li>
+          <a href="/sso" class="font-normal text-gray-900">Login</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
 </header>
