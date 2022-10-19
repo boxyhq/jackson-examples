@@ -6,13 +6,13 @@
     "clean": "rm -rf .turbo && rm -rf node_modules",
     "dev": "npm run dev-docker & node ./bin/www",
     "dev-docker": "docker compose -f ./docker-compose.yml up --build",
-    "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css"
+    "tailwind": "postcss public/styles/tailwind.css -o public/styles/style.css"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.0.4",
-    "atob": "^2.1.2",
-    "autoprefixer": "^10.4.7",
-    "axios": "^0.26.0",
+    "@boxyhq/saml-jackson": "1.3.1",
+    "atob": "2.1.2",
+    "autoprefixer": "10.4.7",
+    "axios": "0.26.0",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.4",
     "debug": "2.6.9",
@@ -20,17 +20,17 @@
     "ejs": "2.6.1",
     "express": "4.16.1",
     "express-session": "1.17.2",
-    "graphql-request": "^4.3.0",
+    "graphql-request": "4.3.0",
     "http-errors": "1.6.3",
-    "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^3.1.2",
+    "jsonwebtoken": "8.5.1",
+    "jwt-decode": "3.1.2",
     "morgan": "1.9.1",
-    "node-fetch": "^3.2.1",
-    "postcss": "^8.4.14",
-    "postcss-cli": "^10.0.0",
-    "tailwindcss": "^3.1.4"
+    "node-fetch": "3.2.1",
+    "postcss": "8.4.14",
+    "postcss-cli": "10.0.0",
+    "tailwindcss": "3.1.4"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.2"
+    "@tailwindcss/forms": "0.5.2"
   }
 }

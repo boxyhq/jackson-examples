@@ -30,18 +30,7 @@ const decodeJwt = (token) => {
   });
 };
 
-const redirectIfNotAuthenticated = (req, res) => {
-  const { token } = req.session;
-
-  if (token === undefined) {
-    req.flash('info', 'Please login to access /me');
-
-    return res.redirect('/login');
-  }
-};
-
 module.exports = {
   generateJWT,
   decodeJwt,
-  redirectIfNotAuthenticated,
 };

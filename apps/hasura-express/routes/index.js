@@ -1,99 +1,77 @@
 const express = require('express');
-const router = express.Router();
-const { generateJWT, decodeJwt, redirectIfNotAuthenticated } = require('../lib/utils');
+const { generateJWT, decodeJwt } = require('../lib/utils');
 const { getUsers, createUser, getUserByEmail } = require('../lib/users');
+const { options, product, redirectUrl, samlPath } = require('../lib/jackson');
+
+const router = express.Router();
 
 let apiController;
 let oauthController;
 
 const tenant = 'boxyhq.com';
-const product = 'jackson';
-
-const baseUrl = process.env.APP_URL;
-const redirectUrl = process.env.REDIRECT_URL;
-const defaultRedirectUrl = `${baseUrl}/sso/callback`;
-const samlPath = '/sso/acs';
-const acsUrl = `${baseUrl}${samlPath}`;
-const samlAudience = process.env.SAML_AUDIENCE;
-
-const jacksonOptions = {
-  externalUrl: baseUrl,
-  samlAudience: samlAudience,
-  samlPath: samlPath,
-  db: {
-    engine: process.env.DB_ENGINE,
-    url: process.env.DB_URL,
-    type: process.env.DB_TYPE,
-  },
-};
 
 (async function init() {
-  const jackson = await require('@boxyhq/saml-jackson').controllers(jacksonOptions);
+  const jackson = await require('@boxyhq/saml-jackson').controllers(options);
 
-  apiController = jackson.apiController;
+  apiController = jackson.connectionAPIController;
   oauthController = jackson.oauthController;
 })();
-
-// Configure SAML SSO: Show the form to configure SSO
-router.get('/configure', async (req, res) => {
-  const { config = null } = await apiController.getConfig({
-    tenant,
-    product,
-  });
-
-  const params = {
-    defaultRedirectUrl,
-    redirectUrl,
-    acsUrl,
-    samlAudience,
-    idpMetadata: config ? config : null,
-  };
-
-  res.render('saml', { params });
-});
-
-// Configure SAML SSO: Save the SAML SSO configuration
-router.post('/configure', async (req, res) => {
-  const { metadata } = req.body;
-
-  const response = await apiController.config({
-    rawMetadata: metadata,
-    defaultRedirectUrl,
-    redirectUrl: JSON.stringify([redirectUrl]),
-    tenant,
-    product,
-  });
-
-  res.redirect('/configure');
-});
 
 // Home
 router.get('/', async (req, res) => {
   res.render('index');
 });
 
-// Display login form
-router.get('/login', async (req, res) => {
-  const { token } = req.session;
+// Show form to add Metadata
+router.get('/settings', async (req, res) => {
+  try {
+    // Get the SAML SSO connection
+    const connections = await apiController.getConnections({
+      tenant,
+      product,
+    });
 
-  if (token) {
-    return res.redirect('/me');
+    res.render('settings', {
+      hasConnection: connections.length > 0,
+    });
+  } catch (err) {
+    next(err);
   }
+});
 
+// Store the Metadata
+router.post('/settings', async (req, res) => {
+  const { rawMetadata } = req.body;
+
+  try {
+    await apiController.createSAMLConnection({
+      rawMetadata,
+      defaultRedirectUrl: redirectUrl,
+      redirectUrl,
+      tenant,
+      product,
+    });
+
+    res.redirect('/settings');
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Display login form
+router.get('/sso', async (req, res) => {
   res.render('login');
 });
 
 // Handle login form submission
-router.post('/login', async (req, res) => {
-  const { email } = req.body;
-
-  const tenant = email.split('@')[1];
+router.post('/sso', async (req, res) => {
+  const { tenant } = req.body;
 
   const { redirect_url } = await oauthController.authorize({
     tenant,
     product,
-    redirect_uri: defaultRedirectUrl,
-    state: 'some-random-state',
+    state: 'a-random-state-value',
+    redirect_uri: redirectUrl,
   });
 
   return res.redirect(redirect_url);
@@ -101,8 +79,10 @@ router.post('/login', async (req, res) => {
 
 // Handle the SAML Response from IdP
 router.post(samlPath, async (req, res, next) => {
+  const { RelayState, SAMLResponse } = req.body;
+
   try {
-    const { redirect_url } = await oauthController.samlResponse(req.body);
+    const { redirect_url } = await oauthController.samlResponse({ RelayState, SAMLResponse });
 
     res.redirect(redirect_url);
   } catch (err) {
@@ -112,45 +92,53 @@ router.post(samlPath, async (req, res, next) => {
 
 // Callback (Redirect URL)
 router.get('/sso/callback', async (req, res, next) => {
-  const { code } = req.query;
+  const { code, state } = req.query;
 
-  const body = {
+  // TODO: Validate state
+
+  const { access_token } = await oauthController.token({
     code,
     client_id: `tenant=${tenant}&product=${product}`,
     client_secret: 'dummy',
-    redirect_uri: defaultRedirectUrl,
-  };
+    redirect_uri: redirectUrl,
+  });
 
-  const { access_token } = await oauthController.token(body);
-
+  // Get the profile infor using the access_token
   const profile = await oauthController.userInfo(access_token);
 
   const user = (await getUserByEmail(profile.email)) || (await createUser(profile));
 
   req.session.token = generateJWT(user);
 
-  return res.redirect('/me');
+  req.session.profile = {
+    id: profile.id,
+    email: profile.email,
+    firstName: profile.firstName,
+    lastName: profile.lastName,
+  };
+
+  return res.redirect('/profile');
 });
 
 // Get the user profile
-router.get('/me', async (req, res, next) => {
-  const { token } = req.session;
+router.get('/profile', async (req, res, next) => {
+  const { token, profile } = req.session;
 
-  if (!token) {
-    return redirectIfNotAuthenticated(req, res);
+  if (!token || !profile) {
+    return res.redirect('/sso');
   }
 
-  const profile = decodeJwt(token);
+  const decodedJwt = decodeJwt(token);
 
-  res.render('me', { profile });
+  res.render('profile', { profile, decodedJwt });
 });
 
 // Fetch users via Hasura GraphQL API
 router.get('/hasura', async (req, res, next) => {
-  const { token } = req.session;
+  const { token, profile } = req.session;
 
-  if (!token) {
-    return redirectIfNotAuthenticated(req, res);
+  if (!token || !profile) {
+    return res.redirect('/sso');
   }
 
   const users = await getUsers(token);

@@ -1,3 +1,17 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>BoxyHQ Enterprise SSO</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <%- include partials/header.ejs %>
+    <div class="mx-auto mt-10 max-w-7xl">
+      <div class="space-y-3 border border-gray-200 px-3 py-3">
+        <pre><%= error.stack %></pre>
+      </div>
+    </div>
+  </body>
+</html>
