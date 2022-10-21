@@ -26,3 +26,8 @@ One simple integration to automate user and group provisioning. Supports SCIM 2.
 Check `package.json` for a list of dev scripts you can run. For example `npm run dev:next-auth`
 
 **_Note_**: Please remember to copy `.env.example` to `.env` for the needed environment variables for the example you wish to run.
+
+## Support
+
+- [Discord](https://discord.gg/uyb7pYt4Pa)
+- [Twitter](https://twitter.com/boxyhq)
