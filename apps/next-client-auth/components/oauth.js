@@ -70,8 +70,23 @@ export default function OAuth() {
     oauth.fetchAuthorizationCode();
   };
 
+  const logout = function () {
+    fetch('/api/logout')
+      .then(json)
+      .then(function (data) {
+        console.log('Request succeeded with JSON response', data);
+        setLoggedIn(null);
+      })
+      .catch(function (error) {
+        console.log('Logout request failed', error);
+      });
+  };
+
   return loggedIn ? (
-    <div>Logged in as {loggedIn}</div>
+    <div>
+      <div>Logged in as {loggedIn}</div>
+      <button onClick={logout}>Logout</button>
+    </div>
   ) : (
     <button onClick={authorize}>Client-Side Flow</button>
   );
