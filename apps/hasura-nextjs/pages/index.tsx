@@ -7,7 +7,7 @@ const Home: NextPage = () => {
       <div className='space-y-4'>
         <h2 className='text-2xl'>SAML Jackson + Hasura GraphQL Example</h2>
         <p>
-          This is an example web app that demonstrate how to use SAML Jackson SSO for Hasura GraphQL
+          This is an example web app that demonstrate how to use Enterprise SSO for Hasura GraphQL
           authentication (via JWT).
         </p>
         <p className='text-gray-600'>
