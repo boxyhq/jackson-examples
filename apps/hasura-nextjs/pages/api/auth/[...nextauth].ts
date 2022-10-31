@@ -30,9 +30,16 @@ export default NextAuth({
       // Fetch the group from profile and add it to the claims
       // If no group found in raw, assume defaultRole
       if (profile) {
-        const raw = profile.raw as any;
+        const roles = profile.roles as any;
+        const groups = profile.groups as any;
+        let role;
+        if (roles && roles.length > 0) {
+          role = roles[0];
+        } else if (groups && groups.length > 0) {
+          role = groups[0];
+        }
 
-        token['role'] = 'group' in raw ? raw.group : defaultRole;
+        token['role'] = role ?? defaultRole;
       }
 
       return {
