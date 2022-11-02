@@ -22,6 +22,8 @@
     "dev:hasura-express": "turbo run dev --filter='hasura-express'",
     "dev:directory-sync-embedded": "turbo run dev --filter='directory-sync-embedded'",
     "dev:adonisjs": "turbo run dev --filter='adonisjs'",
+    "dev:express-api": "turbo run start --filter='express-api'",
+    "dev:react": "npm run dev:express-api & turbo run start --filter='react'",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
