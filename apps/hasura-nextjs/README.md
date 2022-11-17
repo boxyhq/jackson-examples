@@ -108,7 +108,7 @@ Now you can open the demo app at [http://localhost:3366/](http://localhost:3366/
 
 ### Configure Okta (Optional)
 
-You can optionally configure Okta to demonstrates how to pass `group` along with user profile and use it as value for `x-hasura-role` in the claims.
+You can optionally configure Okta to demonstrate how to pass `groups` along with user profile and use it as value for `x-hasura-role` in the claims.
 
 Read more about [How to define and configure a custom SAML attribute statement](https://support.okta.com/help/s/article/How-to-define-and-configure-a-custom-SAML-attribute-statement?language=en_US)
 
