@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import useOAuthClient from '../hooks/useOAuthClient';
-
-import { oAuth2AuthCodePKCE, authenticate } from '../lib/jackson';
 
 const Login = () => {
-  const [tenant, setTenant] = useState('boxyhq.com');
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+  let location = useLocation();
 
-  const authClient = useOAuthClient(tenant);
-  const { onLogin } = useAuth();
+  let from = location.state?.from?.pathname || '/profile';
 
-  // const oauth = oAuth2AuthCodePKCE(tenant);
+  const { signIn, setTenant, authStatus, user } = useAuth();
 
-  // // Start the authorize flow
-  // const authorize = () => {
-  //   oauth.fetchAuthorizationCode();
-  // };
+  useEffect(() => {
+    if (authStatus === 'LOADED' && user) {
+      navigate(from);
+    }
+  }, [authStatus, from, navigate, user]);
+
+  const handleSubmit = () => signIn();
 
   return (
     <div className='mx-auto h-screen max-w-7xl'>
@@ -25,7 +24,7 @@ const Login = () => {
         <h2 className='text-center text-3xl'>Log in to App</h2>
         <div className='mx-auto w-full max-w-md px-3 md:px-0'>
           <div className='rounded border border-gray-200 bg-white py-5 px-5'>
-            <form className='space-y-3' method='POST' onSubmit={onLogin}>
+            <form className='space-y-3' method='POST' onSubmit={handleSubmit}>
               <label htmlFor='tenant' className='block text-sm'>
                 Tenant ID
               </label>
@@ -36,7 +35,7 @@ const Login = () => {
                 defaultValue='boxyhq.com'
                 className='block w-full appearance-none rounded border border-gray-300 text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500'
                 required
-                onChange={(e) => setTenant(e.target.value)}
+                onChange={(e) => typeof setTenant === 'function' && setTenant(e.target.value)}
               />
               <button
                 type='submit'

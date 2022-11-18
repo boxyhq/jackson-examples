@@ -1,7 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import { apiUrl } from '../lib/jackson';
 
 const Header = () => {
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <header>
       <nav className='border-gray-200 px-4 py-4 shadow'>
@@ -22,6 +27,27 @@ const Header = () => {
                 Profile
               </NavLink>
             </li>
+            {user && (
+              <li className='ml-auto'>
+                <button
+                  type='button'
+                  onClick={() =>
+                    signOut(async () => {
+                      // logout from server
+                      const response = await fetch(`${apiUrl}/api/logout`, {
+                        method: 'GET',
+                        credentials: 'include',
+                      });
+                      if (response.status === 401) {
+                        navigate('/login');
+                      }
+                    })
+                  }
+                  className='font-normal text-gray-900'>
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

@@ -1,7 +1,7 @@
 import { OAuth2AuthCodePKCE } from '@bity/oauth2-auth-code-pkce';
 
 const jacksonUrl = 'http://localhost:5225';
-const apiUrl = 'http://localhost:3000';
+export const apiUrl = 'http://localhost:3367';
 const appUrl = 'http://localhost:3366';
 
 export const oAuth2AuthCodePKCE = (tenant: string, product = 'saml-demo.boxyhq.com') => {
@@ -29,10 +29,14 @@ export const authenticate = async (token: string | undefined) => {
     throw new Error('Access token not found.');
   }
 
-  await fetch(`${apiUrl}/api/authenticate?access_token=${token}`, {
+  const response = await fetch(`${apiUrl}/api/authenticate?access_token=${token}`, {
     method: 'GET',
     credentials: 'include',
   });
+  if (response.ok) {
+    return await response.json();
+  }
+  return {};
 };
 
 export const getProfileByJWT = async () => {

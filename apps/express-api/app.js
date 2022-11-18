@@ -28,6 +28,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.get('/api/logout', async function (req, res) {
+  res.clearCookie('sso-token', { httpOnly: true }).status(401).end();
+});
+
 app.get('/api/authenticate', async function (req, res, next) {
   const accessToken = req.query.access_token;
 
@@ -56,15 +60,15 @@ app.get('/api/authenticate', async function (req, res, next) {
   );
 
   res.cookie('sso-token', token, { httpOnly: true });
-
-  res.json({ token });
+  console.log(profile);
+  res.json(profile);
 });
 
 app.get('/api/profile', async function (req, res, next) {
   const token = req.cookies['sso-token'];
 
   if (!token) {
-    return res.json({ data: null, error: { message: 'Missing JWT' } });
+    return res.status(401).json({ data: null, error: { message: 'Missing JWT' } });
   }
 
   // You may fetch the user profile from your database using the user id.
