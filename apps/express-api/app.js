@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/api/logout', async function (req, res) {
-  res.clearCookie('sso-token', { httpOnly: true }).status(401).end();
+app.delete('/api/logout', async function (req, res) {
+  res.clearCookie('sso-token', { httpOnly: true }).status(200).end();
 });
 
 app.get('/api/authenticate', async function (req, res, next) {
