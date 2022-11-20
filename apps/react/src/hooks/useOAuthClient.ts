@@ -2,13 +2,11 @@ import { OAuth2AuthCodePKCE } from '@bity/oauth2-auth-code-pkce';
 import { useEffect, useState } from 'react';
 
 const JACKSON_URL = 'http://localhost:5225';
-const APP_URL = 'http://localhost:3366';
 
 interface OauthClientOptions {
-  tenant: string;
-  product?: string;
+  redirectUrl: string;
 }
-export default function useOAuthClient({ tenant, product = 'saml-demo.boxyhq.com' }: OauthClientOptions) {
+export default function useOAuthClient({ redirectUrl }: OauthClientOptions) {
   const [oauthClient, setOauthClient] = useState<OAuth2AuthCodePKCE | null>(null);
 
   useEffect(() => {
@@ -16,8 +14,8 @@ export default function useOAuthClient({ tenant, product = 'saml-demo.boxyhq.com
       new OAuth2AuthCodePKCE({
         authorizationUrl: `${JACKSON_URL}/api/oauth/authorize`,
         tokenUrl: `${JACKSON_URL}/api/oauth/token`,
-        clientId: `tenant=${tenant}&product=${product}`,
-        redirectUrl: `${APP_URL}/login`,
+        clientId: 'dummy',
+        redirectUrl,
         scopes: [],
         onAccessTokenExpiry(refreshAccessToken) {
           console.log('Expired! Access token needs to be renewed.');
@@ -31,25 +29,7 @@ export default function useOAuthClient({ tenant, product = 'saml-demo.boxyhq.com
         },
       })
     );
-  }, [product, tenant]);
-
-  // useEffect(() => {
-  //   const oAuthCallback = async () => {
-  //     if (!oauthClient) return;
-  //     try {
-  //       const hasAuthCode = await oauthClient.isReturningFromAuthServer();
-  //       if (!hasAuthCode) {
-  //         console.error('Something wrong...no auth code.');
-  //       }
-  //       const token = await oauthClient.getAccessToken();
-  //       await authenticate(token.token?.value);
-  //       navigate(from, { replace: true });
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   oAuthCallback();
-  // }, [oauthClient]);
+  }, [redirectUrl]);
 
   return oauthClient;
 }
