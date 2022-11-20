@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { useState, ReactNode, createContext } from 'react';
+import React, { useState, useEffect, ReactNode, createContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import useOAuthClient from '../hooks/useOAuthClient';
-import { authenticate, getProfileByJWT } from './jackson';
+import { authenticate, getProfileByJWT } from './backend';
+import devLogger from './devLogger';
 
 interface ProviderProps {
   children: ReactNode;
@@ -22,40 +23,59 @@ const AuthProvider = ({ children }: ProviderProps) => {
   const [tenant, setTenant] = useState('boxyhq.com');
   const [authStatus, setAuthStatus] = useState<AuthContextInterface['authStatus']>('UNKNOWN');
 
-  const authClient = useOAuthClient({ tenant });
+  let location = useLocation();
+  let from = location.state?.from?.pathname || '/profile';
+
+  const redirectUrl = process.env.REACT_APP_APP_URL + from;
+
+  const authClient = useOAuthClient({ redirectUrl });
 
   useEffect(() => {
+    let didCancel = false;
+
     const loadUser = async () => {
-      setAuthStatus('FETCHING');
-      if (authClient?.isAuthorized()) {
-        const { data, error } = await getProfileByJWT();
-        if (!error) {
-          setUser(data);
-        }
+      if (!authClient) {
         return;
       }
-      try {
-        const hasAuthCode = await authClient?.isReturningFromAuthServer();
-        if (!hasAuthCode) {
-          console.error('Something wrong...no auth code.');
+      setAuthStatus('FETCHING');
+      if (authClient.isAuthorized()) {
+        devLogger(`authClient is already authorized`);
+        const { data, error } = await getProfileByJWT();
+        if (!didCancel && !error) {
+          setUser(data);
+          setAuthStatus('LOADED');
         }
-        const token = await authClient?.getAccessToken();
-        console.log(`🏎️`, token);
-        const profile = await authenticate(token?.token?.value);
-        setUser(profile);
-      } catch (err) {
-        console.error(err);
+      } else {
+        try {
+          const hasAuthCode = await authClient?.isReturningFromAuthServer();
+          if (!hasAuthCode) {
+            devLogger('no auth code detected...');
+          } else {
+            const token = await authClient?.getAccessToken();
+            const profile = await authenticate(token?.token?.value);
+            if (!didCancel && profile) {
+              setUser(profile);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setAuthStatus('LOADED');
+        }
       }
-      setAuthStatus('LOADED');
     };
+
+    devLogger(`running effect loadUser`);
     loadUser();
+    return () => {
+      devLogger(`cancelling effect`);
+      didCancel = true;
+    };
   }, [authClient]);
 
   const signIn = async () => {
-    // const token = await fakeAuth();  Initiate the login flow
-    // setToken(token);
-    await authClient?.fetchAuthorizationCode();
-    // callback();
+    // Initiate the login flow
+    await authClient?.fetchAuthorizationCode({ tenant, product: 'saml-demo.boxyhq.com' });
   };
 
   const signOut = async (callback: VoidFunction) => {
