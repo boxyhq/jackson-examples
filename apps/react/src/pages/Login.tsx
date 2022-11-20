@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
-  let navigate = useNavigate();
   let location = useLocation();
 
   let from = location.state?.from?.pathname || '/profile';
 
   const { signIn, setTenant, authStatus, user } = useAuth();
 
-  useEffect(() => {
-    if (authStatus === 'LOADED' && user) {
-      navigate(from);
-    }
-  }, [authStatus, from, navigate, user]);
+  if (authStatus !== 'LOADED') {
+    return null;
+  }
 
-  const handleSubmit = () => signIn();
+  if (authStatus === 'LOADED' && user) {
+    return <Navigate to={from} replace />;
+  }
 
   return (
     <div className='mx-auto h-screen max-w-7xl'>
@@ -24,7 +23,7 @@ const Login = () => {
         <h2 className='text-center text-3xl'>Log in to App</h2>
         <div className='mx-auto w-full max-w-md px-3 md:px-0'>
           <div className='rounded border border-gray-200 bg-white py-5 px-5'>
-            <form className='space-y-3' method='POST' onSubmit={handleSubmit}>
+            <form className='space-y-3' method='POST' onSubmit={signIn}>
               <label htmlFor='tenant' className='block text-sm'>
                 Tenant ID
               </label>
