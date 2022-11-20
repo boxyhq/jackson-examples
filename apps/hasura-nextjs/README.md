@@ -1,6 +1,6 @@
-# Next.js + SAML Jackson SSO + Hasura GraphQL Integration Example
+# Next.js + Enterprise SSO + Hasura GraphQL Integration Example
 
-This demo app shows how to use SAML Jackson with Hasura GraphQL for authentication.
+This demo app shows how to use BoxyHQ SAML Jackson with Hasura GraphQL for authentication.
 
 ## Overview
 
@@ -16,11 +16,11 @@ This demo is configured to work with 2 `x-hasura-role` (admin, developer).
 
 Update `.env` with your own credentials.
 
-Run `npm run dev-docker` from `/apps/hasura-nextjs` to start the Postgres and Hasura Docker containers.
+Run `npm run dev-docker` from `/apps/hasura-nextjs` to start the Postgres, Hasura and BoxyHQ (Jackson) Docker containers.
 
 ### Setup SAML Jackson
 
-`.env` is pre-configured to work with a hosted demo version of SAML Jackson. Feel free to change the `BOXYHQ_SAML_JACKSON_URL` to point to your own hosted version of SAML Jackson.
+`.env` is pre-configured to work with a local version of SAML Jackson (and included in the Docker Compose setup). Feel free to change the `BOXYHQ_SAML_JACKSON_URL` to point to your own hosted version of SAML Jackson.
 
 ### Setup Hasura GraphQL
 
@@ -106,9 +106,13 @@ Run `npm run dev:hasura-nextjs` to start the app.
 
 Now you can open the demo app at [http://localhost:3366/](http://localhost:3366/) and start playing with the app.
 
+### Configure Azure AD (Optional)
+
+You can optionally configure Azure AD to send a `role` along with the user profile and use it as the value for `x-hasura-role` in the claims.
+
 ### Configure Okta (Optional)
 
-You can optionally configure Okta to demonstrate how to pass `groups` along with user profile and use it as value for `x-hasura-role` in the claims.
+You can optionally configure Okta to demonstrate how to pass `groups` along with user profile and use it as the value for `x-hasura-role` in the claims.
 
 Read more about [How to define and configure a custom SAML attribute statement](https://support.okta.com/help/s/article/How-to-define-and-configure-a-custom-SAML-attribute-statement?language=en_US)
 

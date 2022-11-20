@@ -26,8 +26,23 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: secret
+      HASURA_GRAPHQL_ADMIN_SECRET: secret #Don't use this secret in production
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "a7ZNtr9OlnGz4lTKkX3GBrMEaSR2Ls66je9x1fHlhzk="}' #Don't use this key in production
+    networks:
+      - jackson
+
+  jackson:
+    image: "boxyhq/jackson:1.3.6"
+    platform: linux/amd64
+    depends_on:
+      - postgres
+    ports:
+      - 5225:5225
+    environment:
+      - JACKSON_API_KEYS=secret #Don't use this secret in production
+      - DB_ENGINE=sql
+      - DB_TYPE=postgres
+      - DB_URL=postgres://postgres:postgres@postgres:5432/postgres
     networks:
       - jackson
 

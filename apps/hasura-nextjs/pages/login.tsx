@@ -10,7 +10,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
   const { data: session } = useSession();
 
   const [state, setState] = useState({
-    email: 'kiran@boxyhq.com',
+    email: 'demo@boxyhq.com',
   });
 
   // Update state when input changes
@@ -47,6 +47,9 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
         <p className='mt-4 text-center font-medium text-gray-500'>
           Click `Continue with SAML SSO` and you will be redirected to your third-party authentication
           provider to finish authenticating.
+        </p>
+        <p className='mt-4 text-center font-medium text-gray-500'>
+          We extract the domain of the email and use it as the `tenant` value for SSO.
         </p>
         <div className='mx-auto mt-3 w-full max-w-sm'>
           <div className='rounded bg-white py-6 px-6'>
