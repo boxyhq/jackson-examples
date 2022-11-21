@@ -34,7 +34,7 @@ export default class SSOController {
       redirect_uri: redirectUrl,
     } as OAuthTokenReqWithCredentials);
 
-    // Get the profile infor using the access_token
+    // Get the profile info using the access_token
     const { id: providerId, email, firstName, lastName } = await oauthController.userInfo(access_token);
 
     const user = await User.firstOrCreate(

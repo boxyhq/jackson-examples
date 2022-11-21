@@ -1,6 +1,6 @@
-# Next.js + SAML Jackson SSO + Hasura GraphQL Integration Example
+# Next.js + Enterprise SSO + Hasura GraphQL Integration Example
 
-This demo app shows how to use SAML Jackson with Hasura GraphQL for authentication.
+This demo app shows how to use BoxyHQ SAML Jackson with Hasura GraphQL for authentication.
 
 ## Overview
 
@@ -16,15 +16,15 @@ This demo is configured to work with 2 `x-hasura-role` (admin, developer).
 
 Update `.env` with your own credentials.
 
-Run `npm run dev-docker` from `/apps/hasura-nextjs` to start the Postgres and Hasura Docker containers.
+Run `npm run dev-docker` from `/apps/hasura-nextjs` to start the Postgres, Hasura and BoxyHQ (Jackson) Docker containers.
 
 ### Setup SAML Jackson
 
-`.env` is pre-configured to work with a hosted demo version of SAML Jackson. Feel free to change the `BOXYHQ_SAML_JACKSON_URL` to point to your own hosted version of SAML Jackson.
+`.env` is pre-configured to work with a local version of SAML Jackson (and included in the Docker Compose setup). Feel free to change the `BOXYHQ_SAML_JACKSON_URL` to point to your own hosted version of SAML Jackson.
 
 ### Setup Hasura GraphQL
 
-Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/console)
+Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/console). Use the `HASURA_GRAPHQL_ADMIN_SECRET` value from `docker-compose.yml`
 
 #### Add Required Tables
 
@@ -100,15 +100,47 @@ Add an additional role `developer` to the `users` table. The Row select permissi
 
 ![img alt](assets/hasura-set-role.png)
 
+### Configure SAML application in an Identity Provider
+
+You can use our Mock SAML IdP if you do not have access to a real Identity Provider like Azure AD or Okta.
+
 ### Start the app
 
 Run `npm run dev:hasura-nextjs` to start the app.
 
-Now you can open the demo app at [http://localhost:3366/](http://localhost:3366/) and start playing with the app.
+Now you can open the example app at [http://localhost:3366/](http://localhost:3366/) and start playing with the app.
+
+### Configure Azure AD (Optional)
+
+You can optionally configure Azure AD to send a `role` along with the user profile and use it as the value for `x-hasura-role` in the claims.
+
+Navigate to `Users and groups` under the SAML application you created earlier, then select the `application registration` link that's in the text just above the users table. The link is highlighted in red in the screenshot below.
+
+![Application Registration](assets/azure-application-registration.png)
+
+Next click on `Create app role` and create two new roles `admin` and `developer`.
+
+![Create App Role](assets/azure-app-roles.png)
+
+Next head back to the `Users and groups` page, select your user from the table and click on `Edit assignment` at the top.
+
+![Edit App Role](assets/azure-edit-assignment.png)
+
+Now click on `Select a role` and then assign the `admin` role.
+
+![Assign App Role](assets/azure-assign-app-role.png)
+
+If you now give it a minute or two to let Azure AD propagate the change, `Sign out` of `http://localhost:3366/` and `Sign in` again you should see the new role reflected now for your user.
+
+![Admin Role](assets/admin-role.png)
+
+If you switch to the `Hasura` tab then you should now see your own record and any other that might exist. A good way to create more records would be to login via Mock SAML by using `demo@examle.com` email in the `Sign In` page.
+
+![Admin Role Records](assets/admin-role-records.png)
 
 ### Configure Okta (Optional)
 
-You can optionally configure Okta to demonstrates how to pass `group` along with user profile and use it as value for `x-hasura-role` in the claims.
+You can optionally configure Okta to demonstrate how to pass `groups` along with user profile and use it as the value for `x-hasura-role` in the claims.
 
 Read more about [How to define and configure a custom SAML attribute statement](https://support.okta.com/help/s/article/How-to-define-and-configure-a-custom-SAML-attribute-statement?language=en_US)
 
