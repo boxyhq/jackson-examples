@@ -98,11 +98,37 @@ Make sure you [track the tables](https://hasura.io/docs/latest/graphql/core/data
 
 Add an additional role `developer` to the `users` table. The Row select permissions are outlined below in the image, also please don't forget to select all for Column select permissions.
 
-![img alt](assets/hasura-set-role.png)
+![Hasura: Set Role](assets/hasura-set-role.png)
 
 ### Configure SAML application in an Identity Provider
 
-You can use our Mock SAML IdP if you do not have access to a real Identity Provider like Azure AD or Okta.
+You can use our Mock SAML IdP if you do not have access to a real Identity Provider like Azure AD or Okta. You will setup the SAML connection in BoxyHQ using API calls.
+
+For Mock SAML use the following curl command:
+
+```bash
+curl --location --request POST 'http://localhost:5225/api/v1/saml/config' \
+--header 'Authorization: Api-Key secret' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'defaultRedirectUrl=http://localhost:3366/login/saml' \
+--data-urlencode 'redirectUrl=["http://localhost:3366/*"]' \
+--data-urlencode 'tenant=example.com' \
+--data-urlencode 'product=hasura-nextjs' \
+--data-urlencode 'encodedRawMetadata=PG1kOkVudGl0eURlc2NyaXB0b3IgeG1sbnM6bWQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDptZXRhZGF0YSIgZW50aXR5SUQ9Imh0dHBzOi8vc2FtbC5leGFtcGxlLmNvbS9lbnRpdHlpZCIgdmFsaWRVbnRpbD0iMjAzMi0xMS0yMVQwMTowMDowMS41NDlaIj4KPG1kOklEUFNTT0Rlc2NyaXB0b3IgV2FudEF1dGhuUmVxdWVzdHNTaWduZWQ9ImZhbHNlIiBwcm90b2NvbFN1cHBvcnRFbnVtZXJhdGlvbj0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOnByb3RvY29sIj4KPG1kOktleURlc2NyaXB0b3IgdXNlPSJzaWduaW5nIj4KPGRzOktleUluZm8geG1sbnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiPgo8ZHM6WDUwOURhdGE+CjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJQzRqQ0NBY29DQ1FDMzN3bnliVDVRWkRBTkJna3Foa2lHOXcwQkFRc0ZBREF5TVFzd0NRWURWUVFHRXdKViBTekVQTUEwR0ExVUVDZ3dHUW05NGVVaFJNUkl3RUFZRFZRUUREQWxOYjJOcklGTkJUVXd3SUJjTk1qSXdNakk0IE1qRTBOak00V2hnUE16QXlNVEEzTURFeU1UUTJNemhhTURJeEN6QUpCZ05WQkFZVEFsVkxNUTh3RFFZRFZRUUsgREFaQ2IzaDVTRkV4RWpBUUJnTlZCQU1NQ1Uxdlkyc2dVMEZOVERDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRCBnZ0VQQURDQ0FRb0NnZ0VCQUxHZllldHRNc2N0MVQ2dFZVd1R1ZE5KSDVQbmI5R0dua1hpOVp3L2U2eDQ1REQwIFJ1Uk9OYkZsSjJUNFJqQUUvdUcrQWpYeFhROG8yU1pmYjkrR2dtQ0h1VEpGTmdIb1oxbkZWWENtYi9IZzhIcGQgNHZPQUdYbmRpeGFSZU9pcTNFSDVYdnBNak1rSjMrOCs5VllNek1aT2prZ1F0QXFPMzZlQUZGZk5LWDdkVGozViBwd0xrdno2L0tGQ3E4T0F3WStBVWk0ZVptNUo1N0QzMUd6akh3ZmpIOVdUZVgwTXluZG1uTkIxcVY3NXFRUjNiIDIvVzVzR0hSdis5QWFyZ2dKa0YrcHRVa1hvTHRWQTUxd2NmWW02aElMcHRwZGU1RlFDOFJXWTFZcnN3QldBRVogTmZ5clI0SmVTd2VFbE5IZzROVk9zNFR3R2pPUHdXR3F6VGZnVGxFQ0F3RUFBVEFOQmdrcWhraUc5dzBCQVFzRiBBQU9DQVFFQUFZUmxZZmxTWEFXb1pwRmZ3TmlDUVZFNWQ5elowRFB6TmRXaEF5YlhjVHlNZjB6NW1EZjZGV0JXIDVHeW9pOXUzRU1FRG56TGNKTmt3SkFBYzM5QXBhNEkyL3RtbCtKeTI5ZGs4YlR5WDZtOTNuZ21DZ2RMaDVaYTQga2h1VTNBTTNMNjNnN1ZleEN1Tzdrd2tqaC8rTHFkY0lYc1ZHTzZYRGZ1MlFPczFYcGU5ekl6THB3bS9STlllWCBVamJTajVjZS9qZWtwQXc3cXlWVkw0eE95aDhBdFVXMWVrM3dJdzFNSnZFZ0VQdDBkMTZvc2hXSnBvUzFPVDhMIHIvMjJTdllFbzNFbVNHZFRWR2drM3gzcytBMHFXQXFUY3lqcjdRNHMvR0tZUkZmb21Hd3owVFo0SXcxWk45OU0gbTBlbzJVU2xTUlRWbDdRSFJUdWl1U1RoSHBMS1FRPT0gPC9kczpYNTA5Q2VydGlmaWNhdGU+CjwvZHM6WDUwOURhdGE+CjwvZHM6S2V5SW5mbz4KPC9tZDpLZXlEZXNjcmlwdG9yPgo8bWQ6TmFtZUlERm9ybWF0PnVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OmVtYWlsQWRkcmVzczwvbWQ6TmFtZUlERm9ybWF0Pgo8bWQ6U2luZ2xlU2lnbk9uU2VydmljZSBCaW5kaW5nPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YmluZGluZ3M6SFRUUC1SZWRpcmVjdCIgTG9jYXRpb249Imh0dHBzOi8vbW9ja3NhbWwuY29tL2FwaS9zYW1sL3NzbyIvPgo8bWQ6U2luZ2xlU2lnbk9uU2VydmljZSBCaW5kaW5nPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YmluZGluZ3M6SFRUUC1QT1NUIiBMb2NhdGlvbj0iaHR0cHM6Ly9tb2Nrc2FtbC5jb20vYXBpL3NhbWwvc3NvIi8+CjwvbWQ6SURQU1NPRGVzY3JpcHRvcj4KPC9tZDpFbnRpdHlEZXNjcmlwdG9yPg=='
+```
+
+For Azure AD or other Identity Providers use the following curl command (same as above) but replace `encodedRawMetadata` with the base64 encoded value of the SAML metadata file you download.
+
+```bash
+curl --location --request POST 'http://localhost:5225/api/v1/connections' \
+--header 'Authorization: Api-Key secret' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'defaultRedirectUrl=http://localhost:3366/login/saml' \
+--data-urlencode 'redirectUrl=["http://localhost:3366/*", "http://localhost:3001/*"]' \
+--data-urlencode 'tenant=boxyhq.com' \
+--data-urlencode 'product=hasura-nextjs' \
+--data-urlencode 'encodedRawMetadata=<base64 encoded string of the SAML metadata file contents>'
+```
 
 ### Start the app
 
