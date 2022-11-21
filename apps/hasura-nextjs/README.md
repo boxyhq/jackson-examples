@@ -156,6 +156,10 @@ Now click on `Select a role` and then assign the `admin` role.
 
 ![Assign App Role](assets/azure-assign-app-role.png)
 
+Now you'll need to ensure that we have a SAML attribute mapping to the role we assigned earlier. Head back to the `SAML setup` page in Azure AD and maps `roles` attribute to `user.assignedroles`.
+
+![SAML role mapping](assets/azure-saml-role-mapping.png)
+
 If you now give it a minute or two to let Azure AD propagate the change, `Sign out` of `http://localhost:3366/` and `Sign in` again you should see the new role reflected now for your user.
 
 ![Admin Role](assets/admin-role.png)
