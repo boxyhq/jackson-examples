@@ -1,15 +1,17 @@
 import { OAuth2AuthCodePKCE } from '@bity/oauth2-auth-code-pkce';
 import { useEffect, useState } from 'react';
+import devLogger from '../lib/devLogger';
 
 const JACKSON_URL = 'http://localhost:5225';
 
 interface OauthClientOptions {
   redirectUrl: string;
 }
-export default function useOAuthClient({ redirectUrl }: OauthClientOptions) {
+export default function useOAuthClient({ redirectUrl }: OauthClientOptions): OAuth2AuthCodePKCE | null {
   const [oauthClient, setOauthClient] = useState<OAuth2AuthCodePKCE | null>(null);
 
   useEffect(() => {
+    devLogger('initializing new oauthclient with redirectUrl: ' + redirectUrl);
     setOauthClient(
       new OAuth2AuthCodePKCE({
         authorizationUrl: `${JACKSON_URL}/api/oauth/authorize`,

@@ -17,6 +17,11 @@ const Header = () => {
                 Home
               </NavLink>
             </li>
+            <li>
+              <NavLink to='/protected' className='font-normal text-gray-900'>
+                Protected
+              </NavLink>
+            </li>
             {loaded && !user && (
               <li>
                 <NavLink to='/login' className='font-normal text-gray-900'>

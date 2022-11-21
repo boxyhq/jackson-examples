@@ -7,6 +7,7 @@ import { AuthProvider } from './lib/AuthProvider';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Protected from './pages/Protected';
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
           element={
             <RequireAuth>
               <Profile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path='/protected'
+          element={
+            <RequireAuth>
+              <Protected />
             </RequireAuth>
           }
         />

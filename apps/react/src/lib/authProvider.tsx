@@ -16,6 +16,9 @@ interface AuthContextInterface {
   signOut: (callback: VoidFunction) => void;
 }
 
+// localstorage key to store from url
+const APP_FROM_URL = 'appFromUrl';
+
 const AuthContext = createContext<AuthContextInterface>(null!);
 
 const AuthProvider = ({ children }: ProviderProps) => {
@@ -24,7 +27,7 @@ const AuthProvider = ({ children }: ProviderProps) => {
   const [authStatus, setAuthStatus] = useState<AuthContextInterface['authStatus']>('UNKNOWN');
 
   let location = useLocation();
-  let from = location.state?.from?.pathname || '/profile';
+  let from = location.state?.from?.pathname || localStorage.getItem(APP_FROM_URL) || '/profile';
 
   const redirectUrl = process.env.REACT_APP_APP_URL + from;
 
@@ -51,7 +54,9 @@ const AuthProvider = ({ children }: ProviderProps) => {
           if (!hasAuthCode) {
             devLogger('no auth code detected...');
           } else {
-            const token = await authClient?.getAccessToken();
+            devLogger(authClient);
+            const token = !didCancel ? await authClient?.getAccessToken() : null;
+            token && localStorage.removeItem(APP_FROM_URL);
             const profile = await authenticate(token?.token?.value);
             if (!didCancel && profile) {
               setUser(profile);
@@ -74,6 +79,8 @@ const AuthProvider = ({ children }: ProviderProps) => {
   }, [authClient]);
 
   const signIn = async () => {
+    // store the from url before redirecting ... we need this to correctly initialize the oauthClient after getting redirected back from SSO Provider.
+    localStorage.setItem(APP_FROM_URL, from);
     // Initiate the login flow
     await authClient?.fetchAuthorizationCode({ tenant, product: 'saml-demo.boxyhq.com' });
   };
