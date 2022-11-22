@@ -2,7 +2,7 @@ import { OAuth2AuthCodePKCE } from '@bity/oauth2-auth-code-pkce';
 import { useEffect, useState } from 'react';
 import devLogger from '../lib/devLogger';
 
-const JACKSON_URL = 'http://localhost:5225';
+const JACKSON_URL = process.env.REACT_APP_JACKSON_URL;
 
 interface OauthClientOptions {
   redirectUrl: string;
