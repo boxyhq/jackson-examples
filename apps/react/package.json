@@ -19,6 +19,7 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf build",
     "start": "export PORT=3366 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
