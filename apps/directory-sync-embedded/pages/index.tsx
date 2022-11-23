@@ -2,8 +2,6 @@ import type { NextPage } from 'next';
 import Container from '../components/Container';
 
 const Home: NextPage = () => {
-  const webhookEndpoint = `http://localhost:3000/api/webhook`;
-
   return (
     <Container title='Directory Sync Example'>
       <div className='space-y-4'>
