@@ -22,9 +22,9 @@ Update `apps/adonisjs/.env` with your own credentials.
 npm run dev:adonisjs
 ```
 
-Open the app at [http://localhost:3000](http://localhost:3000)
+Open the app at [http://localhost:3366](http://localhost:3366)
 
 ## Configure SAML SSO
 
-- Open [http://localhost:3000/settings](http://localhost:3000/settings)
+- Open [http://localhost:3366/settings](http://localhost:3366/settings)
 - Add the SAML Metadata for the current tenant
