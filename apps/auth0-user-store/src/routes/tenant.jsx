@@ -1,3 +1,4 @@
+import React from 'react';
 import '../views/TenantForm.css';
 
 export default function Tenant() {

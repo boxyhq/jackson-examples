@@ -30,7 +30,7 @@ function Index() {
   };
 
   return (
-    <Auth0Provider {...providerConfig} resource={`tenant=${tenant}&product=saml-demo.boxyhq.com`}>
+    <Auth0Provider {...providerConfig} resource={`tenant=${tenant}&product=saml-demo.auth0.com`}>
       <App />
     </Auth0Provider>
   );
