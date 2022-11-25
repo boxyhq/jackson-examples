@@ -8,8 +8,6 @@ Save hundreds of development hours and integrate SSO to your SaaS app in minutes
 
 - [AdonisJS](https://github.com/boxyhq/jackson-examples/tree/main/apps/adonisjs)
 - [Auth0](https://github.com/boxyhq/jackson-examples/tree/main/apps/auth0-user-store)
-- [Directory Sync](https://github.com/boxyhq/jackson-examples/tree/main/apps/directory-sync)
-- [Directory Sync Embedded](https://github.com/boxyhq/jackson-examples/tree/main/apps/directory-sync-embedded)
 - [Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/express)
 - [Firebase](https://github.com/boxyhq/jackson-examples/tree/main/apps/firebase-user-store)
 - [Hasura + Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-express)
