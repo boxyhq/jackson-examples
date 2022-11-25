@@ -8,14 +8,13 @@ function NavItem({ href, text }: { href: string; text: string }) {
   const isActive = router.asPath === href;
 
   return (
-    <Link href={href}>
-      <a
-        className={classnames(
-          isActive ? 'border-b-2 border-indigo-500 font-semibold' : '',
-          'inline-flex items-center px-1 pt-1 text-base text-gray-900'
-        )}>
-        {text}
-      </a>
+    <Link
+      href={href}
+      className={classnames(
+        isActive ? 'border-b-2 border-indigo-500 font-semibold' : '',
+        'inline-flex items-center px-1 pt-1 text-base text-gray-900'
+      )}>
+      {text}
     </Link>
   );
 }
