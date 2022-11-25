@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>BoxyHQ Enterprise SSO</title>
-    <link rel="stylesheet" href="./styles/style.css" />
-  </head>
-  <body>
-    <%- include partials/header.ejs %>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>BoxyHQ Enterprise SSO</title>
+  <link rel="stylesheet" href="./styles/style.css" />
+</head>
+
+<body>
+  <%- include('partials/header.ejs') %>
     <div class="mx-auto mt-10 max-w-7xl">
       <div class="space-y-3 border border-gray-200 px-3 py-3">
         <h1 class="text-2xl">Enterprise SSO + Hasura GraphQL Example</h1>
@@ -22,37 +24,25 @@
         </p>
         <ul class="flex flex-row space-x-6">
           <li>
-            <a
-              class="underline underline-offset-2"
-              target="_blank"
-              rel="noreferrer"
+            <a class="underline underline-offset-2" target="_blank" rel="noreferrer"
               href="https://boxyhq.com/docs/jackson/overview">
               Documentation
             </a>
           </li>
           <li>
-            <a
-              class="underline underline-offset-2"
-              target="_blank"
-              rel="noreferrer"
+            <a class="underline underline-offset-2" target="_blank" rel="noreferrer"
               href="https://github.com/boxyhq/jackson">
               Github
             </a>
           </li>
           <li>
-            <a
-              class="underline underline-offset-2"
-              target="_blank"
-              rel="noreferrer"
+            <a class="underline underline-offset-2" target="_blank" rel="noreferrer"
               href="https://www.npmjs.com/package/@boxyhq/saml-jackson">
               NPM
             </a>
           </li>
           <li>
-            <a
-              class="underline underline-offset-2"
-              target="_blank"
-              rel="noreferrer"
+            <a class="underline underline-offset-2" target="_blank" rel="noreferrer"
               href="https://hub.docker.com/r/boxyhq/jackson">
               Docker Hub
             </a>
@@ -60,5 +50,6 @@
         </ul>
       </div>
     </div>
-  </body>
+</body>
+
 </html>

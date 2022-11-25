@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
+import json from 'highlight.js/lib/languages/json';
+
 import 'highlight.js/styles/monokai-sublime.css';
 
 const registeredLanguages = {};
@@ -14,14 +16,14 @@ class Highlight extends Component {
     this.codeNode = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { language } = this.props;
 
     if (language && !registeredLanguages[language]) {
       try {
-        const newLanguage = require(`highlight.js/lib/languages/${language}`);
-        hljs.registerLanguage(language, newLanguage);
-        registeredLanguages[language] = true;
+        hljs.registerLanguage('json', json);
+
+        registeredLanguages[json] = true;
 
         this.setState({ loaded: true }, this.highlight);
       } catch (e) {

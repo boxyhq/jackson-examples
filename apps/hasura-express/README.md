@@ -36,7 +36,7 @@ npm run dev:hasura-express
 
 - Open Hasura Console at [http://localhost:8081/console](http://localhost:8081/console)
 - Configure your database connection
-- Click `SQL` from the lef menu
+- Click `SQL` from the left menu
 - Paste the following SQL into the editor. This will create the `users` table with required columns
 
 ```sql
