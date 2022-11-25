@@ -45,11 +45,11 @@
     ]
   },
   "devDependencies": {
-    "husky": "7.0.4",
-    "lint-staged": "12.3.7",
-    "prettier": "2.6.0",
-    "prettier-plugin-tailwindcss": "0.1.8",
-    "turbo": "1.2.4"
+    "husky": "8.0.2",
+    "lint-staged": "13.0.4",
+    "prettier": "2.8.0",
+    "prettier-plugin-tailwindcss": "0.1.13",
+    "turbo": "1.6.3"
   },
   "engines": {
     "node": ">=14.18.1 <=18.x"
