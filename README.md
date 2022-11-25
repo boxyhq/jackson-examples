@@ -7,12 +7,19 @@ This is a collection of example apps that show how to integrate  Enterprise SSO 
 Save hundreds of development hours and integrate SSO to your SaaS app in minutes. Supports SAML & OIDC.
 
 - [AdonisJS](https://github.com/boxyhq/jackson-examples/tree/main/apps/adonisjs)
-- [Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/express)
-- [Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/next-auth)
-- [Hasura + Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-nextjs)
-- [Hasura + Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-express)
-- [Firebase](https://github.com/boxyhq/jackson-examples/tree/main/apps/firebase-user-store)
 - [Auth0](https://github.com/boxyhq/jackson-examples/tree/main/apps/auth0-user-store)
+- [Directory Sync](https://github.com/boxyhq/jackson-examples/tree/main/apps/directory-sync)
+- [Directory Sync Embedded](https://github.com/boxyhq/jackson-examples/tree/main/apps/directory-sync-embedded)
+- [Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/express)
+- [Firebase](https://github.com/boxyhq/jackson-examples/tree/main/apps/firebase-user-store)
+- [Hasura + Express.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-express)
+- [Hasura + Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-nextjs)
+- [Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/next-auth)
+- [Reactjs](https://github.com/boxyhq/jackson-examples/tree/main/apps/react)
+
+
+
+
 
 ## Directory Sync (SCIM)
 
