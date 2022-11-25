@@ -12,9 +12,7 @@ export default function Footer() {
           </a>
         </li>
         <li className={styles.navItem}>
-          <Link href="/policy">
-            <a>Policy</a>
-          </Link>
+          <Link href="/policy">Policy</Link>
         </li>
         <li className={styles.navItem}>
           <a href="https://github.com/boxyhq/jackson">
