@@ -1,20 +1,26 @@
 # SAML Jackson + React App Example
 
-This demo app shows how to add SAML SSO to an React app using SAML Jackson.
+This demo app shows how to add SAML SSO to a React app using SAML Jackson.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+For a detailed walkthrough refer to the guide: https://boxyhq.com/guides/jackson/frameworks/react
+
+This example app needs you to run jackson as a service.
 
 ## Setup the app
 
 Please follow the below instructions.
 
-### Install dependencies
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Run the app
+### 2. Configure your local environment
+
+Update the `.env` file if needed.
+
+### 3. Run the app
 
 ```bash
 npm run dev:react
