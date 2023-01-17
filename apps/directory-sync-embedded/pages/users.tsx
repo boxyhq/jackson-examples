@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const tenant = config.tenant;
   const product = config.product;
 
-  const { data: users } = await directorySync.users.setTenantAndProduct(tenant, product).list({});
+  const { data: users } = await directorySync.users.setTenantAndProduct(tenant, product).getAll();
 
   return {
     props: {

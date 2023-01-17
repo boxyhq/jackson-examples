@@ -5,10 +5,10 @@ import jackson from './jackson';
 export const findOrCreateDirectory = async (tenant: string, product: string): Promise<Directory> => {
   const { directorySync } = await jackson();
 
-  const { data: directory } = await directorySync.directories.getByTenantAndProduct(tenant, product);
+  const { data: directories } = await directorySync.directories.getByTenantAndProduct(tenant, product);
 
-  if (directory) {
-    return directory;
+  if (directories && directories.length > 0) {
+    return directories[0];
   }
 
   const { data: directoryCreated, error } = await directorySync.directories.create({
