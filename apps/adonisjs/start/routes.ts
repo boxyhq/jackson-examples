@@ -47,6 +47,7 @@ Route.group(() => {
     return new LoginController().store(ctx);
   });
 
+  // SAML SSO ACS endpoint
   Route.post('/api/oauth/saml', async (ctx) => {
     return new SSOController().acs(ctx);
   });
