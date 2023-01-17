@@ -50,13 +50,30 @@ const Home: NextPage = () => {
           </li>
         </ul>
 
-        <div className='space-y-2 border bg-cyan-100 px-3 py-3'>
+        <div>
+          <h3 className='pb-2 text-xl'>Getting Started</h3>
+          <ol className='list-inside list-decimal'>
+            <li className='py-1'>
+              Create a Directory Sync connection in the <strong>BoxyHQ Admin Portal</strong> using following
+              values:
+            </li>
+            <li className='py-1'>
+              Tenant: <strong>boxyhq.com</strong>
+            </li>
+            <li className='py-1'>
+              Product: <strong>saml-jackson</strong>
+            </li>
+            <li className='py-1'>
+              Webhook URL: <strong>{webhookEndpoint}</strong>
+            </li>
+            <li className='py-1'>
+              Webhook Secret: <strong>any-secret</strong>
+            </li>
+          </ol>
+        </div>
+        <div className='flex flex-col space-y-2'>
           <p>
-            Your webhook endpoint is <strong>{webhookEndpoint}</strong>
-          </p>
-          <p>Create a Directory on the SAML Jackson for the tenant you want to sync for.</p>
-          <p>
-            The demo is configured for the tenant <strong>boxyhq.com</strong>
+            The demo is configured for the tenant <strong>boxyhq.com</strong>.
           </p>
           <p>
             Open <strong>apps/directory-sync/prisma/seed.ts</strong> to change the tenant.

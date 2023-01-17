@@ -12,7 +12,7 @@ export default function Logs(props: { logs: Log[] }) {
       <div className='space-y-4'>
         <h2 className='mb-5 text-2xl'>Webhook Events</h2>
       </div>
-      <table className='w-full text-left text-sm text-gray-500 dark:text-gray-400'>
+      <table className='table-fixed text-left text-sm text-gray-500 dark:text-gray-400'>
         <thead className='bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
             <th scope='col' className='px-6 py-3'>
@@ -37,10 +37,8 @@ export default function Logs(props: { logs: Log[] }) {
                 className='border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600'>
                 <td className='px-6 py-4'>{log.tenant.domain}</td>
                 <td className='px-6 py-4'>{log.action}</td>
-                <td className='px-6 py-4'>{log.createdAt}</td>
-                <td className='px-6 py-4'>
-                  <pre>{JSON.stringify(log.payload)}</pre>
-                </td>
+                <td className='px-6 py-4'>{log.createdAt.toString()}</td>
+                <td className='px-6 py-4'>{JSON.stringify(log.payload)}</td>
               </tr>
             );
           })}
