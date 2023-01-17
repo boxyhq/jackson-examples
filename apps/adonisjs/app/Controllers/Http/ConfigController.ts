@@ -1,10 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import { connectionAPIController } from '@ioc:BoxyHQ/Jackson';
-import { samlAudience, acsUrl, redirectUrl } from '../../../lib/jackson';
-
-const tenant = 'boxyhq.com';
-const product = 'saml-demo.boxyhq.com';
+import { samlAudience, acsUrl, redirectUrl, tenant, product } from '../../../lib/jackson';
 
 export default class ConfigController {
   public async index({ view }: HttpContextContract) {
