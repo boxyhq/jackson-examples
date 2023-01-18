@@ -2,7 +2,7 @@ const baseUrl = process.env.APP_URL;
 const samlAudience = process.env.SAML_AUDIENCE || 'https://saml.boxyhq.com';
 
 const product = 'saml-demo.boxyhq.com';
-const samlPath = '/sso/acs';
+const samlPath = '/api/oauth/saml';
 const redirectUrl = `${baseUrl}/sso/callback`;
 
 // SAML Jackson options
