@@ -2,33 +2,29 @@ import type { Directory } from '@boxyhq/saml-jackson';
 import jackson from './jackson';
 
 // Find or create a directory sync connection for the given tenant and product.
-const findOrCreateDirectory = async (tenant: string, product: string): Promise<Directory> => {
+export const findOrCreateDirectory = async (tenant: string, product: string): Promise<Directory> => {
   const { directorySync } = await jackson();
 
-  let directory: Directory | null = null;
+  const { data: directories } = await directorySync.directories.getByTenantAndProduct(tenant, product);
 
-  // Get the directory sync connection for the tenant
-  const response = await directorySync.directories.getByTenantAndProduct(tenant, product);
-
-  directory = response.data;
-
-  // Create the directory sync connection for the tenant if it doesn't exist
-  if (!directory) {
-    const response = await directorySync.directories.create({
-      name: `Directory Sync : ${tenant}`,
-      type: 'okta-scim-v2',
-      tenant,
-      product,
-    });
-
-    directory = response.data;
+  if (directories && directories.length > 0) {
+    return directories[0];
   }
 
-  if (!directory) {
+  const { data: directoryCreated, error } = await directorySync.directories.create({
+    name: `Directory Sync : ${tenant}`,
+    type: 'okta-scim-v2',
+    tenant,
+    product,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  if (!directoryCreated) {
     throw new Error('Could not create directory sync connection');
   }
 
-  return directory;
+  return directoryCreated;
 };
-
-export { findOrCreateDirectory };

@@ -1,5 +1,5 @@
 import jackson from '@boxyhq/saml-jackson';
-import type { IAPIController, IOAuthController, JacksonOption, DirectorySync } from '@boxyhq/saml-jackson';
+import type { JacksonOption, IDirectorySyncController } from '@boxyhq/saml-jackson';
 
 const opts: JacksonOption = {
   externalUrl: `${process.env.APP_URL}`,
@@ -12,32 +12,21 @@ const opts: JacksonOption = {
   },
 };
 
-let apiController: IAPIController;
-let oauthController: IOAuthController;
-let directorySync: DirectorySync;
+let directorySync: IDirectorySyncController;
 
 const g = global as any;
 
 export default async function init() {
-  if (!g.apiController || !g.oauthController) {
+  if (!g.directorySync) {
     const ret = await jackson(opts);
 
-    apiController = ret.apiController;
-    oauthController = ret.oauthController;
-    directorySync = ret.directorySync;
-
-    g.apiController = apiController;
-    g.oauthController = oauthController;
+    directorySync = ret.directorySyncController;
     g.directorySync = directorySync;
   } else {
-    apiController = g.apiController;
-    oauthController = g.oauthController;
     directorySync = g.directorySync;
   }
 
   return {
-    apiController,
-    oauthController,
     directorySync,
   };
 }
