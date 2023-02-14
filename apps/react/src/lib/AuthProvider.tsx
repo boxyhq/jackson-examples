@@ -31,6 +31,8 @@ const AuthProvider = ({ children }: ProviderProps) => {
 
   const redirectUrl = process.env.REACT_APP_APP_URL + from;
 
+  const product = process.env.REACT_APP_BOXYHQ_PRODUCT || 'saml-demo.boxyhq.com';
+
   const authClient = useOAuthClient({ redirectUrl });
 
   useEffect(() => {
@@ -82,7 +84,10 @@ const AuthProvider = ({ children }: ProviderProps) => {
     // store the from url before redirecting ... we need this to correctly initialize the oauthClient after getting redirected back from SSO Provider.
     localStorage.setItem(APP_FROM_URL, from);
     // Initiate the login flow
-    await authClient?.fetchAuthorizationCode({ tenant, product: 'saml-demo.boxyhq.com' });
+    await authClient?.fetchAuthorizationCode({
+      tenant,
+      product,
+    });
   };
 
   const signOut = async (callback: VoidFunction) => {
