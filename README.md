@@ -32,7 +32,7 @@ Check `package.json` for a list of dev scripts you can run. For example `npm run
 
 **_Note_**: Please remember to copy `.env.example` to `.env` for the needed environment variables for the example you wish to run.
 
-## Support
+## Community
 
-- [Discord](https://discord.gg/uyb7pYt4Pa)
-- [Twitter](https://twitter.com/boxyhq)
+- [Discord](https://discord.gg/uyb7pYt4Pa) (For live discussion with the Community and BoxyHQ team)
+- [Twitter](https://twitter.com/BoxyHQ) (Get the news fast)
