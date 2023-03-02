@@ -30,15 +30,27 @@ const handleDirectorySyncEvents = async (req: NextApiRequest) => {
 
   // Users events
   if (event === 'user.created') {
+    const user = await users.get(data.email);
+
+    if (user) {
+      return;
+    }
+
     return await users.create(tenantInfo.id, data);
   }
 
   if (event === 'user.updated') {
+    const user = await users.get(data.email);
+
+    if (!user) {
+      return await users.create(tenantInfo.id, data);
+    }
+
     return await users.update(data);
   }
 
   if (event === 'user.deleted') {
-    return await users.delete(data.id);
+    return await users.delete(data.email);
   }
 
   // Groups events
