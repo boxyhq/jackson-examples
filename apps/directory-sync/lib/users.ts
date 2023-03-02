@@ -28,18 +28,18 @@ const users = {
     });
   },
 
-  delete: async (directoryUserId: string) => {
+  delete: async (email: string) => {
     return await prisma.user.delete({
       where: {
-        directoryUserId,
+        email,
       },
     });
   },
 
-  get: async (directoryUserId: string) => {
+  get: async (email: string) => {
     return await prisma.user.findUnique({
       where: {
-        directoryUserId,
+        email,
       },
     });
   },
