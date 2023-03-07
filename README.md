@@ -48,3 +48,7 @@ Please try to create bug reports that are:
 - [Discord](https://discord.gg/uyb7pYt4Pa) (For live discussion with the Community and BoxyHQ team)
 - [Twitter](https://twitter.com/BoxyHQ) (Get the news fast)
 - [GitHub Issues](https://github.com/boxyhq/jackson-examples/issues) (Bug reports, Contributions)
+
+## License
+
+[Apache 2.0 License](https://github.com/boxyhq/jackson/blob/main/LICENSE)
