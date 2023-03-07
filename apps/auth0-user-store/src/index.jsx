@@ -20,17 +20,21 @@ function Index() {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState) => {
-    navigate(appState && appState.returnTo ? appState.returnTo : window.location.pathname);
+    navigate((appState && appState.returnTo) || window.location.pathname);
   };
   const providerConfig = {
     domain: process.env.REACT_APP_AUTH0_DOMAIN,
     clientId: process.env.REACT_APP_AUTH0_CLIENTID,
-    redirectUri: window.location.origin + '/profile',
     onRedirectCallback,
   };
 
   return (
-    <Auth0Provider {...providerConfig} resource={`tenant=${tenant}&product=saml-demo.auth0.com`}>
+    <Auth0Provider
+      {...providerConfig}
+      authorizationParams={{
+        redirect_uri: window.location.origin + '/profile',
+        resource: `tenant=${tenant}&product=saml-demo.auth0.com`,
+      }}>
       <App />
     </Auth0Provider>
   );
