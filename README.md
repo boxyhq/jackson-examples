@@ -1,6 +1,6 @@
 # JavaScript Example Apps powered by BoxyHQ
 
-This is a collection of example apps that show how to integrate  Enterprise SSO and Directory Sync with JavaScript-based web and authentication frameworks.
+This is a collection of example apps that show how to integrate Enterprise SSO and Directory Sync with JavaScript-based web and authentication frameworks.
 
 ## Enterprise SSO
 
@@ -14,10 +14,6 @@ Save hundreds of development hours and integrate SSO to your SaaS app in minutes
 - [Hasura + Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/hasura-nextjs)
 - [Next.js](https://github.com/boxyhq/jackson-examples/tree/main/apps/next-auth)
 - [Reactjs](https://github.com/boxyhq/jackson-examples/tree/main/apps/react)
-
-
-
-
 
 ## Directory Sync (SCIM)
 
