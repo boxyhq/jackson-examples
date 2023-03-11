@@ -1,7 +1,7 @@
 const baseUrl = process.env.APP_URL;
 const samlAudience = process.env.SAML_AUDIENCE || 'https://saml.boxyhq.com';
 
-const product = 'saml-demo.boxyhq.com';
+const product = process.env.BOXYHQ_PRODUCT || 'saml-demo.boxyhq.com';
 const samlPath = '/api/oauth/saml';
 const redirectUrl = `${baseUrl}/sso/callback`;
 
@@ -11,9 +11,9 @@ const options = {
   samlAudience,
   samlPath,
   db: {
-    engine: 'sql',
-    type: 'postgres',
-    url: process.env.DB_HOST,
+    engine: process.env.DB_ENGINE,
+    type: process.env.DB_TYPE,
+    url: process.env.DB_URL,
   },
   openid: {
     jwsAlg: 'RS256',
