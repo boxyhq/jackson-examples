@@ -20,7 +20,7 @@
   "contributors": [],
   "license": "Apache 2.0",
   "dependencies": {
-    "next": "13.2.3",
+    "next": "13.2.4",
     "next-auth": "4.17.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
