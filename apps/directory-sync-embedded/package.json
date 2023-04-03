@@ -23,7 +23,7 @@
     "@types/react": "18.0.28",
     "autoprefixer": "10.4.13",
     "eslint": "8.35.0",
-    "eslint-config-next": "13.2.3",
+    "eslint-config-next": "13.2.4",
     "postcss": "8.4.21",
     "tailwindcss": "3.2.7",
     "ts-node": "10.9.1",
