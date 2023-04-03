@@ -13,7 +13,7 @@
     "@bity/oauth2-auth-code-pkce": "2.13.0",
     "firebase": "9.17.2",
     "firebase-admin": "11.5.0",
-    "next": "13.2.3",
+    "next": "13.2.4",
     "node-fetch": "3.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
