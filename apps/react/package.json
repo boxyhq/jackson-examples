@@ -5,18 +5,18 @@
   "dependencies": {
     "@bity/oauth2-auth-code-pkce": "2.13.0",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.4.0",
+    "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.4.0",
-    "@types/node": "18.14.6",
-    "@types/react": "18.0.28",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.8.2",
+    "react-router-dom": "6.10.0",
     "react-scripts": "5.0.1",
     "typescript": "4.9.4",
-    "web-vitals": "3.1.1"
+    "web-vitals": "3.3.1"
   },
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf build",
@@ -47,6 +47,6 @@
     "@tailwindcss/forms": "0.5.3",
     "autoprefixer": "10.4.13",
     "postcss": "8.4.21",
-    "tailwindcss": "3.2.7"
+    "tailwindcss": "3.3.1"
   }
 }
