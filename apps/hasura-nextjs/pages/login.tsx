@@ -52,7 +52,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
           We extract the domain of the email and use it as the `tenant` value for SSO.
         </p>
         <div className='mx-auto mt-3 w-full max-w-sm'>
-          <div className='rounded bg-white py-6 px-6'>
+          <div className='rounded bg-white px-6 py-6'>
             <form className='space-y-6' onSubmit={loginUser}>
               <div>
                 <label htmlFor='email' className='block text-sm text-gray-600'>

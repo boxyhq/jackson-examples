@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
       clientId: `tenant=boxyhq.com&product=${
         process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
       }`,
-      clientSecret: "dummy",
+      clientSecret: "+SHxddKYna8tvOTzczUDEUNb8doSg0fO",
     }),
     // Open Id connect flow
     BoxyHQSAMLProvider({
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify({
             grant_type: "authorization_code",
             client_id: "dummy",
-            client_secret: "dummy",
+            client_secret: "+SHxddKYna8tvOTzczUDEUNb8doSg0fO",
             redirect_url: process.env.NEXTAUTH_URL,
             code,
           }),

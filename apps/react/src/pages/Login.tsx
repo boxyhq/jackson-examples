@@ -22,7 +22,7 @@ const Login = () => {
       <div className='flex h-full flex-col justify-center space-y-5'>
         <h2 className='text-center text-3xl'>Log in to App</h2>
         <div className='mx-auto w-full max-w-md px-3 md:px-0'>
-          <div className='rounded border border-gray-200 bg-white py-5 px-5'>
+          <div className='rounded border border-gray-200 bg-white px-5 py-5'>
             <form className='space-y-3' method='POST' onSubmit={signIn}>
               <label htmlFor='tenant' className='block text-sm'>
                 Tenant ID
