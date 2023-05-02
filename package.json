@@ -34,14 +34,8 @@
     }
   },
   "lint-staged": {
-    "apps/**/*.{js,ts}": [
-      "eslint --cache --fix"
-    ],
     "apps/**/*.{js,ts,css,md}": [
-      "prettier --write"
-    ],
-    "*.json": [
-      "prettier --write"
+      "npm run format"
     ]
   },
   "devDependencies": {

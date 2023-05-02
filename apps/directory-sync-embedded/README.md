@@ -33,6 +33,7 @@ Run the app by executing the following command:
 ```bash
 npm run dev:directory-sync-embedded
 ```
+
 ## Contributing
 
 Thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody and are very appreciated.

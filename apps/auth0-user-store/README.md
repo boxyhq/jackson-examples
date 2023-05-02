@@ -61,7 +61,12 @@ For the demo, we can use mocksaml.com (mock SAML IdP) to test the flow. Add a co
 Since SAML is multi-tenanted we need to pass the tenant/product information to Jackson. Auth0 supports passing of [parameters to Identity Providers](https://auth0.com/docs/authenticate/identity-providers/pass-parameters-to-idps), although only a limited set of params are allowed. We use `resource` param to pass the encoded tenant info:
 
 ```jsx
-<Auth0Provider {...providerConfig} resource={`tenant=${tenant}&product=saml-demo.boxyhq.com`}>
+    <Auth0Provider
+      {...providerConfig}
+      authorizationParams={{
+        redirect_uri: window.location.origin + '/profile',
+        resource: `tenant=${tenant}&product=saml-demo.auth0.com`,
+      }}>
 ```
 
 ## Configuration
@@ -90,6 +95,7 @@ This compiles and serves the React app and starts the backend API server on port
 ```bash
 npm run dev:auth0-user-store // from root of monorepo
 ```
+
 ## Contributing
 
 Thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody and are very appreciated.

@@ -45,7 +45,7 @@ const NavBar = () => {
                   <NavLink
                     tag={RouterNavLink}
                     to='/'
-                    exact
+                    end
                     activeClassName='router-link-exact-active'
                     disabled={isTenantSelectionRoute}>
                     Home
