@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "eslint-config-next": "12.1.5",
-    "eslint-config-prettier": "8.5.0",
+    "eslint-config-prettier": "8.8.0",
     "eslint-plugin-react": "7.31.11"
   },
   "devDependencies": {
