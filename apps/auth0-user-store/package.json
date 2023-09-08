@@ -16,7 +16,7 @@
     "@fortawesome/fontawesome-svg-core": "6.4.0",
     "@fortawesome/free-solid-svg-icons": "6.4.0",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "10.4.15",
     "helmet": "6.0.1",
     "highlight.js": "11.8.0",
     "jwks-rsa": "3.0.1",
