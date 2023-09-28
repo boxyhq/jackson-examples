@@ -22,3 +22,5 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+package-lock.json
