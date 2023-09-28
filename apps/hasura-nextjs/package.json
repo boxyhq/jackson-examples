@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start -p 3366",
     "lint": "next lint",
-    "dev-docker": "docker compose -f ./docker-compose.yml up -d --build"
+    "dev-docker": "docker compose -f ./docker-compose.yml up -d --build",
+    "dev-docker-clean": "docker-compose -f ./docker-compose.yml down --volumes --remove-orphans"
   },
   "dependencies": {
     "@apollo/client": "3.7.17",

@@ -6,6 +6,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules",
     "dev": "npm run dev-docker & node ./bin/www",
     "dev-docker": "docker compose -f ./docker-compose.yml up --build",
+    "dev-docker-clean": "docker-compose -f ./docker-compose.yml down --volumes --remove-orphans",
     "tailwind": "postcss public/styles/tailwind.css -o public/styles/style.css"
   },
   "dependencies": {
