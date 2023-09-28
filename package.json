@@ -2,10 +2,6 @@
   "name": "jackson-examples",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "clean": "turbo run clean && rm -rf node_modules && rm package-lock.json",
     "build": "turbo run build",
