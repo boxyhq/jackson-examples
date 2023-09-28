@@ -3,43 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clean": "turbo run clean && rm -rf node_modules && rm package-lock.json",
-    "build": "turbo run build",
-    "dev:express": "turbo run dev --filter='express'",
-    "build:next-auth": "turbo run build --filter='next-auth'",
-    "build:auth0-user-store": "turbo run build --filter='auth0-user-store'",
-    "dev:next-auth": "turbo run dev --filter='next-auth'",
-    "start:next-auth": "turbo run start --filter='next-auth'",
-    "dev:firebase-user-store": "turbo run dev --filter='firebase-user-store'",
-    "dev:auth0-user-store": "turbo run dev --filter='auth0-user-store'",
-    "dev:directory-sync": "turbo run dev --filter='directory-sync'",
-    "dev:hasura-nextjs": "turbo run dev --filter='hasura-nextjs'",
-    "dev:hasura-express": "turbo run dev --filter='hasura-express'",
-    "dev:directory-sync-embedded": "turbo run dev --filter='directory-sync-embedded'",
-    "dev:adonisjs": "turbo run dev --filter='adonisjs'",
-    "dev:express-api": "turbo run start --filter='express-api'",
-    "dev:react": "npm run dev:express-api & turbo run start --filter='react'",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "apps/**/*.{js,ts,css,md}": [
-      "npm run format"
-    ]
-  },
-  "devDependencies": {
-    "husky": "8.0.3",
-    "lint-staged": "13.2.3",
-    "prettier": "2.8.0",
-    "prettier-plugin-tailwindcss": "0.2.7",
-    "turbo": "1.6.3"
+    "dev:express": "cd apps/express && npm run dev --filter='express'",
+    "build:next-auth": "cd apps/next-auth && npm run build",
+    "build:auth0-user-store": "cd apps/auth0-user-store && npm run build",
+    "dev:next-auth": "cd apps/next-auth && npm run dev",
+    "start:next-auth": "cd apps/next-auth && npm run start",
+    "dev:firebase-user-store": "cd apps/firebase-user-store && npm run dev",
+    "dev:auth0-user-store": "cd apps/auth0-user-store && npm run dev",
+    "dev:directory-sync": "cd apps/directory-sync && npm run dev",
+    "dev:hasura-nextjs": "cd apps/hasura-nextjs && npm run dev",
+    "dev:hasura-express": "cd apps/hasura-express && npm run dev",
+    "dev:directory-sync-embedded": "cd apps/directory-sync-embedded && npm run dev",
+    "dev:adonisjs": "cd apps/adonisjs && npm run dev",
+    "dev:express-api": "cd apps/express-api && npm run start",
+    "dev:react": "npm run dev:express-api & cd apps/react && npm run start"
   },
   "engines": {
     "node": ">=14.18.1 <=18.x"
