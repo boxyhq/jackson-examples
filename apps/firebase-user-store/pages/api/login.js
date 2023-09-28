@@ -40,7 +40,7 @@ export default async function loginRoute(req, res) {
               });
           } else {
             console.log(`User updation failed`);
-            console.log(err.code);
+            console.log(error.code);
           }
           console.log('Error updating user:', error);
         });
