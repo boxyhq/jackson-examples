@@ -4,8 +4,8 @@ export const env = {
     url: process.env.NEXTAUTH_URL || 'http://localhost:3366',
   },
   jackson: {
-    endpoint: process.env.BOXYHQ_SAML_JACKSON_URL || 'https://jackson-demo.boxyhq.com',
-    product: process.env.BOXYHQ_PRODUCT || 'saml-demo.boxyhq.com',
+    endpoint: process.env.BOXYHQ_SAML_JACKSON_URL || 'https://sso.eu.boxyhq.com',
+    product: process.env.BOXYHQ_PRODUCT || '1eef7782-41d4-4a0a-b450-0857413b4f63',
   },
   hasura: {
     endpoint: process.env.HASURA_ENDPOINT || 'http://localhost:8081/v1/graphql',
