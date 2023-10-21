@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import BoxyHQSAMLProvider from "next-auth/providers/boxyhq-saml"
 
 const samlLoginUrl =
-  process.env.BOXYHQ_SAML_JACKSON_URL || "https://jackson-demo.boxyhq.com"
+  process.env.BOXYHQ_SAML_JACKSON_URL || "https://sso.eu.boxyhq.com"
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
       authorization: { params: { scope: "" } },
       issuer: samlLoginUrl,
       clientId: `tenant=boxyhq.com&product=${
-        process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
+        process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
       }`,
       clientSecret: "dummy",
     }),
@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
       authorization: { params: { scope: "openid email" } },
       // checks: ["pkce", "state"],
       clientId: `tenant=boxyhq.com&product=${
-        process.env.BOXYHQ_PRODUCT || "saml-demo.boxyhq.com"
+        process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
       }`,
       clientSecret: "dummy",
     }),
