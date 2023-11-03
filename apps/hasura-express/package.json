@@ -9,7 +9,7 @@
     "tailwind": "postcss public/styles/tailwind.css -o public/styles/style.css"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.12.2",
+    "@boxyhq/saml-jackson": "1.14.2",
     "atob": "2.1.2",
     "autoprefixer": "10.4.16",
     "axios": "1.5.1",
