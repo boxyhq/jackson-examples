@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bity/oauth2-auth-code-pkce": "2.13.0",
-    "firebase": "10.4.0",
+    "firebase": "10.5.2",
     "firebase-admin": "11.11.0",
     "next": "13.5.4",
     "node-fetch": "3.3.2",
