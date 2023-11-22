@@ -23,6 +23,7 @@
     "dev:adonisjs": "turbo run dev --filter='adonisjs'",
     "dev:express-api": "turbo run start --filter='express-api'",
     "dev:react": "npm run dev:express-api & turbo run start --filter='react-example'",
+    "dev:express-passportjs": "turbo run dev --filter='express-passportjs'",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
