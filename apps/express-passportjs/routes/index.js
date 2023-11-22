@@ -6,19 +6,16 @@ const router = express.Router();
 
 const product = process.env.BOXYHQ_PRODUCT;
 const boxyhqUrl = process.env.BOXYHQ_SAML_JACKSON_URL;
-
-const tenant = 'boxyhq.com'; // TODO: Read from request
-const clientId = `tenant=${tenant}&product=${product}`;
-const clientSecret = 'dummy';
+const callbackUrl = `${process.env.APP_URL}/api/auth/callback/boxyhq-saml`;
 
 // Register the BoxyHQ SAML strategy
 const authClient = new OAuth2Strategy(
   {
     authorizationURL: `${boxyhqUrl}/api/oauth/authorize`,
     tokenURL: `${boxyhqUrl}/api/oauth/token`,
-    callbackURL: 'http://localhost:3366/api/auth/callback/boxyhq-saml',
-    clientID: clientId,
-    clientSecret: clientSecret,
+    callbackURL: callbackUrl,
+    clientID: 'dummy',
+    clientSecret: 'dummy',
     state: 'some-state-string',
   },
   function (accessToken, refreshToken, profile, cb) {
@@ -26,6 +23,13 @@ const authClient = new OAuth2Strategy(
     cb(null, profile);
   }
 );
+
+authClient.authorizationParams = function ({ tenant }) {
+  return {
+    tenant,
+    product,
+  };
+};
 
 // Fetch the user profile
 // https://github.com/jaredhanson/passport-oauth2/issues/73
@@ -87,6 +91,7 @@ router.post('/sso', (req, res, next) => {
   passport.authenticate('boxyhq-saml', {
     successRedirect: '/profile',
     failureRedirect: '/sso',
+    tenant: req.body.tenant,
   })(req, res, next);
 });
 
