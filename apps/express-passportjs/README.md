@@ -14,12 +14,12 @@ npm install
 
 ### Setup environment
 
-Update the `apps/express/.env` with your own values.
+Update the `apps/express-passportjs/.env` with your own values.
 
 ### Run the app
 
 ```bash
-npm run dev:express
+npm run dev:express:passportjs
 ```
 
 ## Contributing
