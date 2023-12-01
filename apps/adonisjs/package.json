@@ -19,7 +19,7 @@
     "pino-pretty": "10.2.3",
     "postcss-loader": "7.3.3",
     "tailwindcss": "3.3.5",
-    "typescript": "5.2.2",
+    "typescript": "5.3.2",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",
     "assets-webpack-plugin": "7.1.1",
