@@ -61,6 +61,6 @@ updates:
       interval: 'monthly'
 
   - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/apps/react' # Location of package manifests
+    directory: '/apps/react-example' # Location of package manifests
     schedule:
       interval: 'monthly'
