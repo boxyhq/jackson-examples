@@ -12,7 +12,7 @@
     "@babel/core": "7.23.0",
     "@babel/preset-env": "7.23.2",
     "@japa/preset-adonis": "1.2.0",
-    "@japa/runner": "2.5.1",
+    "@japa/runner": "3.1.0",
     "@symfony/webpack-encore": "4.5.0",
     "@tailwindcss/forms": "0.5.6",
     "adonis-preset-ts": "2.1.0",
