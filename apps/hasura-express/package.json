@@ -12,7 +12,7 @@
     "@boxyhq/saml-jackson": "1.15.2",
     "atob": "2.1.2",
     "autoprefixer": "10.4.16",
-    "axios": "1.6.2",
+    "axios": "1.6.3",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.6",
     "debug": "4.3.4",
