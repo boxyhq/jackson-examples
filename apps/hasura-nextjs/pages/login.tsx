@@ -10,7 +10,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
   const { data: session } = useSession();
 
   const [state, setState] = useState({
-    email: 'demo@boxyhq.com',
+    email: 'jackson@example.com',
   });
 
   // Update state when input changes
@@ -43,14 +43,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
   return (
     <Container title='Sign in'>
       <div className='mx-auto flex max-w-md flex-col py-20'>
-        <h2 className='mt-5 text-center text-3xl'>Log in to App</h2>
-        <p className='mt-4 text-center font-medium text-gray-500'>
-          Click `Continue with SAML SSO` and you will be redirected to your third-party authentication
-          provider to finish authenticating.
-        </p>
-        <p className='mt-4 text-center font-medium text-gray-500'>
-          We extract the domain of the email and use it as the `tenant` value for SSO.
-        </p>
+        <h2 className='mt-5 text-center text-3xl'>Login with SAML SSO</h2>
         <div className='mx-auto mt-3 w-full max-w-sm'>
           <div className='rounded bg-white px-6 py-6'>
             <form className='space-y-6' onSubmit={loginUser}>
@@ -63,7 +56,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
                     type='email'
                     name='email'
                     id='email'
-                    placeholder='username@boxyhq.com'
+                    placeholder='jackson@example.com'
                     value={state.email}
                     onChange={handleChange}
                     className='block w-full appearance-none rounded border border-gray-300 text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500'
@@ -75,7 +68,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
                 <button
                   type='submit'
                   className='w-full rounded border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white focus:outline-none'>
-                  Continue with SAML SSO
+                  Continue
                 </button>
               </div>
             </form>
