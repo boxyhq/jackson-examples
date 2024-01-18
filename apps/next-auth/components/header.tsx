@@ -25,17 +25,13 @@ export default function Header() {
               <span className={styles.notSignedInText}>
                 You are not signed in
               </span>
-              <a
+              <Link
+                href="/sso"
                 className={styles.buttonPrimary}
                 data-test-id="signInButton"
-                onClick={(e) => {
-                  e.preventDefault()
-                  // OAuth flow
-                  signIn("boxyhq-saml")
-                }}
               >
                 Sign in with SAML SSO
-              </a>
+              </Link>
             </>
           )}
           {session?.user && (
