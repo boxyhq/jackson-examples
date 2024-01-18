@@ -23,7 +23,7 @@ const AuthContext = createContext<AuthContextInterface>(null!);
 
 const AuthProvider = ({ children }: ProviderProps) => {
   const [user, setUser] = useState<any>(null);
-  const [tenant, setTenant] = useState('boxyhq.com');
+  const [tenant, setTenant] = useState('example.com');
   const [authStatus, setAuthStatus] = useState<AuthContextInterface['authStatus']>('UNKNOWN');
 
   let location = useLocation();
