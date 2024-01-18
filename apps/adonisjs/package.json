@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "5.9.5",
+    "@adonisjs/assembler": "7.0.0",
     "@babel/core": "7.23.7",
     "@babel/preset-env": "7.23.6",
     "@japa/preset-adonis": "1.2.0",
@@ -16,7 +16,7 @@
     "@symfony/webpack-encore": "4.5.0",
     "@tailwindcss/forms": "0.5.7",
     "adonis-preset-ts": "2.1.0",
-    "pino-pretty": "10.2.3",
+    "pino-pretty": "10.3.1",
     "postcss-loader": "7.3.4",
     "tailwindcss": "3.3.6",
     "typescript": "5.3.2",
