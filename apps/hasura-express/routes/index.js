@@ -8,7 +8,7 @@ const router = express.Router();
 let apiController;
 let oauthController;
 
-const tenant = 'boxyhq.com';
+const tenant = 'example.com';
 
 (async function init() {
   const jackson = await require('@boxyhq/saml-jackson').controllers(options);
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 // Show form to add Metadata
-router.get('/settings', async (req, res) => {
+router.get('/settings', async (req, res, next) => {
   try {
     // Get the SAML SSO connection
     const connections = await apiController.getConnections({
@@ -40,7 +40,7 @@ router.get('/settings', async (req, res) => {
 });
 
 // Store the Metadata
-router.post('/settings', async (req, res) => {
+router.post('/settings', async (req, res, next) => {
   const { rawMetadata } = req.body;
 
   try {
@@ -64,17 +64,22 @@ router.get('/sso', async (req, res) => {
 });
 
 // Handle login form submission
-router.post('/sso', async (req, res) => {
-  const { tenant } = req.body;
+router.post('/sso', async (req, res, next) => {
+  // Extract the tenant from the email address
+  const tenant = req.body.email.split('@')[1];
 
-  const { redirect_url } = await oauthController.authorize({
-    tenant,
-    product,
-    state: 'a-random-state-value',
-    redirect_uri: redirectUrl,
-  });
+  try {
+    const { redirect_url } = await oauthController.authorize({
+      tenant,
+      product,
+      state: 'a-random-state-value',
+      redirect_uri: redirectUrl,
+    });
 
-  return res.redirect(redirect_url);
+    res.redirect(redirect_url);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Handle the SAML Response from IdP
