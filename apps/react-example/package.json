@@ -16,7 +16,7 @@
     "react-router-dom": "6.21.1",
     "react-scripts": "5.0.1",
     "typescript": "5.3.2",
-    "web-vitals": "3.5.0"
+    "web-vitals": "3.5.1"
   },
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf build",
