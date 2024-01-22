@@ -68,7 +68,7 @@ const Login: NextPage<{ product: string }> = ({ product }) => {
                 <button
                   type='submit'
                   className='w-full rounded border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white focus:outline-none'>
-                  Continue
+                  Continue with SAML SSO
                 </button>
               </div>
             </form>
