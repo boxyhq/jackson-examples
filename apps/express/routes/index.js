@@ -1,13 +1,14 @@
 const express = require('express');
 
-const { options, product, redirectUrl, samlPath } = require('../jackson');
+const { options, redirectUrl, samlPath } = require('../jackson');
 
 const router = express.Router();
 
 let apiController;
 let oauthController;
 
-const tenant = 'boxyhq.com';
+const tenant = process.env.BOXYHQ_TENANT || 'example.com';
+const product = process.env.BOXYHQ_PRODUCT || 'saml-demo.boxyhq.com';
 
 (async function init() {
   const jackson = await require('@boxyhq/saml-jackson').controllers(options);
@@ -71,7 +72,8 @@ router.get('/sso', async (req, res, next) => {
 });
 
 router.post('/sso', async (req, res, next) => {
-  const { tenant } = req.body;
+  // Extract the tenant from the email address
+  const tenant = req.body.email.split('@')[1];
 
   try {
     const { redirect_url } = await oauthController.authorize({

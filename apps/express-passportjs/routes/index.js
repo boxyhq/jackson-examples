@@ -88,10 +88,13 @@ router.get('/sso', async (req, res, next) => {
 
 // Start SSO
 router.post('/sso', (req, res, next) => {
+  // Extract the tenant from the email address
+  const tenant = req.body.email.split('@')[1];
+
   passport.authenticate('boxyhq-saml', {
     successRedirect: '/profile',
     failureRedirect: '/sso',
-    tenant: req.body.tenant,
+    tenant,
   })(req, res, next);
 });
 

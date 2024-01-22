@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
@@ -17,24 +16,32 @@ const Login = () => {
     return <Navigate to={from} replace />;
   }
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tenant = e.target.value.split('@')[1];
+
+    if (typeof setTenant === 'function') {
+      setTenant(tenant);
+    }
+  };
+
   return (
     <div className='mx-auto h-screen max-w-7xl'>
       <div className='flex h-full flex-col justify-center space-y-5'>
-        <h2 className='text-center text-3xl'>Log in to App</h2>
+        <h2 className='text-center text-3xl'>Login with SAML SSO</h2>
         <div className='mx-auto w-full max-w-md px-3 md:px-0'>
           <div className='rounded border border-gray-200 bg-white px-5 py-5'>
             <form className='space-y-3' method='POST' onSubmit={signIn}>
               <label htmlFor='tenant' className='block text-sm'>
-                Tenant ID
+                Work Email
               </label>
               <input
-                type='text'
-                name='tenant'
-                placeholder='boxyhq'
-                defaultValue='boxyhq.com'
+                type='email'
+                name='email'
+                placeholder='jackson@example.com'
+                defaultValue='jackson@example.com'
                 className='block w-full appearance-none rounded border border-gray-300 text-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500'
                 required
-                onChange={(e) => typeof setTenant === 'function' && setTenant(e.target.value)}
+                onChange={onChange}
               />
               <button
                 type='submit'

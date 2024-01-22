@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import styles from "./header.module.css"
 
 // The approach used in this component shows how to build a sign in and sign out
@@ -25,17 +25,13 @@ export default function Header() {
               <span className={styles.notSignedInText}>
                 You are not signed in
               </span>
-              <a
+              <Link
+                href="/saml"
                 className={styles.buttonPrimary}
                 data-test-id="signInButton"
-                onClick={(e) => {
-                  e.preventDefault()
-                  // OAuth flow
-                  signIn("boxyhq-saml")
-                }}
               >
                 Sign in with SAML SSO
-              </a>
+              </Link>
             </>
           )}
           {session?.user && (
@@ -51,16 +47,15 @@ export default function Header() {
                 <br />
                 <strong>{session.user.email ?? session.user.name}</strong>
               </span>
-              <a
-                href={`/api/auth/signout`}
+              <button
                 className={styles.button}
                 onClick={(e) => {
                   e.preventDefault()
-                  signOut()
+                  signOut({ callbackUrl: "/" })
                 }}
               >
                 Sign out
-              </a>
+              </button>
             </>
           )}
         </p>
