@@ -16,10 +16,6 @@ export const authOptions: NextAuthOptions = {
       issuer: samlLoginUrl,
       clientId: "dummy",
       clientSecret: "dummy",
-      // clientId: `tenant=boxyhq.com&product=${
-      //   process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
-      // }`,
-      // clientSecret: "dummy",
     }),
     // Open Id connect flow
     BoxyHQSAMLProvider({

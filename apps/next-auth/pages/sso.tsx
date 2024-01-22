@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/router"
 import { signIn } from "next-auth/react"
 import { useSession } from "next-auth/react"
 
 import Layout from "../components/layout"
 import coreStyles from "../components/header.module.css"
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next"
 
 const styles = {
   container: {
@@ -24,8 +25,16 @@ const styles = {
   },
 } as const
 
-export default function Page() {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+
+export default function Page({ productId }: Props) {
+  const router = useRouter()
+  const { status } = useSession()
   const [email, setEmail] = useState("jackson@example.com")
+
+  if (status === "authenticated") {
+    router.push("/me")
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -36,10 +45,14 @@ export default function Page() {
 
     const tenant = email.split("@")[1]
 
-    await signIn("boxyhq-saml", undefined, {
-      tenant,
-      product: "jackson",
-    })
+    await signIn(
+      "boxyhq-saml",
+      { callbackUrl: "/me" },
+      {
+        tenant,
+        product: productId,
+      }
+    )
   }
 
   return (
@@ -73,4 +86,12 @@ export default function Page() {
       </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return {
+    props: {
+      productId: process.env.BOXYHQ_PRODUCT || "",
+    },
+  }
 }
