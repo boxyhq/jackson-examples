@@ -14,10 +14,12 @@ export const authOptions: NextAuthOptions = {
     BoxyHQSAMLProvider({
       authorization: { params: { scope: "" } },
       issuer: samlLoginUrl,
-      clientId: `tenant=boxyhq.com&product=${
-        process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
-      }`,
+      clientId: "dummy",
       clientSecret: "dummy",
+      // clientId: `tenant=boxyhq.com&product=${
+      //   process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
+      // }`,
+      // clientSecret: "dummy",
     }),
     // Open Id connect flow
     BoxyHQSAMLProvider({
