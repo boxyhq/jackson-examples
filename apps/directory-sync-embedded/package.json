@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.15.5",
+    "@boxyhq/saml-jackson": "1.16.1",
     "classnames": "2.3.2",
     "next": "13.4.12",
     "next-transpile-modules": "10.0.1",
@@ -25,7 +25,7 @@
     "eslint": "8.56.0",
     "eslint-config-next": "14.0.1",
     "postcss": "8.4.32",
-    "tailwindcss": "3.3.6",
+    "tailwindcss": "3.4.1",
     "ts-node": "10.9.1",
     "typescript": "5.2.2"
   }
