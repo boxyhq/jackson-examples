@@ -1,13 +1,14 @@
 const express = require('express');
 
-const { options, product, redirectUrl, samlPath } = require('../jackson');
+const { options, redirectUrl, samlPath } = require('../jackson');
 
 const router = express.Router();
 
 let apiController;
 let oauthController;
 
-const tenant = 'example.com';
+const tenant = process.env.BOXYHQ_TENANT || 'example.com';
+const product = process.env.BOXYHQ_PRODUCT || 'saml-demo.boxyhq.com';
 
 (async function init() {
   const jackson = await require('@boxyhq/saml-jackson').controllers(options);
