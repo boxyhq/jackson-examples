@@ -24,10 +24,7 @@ export const authOptions: NextAuthOptions = {
       issuer: samlLoginUrl,
       wellKnown: `${samlLoginUrl}/.well-known/openid-configuration`,
       authorization: { params: { scope: "openid email" } },
-      // checks: ["pkce", "state"],
-      clientId: `tenant=boxyhq.com&product=${
-        process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63"
-      }`,
+      clientId: "dummy",
       clientSecret: "dummy",
     }),
     CredentialsProvider({

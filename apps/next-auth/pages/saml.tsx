@@ -76,7 +76,7 @@ export default function Page({ productId }: Props) {
                     className={coreStyles.input}
                   />
                   <button type="submit" className={coreStyles.buttonPrimary}>
-                    <span>Sign in with BoxyHQ SAML</span>
+                    <span>Continue</span>
                   </button>
                 </div>
               </form>
@@ -91,7 +91,8 @@ export default function Page({ productId }: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
-      productId: process.env.BOXYHQ_PRODUCT || "",
+      productId:
+        process.env.BOXYHQ_PRODUCT || "1eef7782-41d4-4a0a-b450-0857413b4f63",
     },
   }
 }

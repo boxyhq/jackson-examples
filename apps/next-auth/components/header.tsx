@@ -26,7 +26,7 @@ export default function Header() {
                 You are not signed in
               </span>
               <Link
-                href="/sso"
+                href="/saml"
                 className={styles.buttonPrimary}
                 data-test-id="signInButton"
               >
