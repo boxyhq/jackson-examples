@@ -13,7 +13,7 @@
   "dependencies": {
     "@apollo/client": "3.8.10",
     "@skillrecordings/next-auth-hasura-adapter": "0.0.2",
-    "classnames": "2.3.2",
+    "classnames": "2.5.1",
     "graphql": "16.8.1",
     "jsonwebtoken": "9.0.2",
     "next": "14.1.0",
