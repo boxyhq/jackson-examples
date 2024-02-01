@@ -41,7 +41,7 @@
     "luxon": "3.4.4",
     "pg": "8.11.3",
     "proxy-addr": "2.0.7",
-    "reflect-metadata": "0.1.13",
+    "reflect-metadata": "0.2.1",
     "source-map-support": "0.5.21"
   }
 }
