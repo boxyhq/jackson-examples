@@ -18,7 +18,7 @@
     "http-errors": "2.0.0",
     "jose": "5.1.0",
     "morgan": "1.10.0",
-    "passport": "0.6.0",
+    "passport": "0.7.0",
     "passport-oauth": "1.0.0"
   },
   "devDependencies": {
