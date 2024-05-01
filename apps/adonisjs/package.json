@@ -10,7 +10,7 @@
   "devDependencies": {
     "@adonisjs/assembler": "7.0.0",
     "@babel/core": "7.23.7",
-    "@babel/preset-env": "7.23.6",
+    "@babel/preset-env": "7.24.5",
     "@japa/preset-adonis": "1.2.0",
     "@japa/runner": "3.1.1",
     "@symfony/webpack-encore": "4.5.0",
