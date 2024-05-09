@@ -39,6 +39,7 @@ export default async function handler(
       return
     }
   } catch (error: any) {
+    console.log("errror:", error)
     // const { message, statusCode = 500 } = error;
 
     // setErrorCookie(res, { message, statusCode }, { path: '/error' });
