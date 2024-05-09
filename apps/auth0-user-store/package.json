@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.1.5",
-    "@testing-library/react": "14.1.2",
+    "@testing-library/react": "15.0.7",
     "jest-environment-jsdom": "29.7.0",
     "jest-fetch-mock": "3.0.3"
   },
