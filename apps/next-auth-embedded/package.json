@@ -1,0 +1,40 @@
+{
+  "name": "next-auth-embedded",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An example project for NextAuth.js",
+  "repository": "https://github.com/boxyhq/jackson-examples.git",
+  "bugs": {
+    "url": "https://github.com/boxyhq/jackson-examples/issues"
+  },
+  "homepage": "https://saml-demo.boxyhq.com",
+  "main": "",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
+    "dev": "next -p 3366",
+    "build": "next build",
+    "start": "next start -p 3366",
+    "types": "tsc --noEmit"
+  },
+  "author": "Deepak Prabhakara <deepak@boxyhq.com>",
+  "contributors": [],
+  "license": "Apache 2.0",
+  "dependencies": {
+    "@boxyhq/saml-jackson": "1.23.9",
+    "next": "14.2.3",
+    "next-auth": "4.24.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.19",
+    "typescript": "5.3.3",
+    "@types/react": "18.2.56"
+  },
+  "prettier": {
+    "semi": false
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
