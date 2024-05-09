@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
-import styles from './header.module.css';
+import Link from "next/link"
+import { signOut, useSession } from "next-auth/react"
+import styles from "./header.module.css"
 
 // The approach used in this component shows how to build a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
 export default function Header() {
-  const { data: session, status } = useSession();
-  const loading = status === 'loading';
+  const { data: session, status } = useSession()
+  const loading = status === "loading"
 
   return (
     <header>
@@ -15,11 +15,21 @@ export default function Header() {
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
       <div className={styles.signedInStatus}>
-        <p className={`nojs-show ${!session && loading ? styles.loading : styles.loaded}`}>
+        <p
+          className={`nojs-show ${
+            !session && loading ? styles.loading : styles.loaded
+          }`}
+        >
           {!session && (
             <>
-              <span className={styles.notSignedInText}>You are not signed in</span>
-              <Link href='/saml' className={styles.buttonPrimary} data-test-id='signInButton'>
+              <span className={styles.notSignedInText}>
+                You are not signed in
+              </span>
+              <Link
+                href="/saml"
+                className={styles.buttonPrimary}
+                data-test-id="signInButton"
+              >
                 Sign in with SAML SSO
               </Link>
             </>
@@ -27,7 +37,10 @@ export default function Header() {
           {session?.user && (
             <>
               {session.user.image && (
-                <span style={{ backgroundImage: `url('${session.user.image}')` }} className={styles.avatar} />
+                <span
+                  style={{ backgroundImage: `url('${session.user.image}')` }}
+                  className={styles.avatar}
+                />
               )}
               <span className={styles.signedInText}>
                 <small>Signed in as</small>
@@ -37,9 +50,10 @@ export default function Header() {
               <button
                 className={styles.button}
                 onClick={(e) => {
-                  e.preventDefault();
-                  signOut({ callbackUrl: '/' });
-                }}>
+                  e.preventDefault()
+                  signOut({ callbackUrl: "/" })
+                }}
+              >
                 Sign out
               </button>
             </>
@@ -49,19 +63,19 @@ export default function Header() {
       <nav>
         <ul className={styles.navItems}>
           <li className={styles.navItem}>
-            <Link href='/'>Home</Link>
+            <Link href="/">Home</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href='/api-example'>API</Link>
+            <Link href="/api-example">API</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href='/admin'>Admin</Link>
+            <Link href="/admin">Admin</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href='/me'>Me</Link>
+            <Link href="/me">Me</Link>
           </li>
         </ul>
       </nav>
     </header>
-  );
+  )
 }
