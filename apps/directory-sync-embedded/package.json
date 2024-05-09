@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.16.1",
+    "@boxyhq/saml-jackson": "1.23.9",
     "classnames": "2.3.2",
     "next": "13.4.12",
     "next-transpile-modules": "10.0.1",
