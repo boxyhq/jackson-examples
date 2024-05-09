@@ -29,7 +29,7 @@
     "dev:express-passportjs": "turbo run dev --filter='express-passportjs'",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "husky": {

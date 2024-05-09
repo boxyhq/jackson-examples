@@ -30,9 +30,6 @@
     "typescript": "5.3.3",
     "@types/react": "18.2.56"
   },
-  "prettier": {
-    "semi": false
-  },
   "engines": {
     "node": ">=14.0.0"
   }

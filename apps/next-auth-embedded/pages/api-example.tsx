@@ -1,4 +1,4 @@
-import Layout from "../components/layout"
+import Layout from '../components/layout';
 
 export default function ApiExamplePage() {
   return (
@@ -10,10 +10,10 @@ export default function ApiExamplePage() {
       </p>
       <h2>Session</h2>
       <p>/api/examples/session</p>
-      <iframe src="/api/examples/session" />
+      <iframe src='/api/examples/session' />
       <h2>JSON Web Token</h2>
       <p>/api/examples/jwt</p>
-      <iframe src="/api/examples/jwt" />
+      <iframe src='/api/examples/jwt' />
     </Layout>
-  )
+  );
 }

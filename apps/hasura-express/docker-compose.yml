@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   postgres:
@@ -23,8 +23,8 @@ services:
     environment:
       HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
       PG_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+      HASURA_GRAPHQL_DEV_MODE: 'true'
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: secret
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "a7ZNtr9OlnGz4lTKkX3GBrMEaSR2Ls66je9x1fHlhzk="}' #Don't use this key in production
