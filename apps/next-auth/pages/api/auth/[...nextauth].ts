@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
             grant_type: 'authorization_code',
             client_id: 'dummy',
             client_secret: 'dummy',
-            redirect_url: process.env.NEXTAUTH_URL,
+            redirect_uri: process.env.NEXTAUTH_URL,
             code,
           }),
           headers: {
