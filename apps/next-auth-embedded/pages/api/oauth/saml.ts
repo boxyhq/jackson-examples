@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
   } catch (error: any) {
-    console.log('errror:', error);
+    console.log('error:', error);
     // const { message, statusCode = 500 } = error;
 
     // setErrorCookie(res, { message, statusCode }, { path: '/error' });
