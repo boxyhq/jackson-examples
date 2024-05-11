@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import BoxyHQSAMLProvider from 'next-auth/providers/boxyhq-saml';
+import jackson from '../../../lib/jackson';
 
 const samlLoginUrl = process.env.NEXTAUTH_URL;
 
@@ -13,16 +14,6 @@ export const authOptions: NextAuthOptions = {
     BoxyHQSAMLProvider({
       authorization: { params: { scope: '' } },
       issuer: samlLoginUrl,
-      clientId: 'dummy',
-      clientSecret: 'dummy',
-    }),
-    // Open Id connect flow
-    BoxyHQSAMLProvider({
-      name: 'BoxyHQ OIDC',
-      id: 'boxyhq-saml-oidc',
-      issuer: samlLoginUrl,
-      wellKnown: `${samlLoginUrl}/.well-known/openid-configuration`,
-      authorization: { params: { scope: 'openid email' } },
       clientId: 'dummy',
       clientSecret: 'dummy',
     }),
@@ -48,39 +39,20 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const res = await fetch(`${samlLoginUrl}/api/oauth/token`, {
-          method: 'POST',
-          body: JSON.stringify({
-            grant_type: 'authorization_code',
-            client_id: 'dummy',
-            client_secret: 'dummy',
-            redirect_url: process.env.NEXTAUTH_URL,
-            code,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        const { oauthController } = await jackson();
+        const result = await oauthController.token({
+          grant_type: 'authorization_code',
+          client_id: 'dummy',
+          client_secret: 'dummy',
+          redirect_uri: process.env.NEXTAUTH_URL,
+          code,
         });
 
-        if (res.status !== 200) {
+        if (!result?.access_token) {
           return null;
         }
 
-        const json = await res.json();
-        if (!json?.access_token) {
-          return null;
-        }
-
-        const resUserInfo = await fetch(`${samlLoginUrl}/api/oauth/userinfo`, {
-          headers: {
-            Authorization: `Bearer ${json.access_token}`,
-          },
-        });
-
-        if (resUserInfo.status !== 200) {
-          return null;
-        }
-        const profile = await resUserInfo.json();
+        const profile = await oauthController.userInfo(result.access_token);
 
         if (profile?.id && profile?.email) {
           return {
