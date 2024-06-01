@@ -23,13 +23,13 @@
     "@boxyhq/saml-jackson": "1.23.9",
     "next": "14.2.3",
     "next-auth": "4.24.7",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "20.11.19",
     "typescript": "5.3.3",
-    "@types/react": "18.2.56"
+    "@types/react": "18.3.3"
   },
   "engines": {
     "node": ">=14.0.0"
