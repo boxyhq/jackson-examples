@@ -20,7 +20,7 @@
   "contributors": [],
   "license": "Apache 2.0",
   "dependencies": {
-    "@boxyhq/saml-jackson": "1.23.9",
+    "@boxyhq/saml-jackson": "1.26.3",
     "next": "14.2.3",
     "next-auth": "4.24.7",
     "react": "18.2.0",
