@@ -20,7 +20,7 @@
     "postcss-loader": "7.3.4",
     "tailwindcss": "3.3.6",
     "typescript": "5.3.2",
-    "webpack": "5.89.0",
+    "webpack": "5.92.1",
     "webpack-cli": "5.1.4",
     "assets-webpack-plugin": "7.1.1",
     "clean-webpack-plugin": "4.0.0",
