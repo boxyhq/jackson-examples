@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "7.0.0",
+    "@adonisjs/assembler": "7.6.1",
     "@babel/core": "7.23.7",
     "@babel/preset-env": "7.23.6",
     "@japa/preset-adonis": "1.2.0",
